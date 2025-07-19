@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>風格網頁總合</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  <!-- 配置Tailwind自定義顏色和字體 -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cyber: {
+              blue: '#00f0ff',
+              pink: '#ff2a6d',
+              purple: '#d300c5',
+              dark: '#0d0221'
+            },
+            movie: {
+              gold: '#ffd700',
+              dark: '#1a1a1a',
+              accent: '#e5b800'
+            },
+            hongkong: {
+              red: '#e60000',
+              yellow: '#ffcc00',
+              dark: '#1c1212'
+            },
+            anime: {
+              blue: '#1e90ff',
+              pink: '#ff69b4',
+              dark: '#1a0f23'
+            },
+            pixel: {
+              green: '#7fff00',
+              dark: '#222222',
+              accent: '#55ff00'
+            },
+            portrait: {
+              sepia: '#e0c588',
+              dark: '#2d2417',
+              accent: '#f0d8a8'
+            },
+            chinese: {
+              red: '#aa0000',
+              gold: '#d4af37',
+              dark: '#1f0a0a'
+            },
+            '3d': {
+              cyan: '#00ffff',
+              purple: '#9932cc',
+              dark: '#140b29'
+            },
+            watercolor: {
+              light: '#e6f7ff',
+              dark: '#1a2e35',
+              accent: '#73a6ff'
+            },
+            ink: {
+              light: '#f5f5f5',
+              dark: '#121212',
+              accent: '#555555'
+            },
+            oil: {
+              light: '#ffe4b5',
+              dark: '#282828',
+              accent: '#b8860b'
+            }
+          },
+          fontFamily: {
+            cyber: ['Orbitron', 'sans-serif'],
+            movie: ['Playfair Display', 'serif'],
+            chinese: ['"Ma Shan Zheng"', 'cursive'],
+            pixel: ['"Press Start 2P"', 'cursive'],
+            anime: ['"Nunito"', 'sans-serif'],
+            watercolor: ['"Dancing Script"', 'cursive'],
+            ink: ['"Zhi Mang Xing"', 'cursive'],
+            oil: ['"Cormorant Garamond"', 'serif']
+          }
+        }
+      }
+    }
+  </script>
+  
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .text-shadow-cyber {
+        text-shadow: 0 0 5px currentColor, 0 0 10px currentColor, 0 0 20px currentColor;
+      }
+      .text-shadow {
+        text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+      }
+      .border-glow {
+        box-shadow: 0 0 5px currentColor, 0 0 10px currentColor;
+      }
+      .bg-grid {
+        background-size: 40px 40px;
+        background-image: 
+          linear-gradient(to right, rgba(0, 240, 255, 0.1) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(0, 240, 255, 0.1) 1px, transparent 1px);
+      }
+      .pixel-border {
+        box-shadow: 0 -4px 0 4px currentColor, 4px 0 0 4px currentColor, 
+                   0 4px 0 4px currentColor, -4px 0 0 4px currentColor;
+      }
+      .card-3d {
+        transform-style: preserve-3d;
+        perspective: 1000px;
+      }
+      .card-3d-inner {
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+      }
+      .card-3d:hover .card-3d-inner {
+        transform: rotateY(5deg) translateZ(10px) translateY(-5px);
+      }
+      .card-shadow {
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+      }
+      .text-depth {
+        text-shadow: 1px 1px 0px rgba(0,0,0,0.3), 
+                     2px 2px 0px rgba(0,0,0,0.2),
+                     3px 3px 0px rgba(0,0,0,0.1);
+      }
+      /* 新增動畫效果 */
+      .cyber-pulse {
+        animation: cyberPulse 2s infinite alternate;
+      }
+      @keyframes cyberPulse {
+        0% { opacity: 0.8; }
+        100% { opacity: 1; }
+      }
+      .movie-glow {
+        animation: movieGlow 3s infinite alternate;
+      }
+      @keyframes movieGlow {
+        0% { box-shadow: 0 0 5px rgba(255, 215, 0, 0.5); }
+        100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.8); }
+      }
+      .anime-bounce {
+        animation: animeBounce 2s infinite;
+      }
+      @keyframes animeBounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+      }
+      .pixel-flicker {
+        animation: pixelFlicker 0.5s infinite alternate;
+      }
+      @keyframes pixelFlicker {
+        0% { opacity: 0.8; }
+        100% { opacity: 1; }
+      }
+      .watercolor-swirl {
+        background: linear-gradient(45deg, rgba(115, 166, 255, 0.2), rgba(115, 166, 255, 0.4), rgba(115, 166, 255, 0.2));
+        background-size: 200% 200%;
+        animation: watercolorSwirl 8s ease infinite;
+      }
+      @keyframes watercolorSwirl {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      .ink-spread {
+        position: relative;
+        overflow: hidden;
+      }
+      .ink-spread::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle, rgba(85, 85, 85, 0.1) 0%, transparent 70%);
+        animation: inkSpread 6s infinite alternate;
+      }
+      @keyframes inkSpread {
+        0% { transform: scale(0.8); opacity: 0.3; }
+        100% { transform: scale(1.2); opacity: 0.1; }
+      }
+      .oil-texture {
+        background-image: url('https://www.transparenttextures.com/patterns/crisp-paper-ruffles.png');
+        background-blend-mode: overlay;
+      }
+    }
+  </style>
+  
+  <!-- 導入Google字體 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Orbitron:wght@400;500;600;700;800;900&family=Nunito:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Press+Start+2P&family=Dancing+Script&family=Zhi+Mang+Xing&family=Cormorant+Garamond&display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-cyber-dark text-white min-h-screen overflow-x-hidden bg-grid">
+  <!-- 語言切換按鈕 -->
+  <div class="fixed top-4 right-4 z-20">
+    <button id="lang-toggle" class="px-4 py-2 font-cyber bg-cyber-dark/80 backdrop-blur-sm border border-cyber-blue text-cyber-blue rounded-lg hover:bg-cyber-blue hover:text-cyber-dark transition-all duration-300 flex items-center gap-2">
+      <span class="lang-zh">English</span>
+      <span class="lang-en hidden">繁體中文</span>
+      <i class="fa fa-language"></i>
+    </button>
+  </div>
+
+  <!-- 背景裝飾元素 -->
+  <div class="fixed inset-0 z-0 opacity-20 pointer-events-none">
+    <div class="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-cyber-purple blur-[100px]"></div>
+    <div class="absolute bottom-1/3 right-1/3 w-80 h-80 rounded-full bg-cyber-blue blur-[120px]"></div>
+    <div class="absolute top-2/3 right-1/4 w-72 h-72 rounded-full bg-cyber-pink blur-[110px]"></div>
+  </div>
+
+  <!-- 頁面內容 -->
+  <div class="relative z-10 container mx-auto px-4 py-12">
+    <!-- 標題區域 -->
+    <header class="text-center mb-16 md:mb-24">
+      <h1 class="font-cyber text-[clamp(2rem,5vw,4rem)] font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-cyber-blue via-cyber-purple to-cyber-pink animate-pulse">
+        <span class="lang-zh">風格網頁總合</span>
+        <span class="lang-en hidden">Style Website Collection</span>
+      </h1>
+      <p class="text-gray-300 max-w-2xl mx-auto text-lg md:text-xl">
+        <span class="lang-zh">探索不同風格的網頁設計，點擊下方卡片進入相應風格的展示頁面</span>
+        <span class="lang-en hidden">Explore different styles of web design, click on the cards below to enter the corresponding style showcase</span>
+      </p>
+    </header>
+
+    <!-- 賽博風格分類 -->
+    <h2 class="font-cyber text-3xl font-bold mb-8 text-cyber-blue text-shadow-cyber">
+      <span class="lang-zh">賽博風格</span>
+      <span class="lang-en hidden">Cyber Style</span>
+    </h2>
+    
+    <!-- 賽博風格卡片容器 -->
+    <main class="max-w-6xl mx-auto mb-16">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+        <!-- 賽博風格網站型式一 -->
+        <div class="style-card card-3d group" data-url="https://ping763573.github.io/style-website/賽博01.html">
+          <div class="card-3d-inner relative rounded-xl overflow-hidden border-2 border-cyber-blue transition-all duration-500 group-hover:border-glow card-shadow cyber-pulse">
+            <!-- 卡片圖片 -->
+            <div class="aspect-[4/3] bg-cyber-dark relative overflow-hidden">
+              <img src="https://picsum.photos/id/1/800/600" alt="賽博風格網站型式一預覽" class="w-full h-full object-cover opacity-70 mix-blend-screen transition-opacity duration-500 group-hover:opacity-90">
+              
+              <!-- 賽博風格疊加層 -->
+              <div class="absolute inset-0 bg-gradient-to-t from-cyber-dark via-transparent to-transparent"></div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-24 h-24 border-4 border-cyber-blue rounded-full animate-ping opacity-50"></div>
+                <div class="w-16 h-16 border-4 border-cyber-blue rounded-full absolute flex items-center justify-center">
+                  <i class="fa fa-arrow-right text-cyber-blue text-2xl"></i>
+                </div>
+              </div>
+              <!-- 新增賽博風格網格效果 -->
+              <div class="absolute inset-0 opacity-30" style="background-image: 
+                linear-gradient(to right, rgba(0, 240, 255, 0.3) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 240, 255, 0.3) 1px, transparent 1px);
+                background-size: 20px 20px;"></div>
+            </div>
+            
+            <!-- 卡片內容 -->
+            <div class="p-6 bg-cyber-dark/90 backdrop-blur-sm">
+              <div class="flex justify-between items-center mb-3">
+                <span class="px-3 py-1 text-xs font-cyber border border-cyber-blue text-cyber-blue rounded-full">
+                  <span class="lang-zh">賽博風格</span>
+                  <span class="lang-en hidden">Cyber Style</span>
+                </span>
+                <span class="text-gray-400 text-sm">
+                  <span class="lang-zh">型式一</span>
+                  <span class="lang-en hidden">Version 1</span>
+                </span>
+              </div>
+              <h2 class="font-cyber text-2xl font-bold mb-2 text-cyber-blue text-shadow-cyber text-depth">
+                <span class="lang-zh">霓虹賽博</span>
+                <span class="lang-en hidden">Neon Cyber</span>
+              </h2>
+              <p class="text-gray-300 mb-4">
+                <span class="lang-zh">探索充滿霓虹燈光與未來感的賽博龐克世界，體驗獨特的視覺衝擊與交互感受。</span>
+                <span class="lang-en hidden">Explore a cyberpunk world full of neon lights and futuristic vibes, experience unique visual impact and interactive feelings.</span>
+              </p>
+              <button class="w-full py-3 font-cyber bg-transparent border-2 border-cyber-blue text-cyber-blue rounded-lg hover:bg-cyber-blue hover:text-cyber-dark transition-all duration-300 flex items-center justify-center gap-2 group-hover:border-glow">
+                <span class="lang-zh">進入瀏覽</span>
+                <span class="lang-en hidden">Browse Now</span>
+                <i class="fa fa-external-link"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 賽博風格網站型式二 -->
+        <div class="style-card card-3d group" data-url="https://ping763573.github.io/style-website/賽博02.html">
+          <div class="card-3d-inner relative rounded-xl overflow-hidden border-2 border-cyber-pink transition-all duration-500 group-hover:border-glow card-shadow cyber-pulse">
+            <!-- 卡片圖片 -->
+            <div class="aspect-[4/3] bg-cyber-dark relative overflow-hidden">
+              <img src="https://picsum.photos/id/2/800/600" alt="賽博風格網站型式二預覽" class="w-full h-full object-cover opacity-70 mix-blend-screen transition-opacity duration-500 group-hover:opacity-90">
+              
+              <!-- 賽博風格疊加層 -->
+              <div class="absolute inset-0 bg-gradient-to-t from-cyber-dark via-transparent to-transparent"></div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-24 h-24 border-4 border-cyber-pink rounded-full animate-ping opacity-50"></div>
+                <div class="w-16 h-16 border-4 border-cyber-pink rounded-full absolute flex items-center justify-center">
+                  <i class="fa fa-arrow-right text-cyber-pink text-2xl"></i>
+                </div>
+              </div>
+              <!-- 新增賽博風格掃描線效果 -->
+              <div class="absolute inset-0 opacity-20" style="background-image: 
+                repeating-linear-gradient(0deg, rgba(255,42,109,0.1), rgba(255,42,109,0.1) 1px, transparent 1px, transparent 3px);
+                background-size: 100% 4px;"></div>
+            </div>
+            
+            <!-- 卡片內容 -->
+            <div class="p-6 bg-cyber-dark/90 backdrop-blur-sm">
+              <div class="flex justify-between items-center mb-3">
+                <span class="px-3 py-1 text-xs font-cyber border border-cyber-pink text-cyber-pink rounded-full">
+                  <span class="lang-zh">賽博風格</span>
+                  <span class="lang-en hidden">Cyber Style</span>
+                </span>
+                <span class="text-gray-400 text-sm">
+                  <span class="lang-zh">型式二</span>
+                  <span class="lang-en hidden">Version 2</span>
+                </span>
+              </div>
+              <h2 class="font-cyber text-2xl font-bold mb-2 text-cyber-pink text-shadow-cyber text-depth">
+                <span class="lang-zh">數位荒原</span>
+                <span class="lang-en hidden">Digital Wasteland</span>
+              </h2>
+              <p class="text-gray-300 mb-4">
+                <span class="lang-zh">沉浸在數位與現實交織的賽博空間，感受高科技與低生活並存的獨特美學體驗。</span>
+                <span class="lang-en hidden">Immerse yourself in a cyber space where digital and reality intersect, experience the unique aesthetic of high technology coexisting with low life.</span>
+              </p>
+              <button class="w-full py-3 font-cyber bg-transparent border-2 border-cyber-pink text-cyber-pink rounded-lg hover:bg-cyber-pink hover:text-cyber-dark transition-all duration-300 flex items-center justify-center gap-2 group-hover:border-glow">
+                <span class="lang-zh">進入瀏覽</span>
+                <span class="lang-en hidden">Browse Now</span>
+                <i class="fa fa-external-link"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- 電影風格分類 -->
+    <h2 class="font-movie text-3xl font-bold mb-8 text-movie-gold text-shadow">
+      <span class="lang-zh">電影風格</span>
+      <span class="lang-en hidden">Movie Style</span>
+    </h2>
+    
+    <main class="max-w-6xl mx-auto mb-16">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+        <!-- 電影風格網站型式一 -->
+        <div class="style-card card-3d group" data-url="https://ping763573.github.io/style-website/電影01.html">
+          <div class="card-3d-inner relative rounded-xl overflow-hidden border-2 border-movie-gold transition-all duration-500 group-hover:border-glow card-shadow bg-movie-dark movie-glow">
+            <div class="aspect-[4/3] bg-movie-dark relative overflow-hidden">
+              <img src="https://picsum.photos/id/237/800/600" alt="電影風格網站型式一預覽" class="w-full h-full object-cover opacity-70 mix-blend-overlay transition-opacity duration-500 group-hover:opacity-90">
+              
+              <div class="absolute inset-0 bg-gradient-to-t from-movie-dark via-transparent to-transparent"></div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-24 h-24 border-4 border-movie-gold rounded-full animate-ping opacity-50"></div>
+                <div class="w-16 h-16 border-4 border-movie-gold rounded-full absolute flex items-center justify-center">
+                  <i class="fa fa-play text-movie-gold text-2xl"></i>
+                </div>
+              </div>
+              <!-- 新增電影膠片效果 -->
+              <div class="absolute top-0 left-0 right-0 h-8 bg-black/50 flex items-center">
+                <div class="flex space-x-2">
+                  <div class="w-4 h-4 bg-movie-gold rounded-full"></div>
+                  <div class="w-4 h-4 bg-movie-gold rounded-full"></div>
+                  <div class="w-4 h-4 bg-movie-gold rounded-full"></div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="p-6 bg-movie-dark/90 backdrop-blur-sm">
+              <div class="flex justify-between items-center mb-3">
+                <span class="px-3 py-1 text-xs font-movie border border-movie-gold text-movie-gold rounded-full">
+                  <span class="lang-zh">電影風格</span>
+                  <span class="lang-en hidden">Movie Style</span>
+                </span>
+                <span class="text-gray-400 text-sm">
+                  <span class="lang-zh">型式一</span>
+                  <span class="lang-en hidden">Version 1</span>
+                </span>
+              </div>
+              <h2 class="font-movie text-2xl font-bold mb-2 text-movie-gold text-shadow text-depth">
+                <span class="lang-zh">黃金時代</span>
+                <span class="lang-en hidden">Golden Era</span>
+              </h2>
+              <p class="text-gray-300 mb-4">
+                <span class="lang-zh">重現經典電影的懷舊氛圍，感受銀幕黃金時代的獨特魅力與視覺語言。</span>
+                <span class="lang-en hidden">Recreate the nostalgic atmosphere of classic films, experience the unique charm and visual language of the golden age of cinema.</span>
+              </p>
+              <button class="w-full py-3 font-movie bg-transparent border-2 border-movie-gold text-movie-gold rounded-lg hover:bg-movie-gold hover:text-movie-dark transition-all duration-300 flex items-center justify-center gap-2 group-hover:border-glow">
+                <span class="lang-zh">進入瀏覽</span>
+                <span class="lang-en hidden">Browse Now</span>
+                <i class="fa fa-external-link"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 電影風格網站型式二 -->
+        <div class="style-card card-3d group" data-url="https://ping763573.github.io/style-website/電影02.html">
+          <div class="card-3d-inner relative rounded-xl overflow-hidden border-2 border-movie-accent transition-all duration-500 group-hover:border-glow card-shadow bg-movie-dark movie-glow">
+            <div class="aspect-[4/3] bg-movie-dark relative overflow-hidden">
+              <img src="https://picsum.photos/id/239/800/600" alt="電影風格網站型式二預覽" class="w-full h-full object-cover opacity-70 mix-blend-overlay transition-opacity duration-500 group-hover:opacity-90">
+              
+              <div class="absolute inset-0 bg-gradient-to-t from-movie-dark via-transparent to-transparent"></div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-24 h-24 border-4 border-movie-accent rounded-full animate-ping opacity-50"></div>
+                <div class="w-16 h-16 border-4 border-movie-accent rounded-full absolute flex items-center justify-center">
+                  <i class="fa fa-play text-movie-accent text-2xl"></i>
+                </div>
+              </div>
+              <!-- 新增電影放映機光線效果 -->
+              <div class="absolute inset-0 pointer-events-none" style="background: 
+                radial-gradient(ellipse at center, rgba(229,184,0,0.1) 0%, rgba(229,184,0,0) 70%)"></div>
+            </div>
+            
+            <div class="p-6 bg-movie-dark/90 backdrop-blur-sm">
+              <div class="flex justify-between items-center mb-3">
+                <span class="px-3 py-1 text-xs font-movie border border-movie-accent text-movie-accent rounded-full">
+                  <span class="lang-zh">電影風格</span>
+                  <span class="lang-en hidden">Movie Style</span>
+                </span>
+                <span class="text-gray-400 text-sm">
+                  <span class="lang-zh">型式二</span>
+                  <span class="lang-en hidden">Version 2</span>
+                </span>
+              </div>
+              <h2 class="font-movie text-2xl font-bold mb-2 text-movie-accent text-shadow text-depth">
+                <span class="lang-zh">現代劇場</span>
+                <span class="lang-en hidden">Modern Theater</span>
+              </h2>
+              <p class="text-gray-300 mb-4">
+                <span class="lang-zh">以現代電影美學為靈感，呈現簡約而富有張力的視覺體驗與互動設計。</span>
+                <span class="lang-en hidden">Inspired by modern film aesthetics, presenting a minimalist yet impactful visual experience and interactive design.</span>
+              </p>
+              <button class="w-full py-3 font-movie bg-transparent border-2 border-movie-accent text-movie-accent rounded-lg hover:bg-movie-accent hover:text-movie-dark transition-all duration-300 flex items-center justify-center gap-2 group-hover:border-glow">
+                <span class="lang-zh">進入瀏覽</span>
+                <span class="lang-en hidden">Browse Now</span>
+                <i class="fa fa-external-link"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- 港風動漫風格分類 -->
+    <h2 class="font-cyber text-3xl font-bold mb-8 text-hongkong-red text-shadow">
+      <span class="lang-zh">港風動漫風格</span>
+      <span class="lang-en hidden">Hong Kong Anime Style</span>
+    </h2>
+    
+    <main class="max-w-6xl mx-auto mb-16">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+        <!-- 港風動漫風格網站型式一 -->
+        <div class="style-card card-3d group" data-url="https://ping763573.github.io/style-website/港風動漫01.html">
+          <div class="card-3d-inner relative rounded-xl overflow-hidden border-2 border-hongkong-red transition-all duration-500 group-hover:border-glow card-shadow bg-hongkong-dark">
+            <div class="aspect-[4/3] bg-hongkong-dark relative overflow-hidden">
+              <img src="https://picsum.photos/id/42/800/600" alt="港風動漫風格網站型式一預覽" class="w-full h-full object-cover opacity-70 mix-blend-screen transition-opacity duration-500 group-hover:opacity-90">
+              
+              <div class="absolute inset-0 bg-gradient-to-t from-hongkong-dark via-transparent to-transparent"></div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-24 h-24 border-4 border-hongkong-red rounded-full animate-ping opacity-50"></div>
+                <div class="w-16 h-16 border-4 border-hongkong-red rounded-full absolute flex items-center justify-center">
+                  <i class="fa fa-arrow-right text-hongkong-red text-2xl"></i>
+                </div>
+              </div>
+              <!-- 新增霓虹招牌效果 -->
+              <div class="absolute top-4 left-4 right-4 h-1 bg-hongkong-red blur-sm opacity-70 animate-pulse"></div>
+            </div>
+            
+            <div class="p-6 bg-hongkong-dark/90 backdrop-blur-sm">
+              <div class="flex justify-between items-center mb-3">
+                <span class="px-3 py-1 text-xs font-cyber border border-hongkong-red text-hongkong-red rounded-full">
+                  <span class="lang-zh">港風動漫</span>
+                  <span class="lang-en hidden">HK Anime</span>
+                </span>
+                <span class="text-gray-400 text-sm">
+                  <span class="lang-zh">型式一</span>
+                  <span class="lang-en hidden">Version 1</span>
+                </span>
+              </div>
+              <h2 class="font-cyber text-2xl font-bold mb-2 text-hongkong-red text-shadow text-depth">
+                <span class="lang-zh">街頭漫畫</span>
+                <span class="lang-en hidden">Street Comics</span>
+              </h2>
+              <p class="text-gray-300 mb-4">
+                <span class="lang-zh">融合香港街頭文化與經典漫畫風格，展現獨特的視覺語言與城市氛圍。</span>
+                <span class="lang-en hidden">Combining Hong Kong street culture with classic comic styles, showcasing a unique visual language and urban atmosphere.</span>
+              </p>
+              <button class="w-full py-3 font-cyber bg-transparent border-2 border-hongkong-red text-hongkong-red rounded-lg hover:bg-hongkong-red hover:text-white transition-all duration-300 flex items-center justify-center gap-2 group-hover:border-glow">
+                <span class="lang-zh">進入瀏覽</span>
+                <span class="lang-en hidden">Browse Now</span>
+                <i class="fa fa-external-link"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 港風動漫風格網站型式二 -->
+        <div class="style-card card-3d group" data-url="https://ping763573.github.io/style-website/港風動漫02.html">
+          <div class="card-3d-inner relative rounded-xl overflow-hidden border-2 border-hongkong-yellow transition-all duration-500 group-hover:border-glow card-shadow bg-hongkong-dark">
+            <div class="aspect-[4/3] bg-hongkong-dark relative overflow-hidden">
+              <img src="https://picsum.photos/id/43/800/600" alt="港風動漫風格網站型式二預覽" class="w-full h-full object-cover opacity-70 mix-blend-screen transition-opacity duration-500 group-hover:opacity-90">
+              
+              <div class="absolute inset-0 bg-gradient-to-t from-hongkong-dark via-transparent to-transparent"></div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-24 h-24 border-4 border-hongkong-yellow rounded-full animate-ping opacity-50"></div>
+                <div class="w-16 h-16 border-4 border-hongkong-yellow rounded-full absolute flex items-center justify-center">
+                  <i class="fa fa-arrow-right text-hongkong-yellow text-2xl"></i>
+                </div>
+              </div>
+              <!-- 新增霓虹燈效果 -->
+              <div class="absolute top-4 right-4 w-8 h-8 rounded-full border-2 border-hongkong-yellow animate-pulse"></div>
+            </div>
+            
+            <div class="p-6 bg-hongkong-dark/90 backdrop-blur-sm">
+              <div class="flex justify-between items-center mb-3">
+                <span class="px-3 py-1 text-xs font-cyber border border-hongkong-yellow text-hongkong-yellow rounded-full">
+                  <span class="lang-zh">港風動漫</span>
+                  <span class="lang-en hidden">HK Anime</span>
+                </span>
+                <span class="text-gray-400 text-sm">
+                  <span class="lang-zh">型式二</span>
+                  <span class="lang-en hidden">Version 2</span>
+                </span>
+              </div>
+              <h2 class="font-cyber text-2xl font-bold mb-2 text-hongkong-yellow text-shadow text-depth">
+                <span class="lang-zh">霓虹漫畫</span>
+                <span class="lang-en hidden">Neon Comics</span>
+              </h2>
+              <p class="text-gray-300 mb-4">
+                <span class="lang-zh">呈現香港霓虹燈下的漫畫世界，結合城市夜景與動漫美學的視覺體驗。</span>
+                <span class="lang-en hidden">Presenting the comic world under Hong Kong's neon lights, combining urban night scenes with anime aesthetic visual experience.</span>
+              </p>
+              <button class="w-full py-3 font-cyber bg-transparent border-2 border-hongkong-yellow text-hongkong-yellow rounded-lg hover:bg-hongkong-yellow hover:text-hongkong-dark transition-all duration-300 flex items-center justify-center gap-2 group-hover:border-glow">
+                <span class="lang-zh">進入瀏覽</span>
+                <span class="lang-en hidden">Browse Now</span>
+                <i class="fa fa-external-link"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- 動漫風格分類 -->
+    <h2 class="font-anime text-3xl font-bold mb-8 text-anime-pink text-shadow">
+      <span class="lang-zh">動漫風格</span>
+      <span class="lang-en hidden">Anime Style</span>
+    </h2>
+    
+    <main class="max-w-6xl mx-auto mb-16">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+        <!-- 動漫風格網站型式一 -->
+        <div class="style-card card-3d group" data-url="https://ping763573.github.io/style-website/動漫01.html">
+          <div class="card-3d-inner relative rounded-xl overflow-hidden border-2 border-anime-pink transition-all duration-500 group-hover:border-glow card-shadow bg-anime-dark anime-bounce">
+            <div class="aspect-[4/3] bg-anime-dark relative overflow-hidden">
+              <img src="https://picsum.photos/id/64/800/600" alt="動漫風格網站型式一預覽" class="w-full h-full object-cover opacity-70 mix-blend-screen transition-opacity duration-500 group-hover:opacity-90">
+              
+              <div class="absolute inset-0 bg-gradient-to-t from-anime-dark via-transparent to-transparent"></div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-24 h-24 border-4 border-anime-pink rounded-full animate-ping opacity-50"></div>
+                <div class="w-16 h-16 border-4 border-anime-pink rounded-full absolute flex items-center justify-center">
+                  <i class="fa fa-arrow-right text-anime-pink text-2xl"></i>
+                </div>
+              </div>
+              <!-- 新增動漫星星效果 -->
+              <div class="absolute inset-0 pointer-events-none">
+                <div class="absolute top-1/4 left-1/4 w-2 h-2 bg-anime-pink rounded-full animate-pulse"></div>
+                <div class="absolute top-1/3 right-1/3 w-2 h-2 bg-anime-pink rounded-full animate-pulse delay-300"></div>
+                <div class="absolute bottom-1/4 left-1/3 w-2 h-2 bg-anime-pink rounded-full animate-pulse delay-500"></div>
+              </div>
+            </div>
+            
+            <div class="p-6 bg-anime-dark/90 backdrop-blur-sm">
+              <div class="flex justify-between items-center mb-3">
+                <span class="px-3 py-1 text-xs font-anime border border-anime-pink text-anime-pink rounded-full">
+                  <span class="lang-zh">動漫風格</span>
+                  <span class="lang-en hidden">Anime Style</span>
+                </span>
+                <span class="text-gray-400 text-sm">
+                  <span class="lang-zh">型式一</span>
+                  <span class="lang-en hidden">Version 1</span>
+                </span>
+              </div>
+              <h2 class="font-anime text-2xl font-bold mb-2 text-anime-pink text-shadow text-depth">
+                <span class="lang-zh">日系動漫</span>
+                <span class="lang-en hidden">Japanese Anime</span>
+              </h2>
+              <p class="text-gray-300 mb-4">
+                <span class="lang-zh">經典日系動漫風格呈現，明亮色彩與可愛角色塑造獨特的視覺體驗。</span>
+                <span class="lang-en hidden">Classic Japanese anime style presentation, with bright colors and cute characters creating a unique visual experience.</span>
+              </p>
+              <button class="w-full py-3 font-anime bg-transparent border-2 border-anime-pink text-anime-pink rounded-lg hover:bg-anime-pink hover:text-white transition-all duration-300 flex items-center justify-center gap-2 group-hover:border-glow">
+                <span class="lang-zh">進入瀏覽</span>
+                <span class="lang-en hidden">Browse Now</span>
+                <i class="fa fa-external-link"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 動漫風格網站型式二 -->
+        <div class="style-card card-3d group" data-url="https://ping763573.github.io/style-website/動漫02.html">
+          <div class="card-3d-inner relative rounded-xl overflow-hidden border-2 border-anime-blue transition-all duration-500 group-hover:border-glow card-shadow bg-anime-dark anime-bounce">
+            <div class="aspect-[4/3] bg-anime-dark relative overflow-hidden">
+              <img src="https://picsum.photos/id/65/800/600" alt="動漫風格網站型式二預覽" class="w-full h-full object-cover opacity-70 mix-blend-screen transition-opacity duration-500 group-hover:opacity-90">
+              
+              <div class="absolute inset-0 bg-gradient-to-t from-anime-dark via-transparent to-transparent"></div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-24 h-24 border-4 border-anime-blue rounded-full animate-ping opacity-50"></div>
+                <div class="w-16 h-16 border-4 border-anime-blue rounded-full absolute flex items-center justify-center">
+                  <i class="fa fa-arrow-right text-anime-blue text-2xl"></i>
+                </div>
+              </div>
+              <!-- 新增動漫閃光效果 -->
+              <div class="absolute inset-0 pointer-events-none" style="background: 
+                radial-gradient(ellipse at center, rgba(30,144,255,0.1) 0%, rgba(30,144,255,0) 70%)"></div>
+            </div>
+            
+            <div class="p-6 bg-anime-dark/90 backdrop-blur-sm">
+              <div class="flex justify-between items-center mb-3">
+                <span class="px-3 py-1 text-xs font-anime border border-anime-blue text-anime-blue rounded-full">
+                  <span class="lang-zh">動漫風格</span>
+                  <span class="lang-en hidden">Anime Style</span>
+                </span>
+                <span class="text-gray-400 text-sm">
+                  <span class="lang-zh">型式二</span>
+                  <span class="lang-en hidden">Version 2</span>
+                </span>
+              </div>
+              <h2 class="font-anime text-2xl font-bold mb-2 text-anime-blue text-shadow text-depth">
+                <span class="lang-zh">科幻動漫</span>
+                <span class="lang-en hidden">Sci-Fi Anime</span>
+              </h2>
+              <p class="text-gray-300 mb-4">
+                <span class="lang-zh">充滿未來感的科幻動漫風格，機械與科技元素營造獨特的視覺震撼。</span>
+                <span class="lang-en hidden">Futuristic sci-fi anime style, with mechanical and technological elements creating a unique visual impact.</span>
+              </p>
+              <button class="w-full py-3 font-anime bg-transparent border-2 border-anime-blue text-anime-blue rounded-lg hover:bg-anime-blue hover:text-white transition-all duration-300 flex items-center justify-center gap-2 group-hover:border-glow">
+                <span class="lang-zh">進入瀏覽</span>
+                <span class="lang-en hidden">Browse Now</span>
+                <i class="fa fa-external-link"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- 像素風格分類 -->
+    <h2 class="font-pixel text-2xl md:text-3xl font-bold mb-8 text-pixel-green text-shadow">
+      <span class="lang-zh">像素風格</span>
+      <span class="lang-en hidden">Pixel Style</span>
+    </h2>
+    
+    <main class="max-w-6xl mx-auto mb-16">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+        <!-- 像素風格網站型式一 -->
+        <div class="style-card card-3d group" data-url="https://ping763573.github.io/style-website/像素01.html">
+          <div class="card-3d-inner relative rounded-xl overflow-hidden border-2 border-pixel-green transition-all duration-500 group-hover:pixel-border transform group-hover:-translate-y-2 card-shadow bg-pixel-dark pixel-flicker">
+            <div class="aspect-[4/3] bg-pixel-dark relative overflow-hidden">
+              <img src="https://picsum.photos/id/87/800/600" alt="像素風格網站型式一預覽" class="w-full h-full object-cover opacity-70 mix-blend-screen transition-opacity duration-500 group-hover:opacity-90">
+              
+              <div class="absolute inset-0 bg-gradient-to-t from-pixel-dark via-transparent to-transparent"></div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-24 h-24 border-4 border-pixel-green rounded-full animate-ping opacity-50"></div>
+                <div class="w-16 h-16 border-4 border-pixel-green rounded-full absolute flex items-center justify-center">
+                  <i class="fa fa-gamepad text-pixel-green text-2xl"></i>
+                </div>
+              </div>
+              <!-- 新增像素網格效果 -->
+              <div class="absolute inset-0" style="background-image: 
+                linear-gradient(to right, rgba(127, 255, 0, 0.1) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(127, 255, 0, 0.1) 1px, transparent 1px);
+                background-size: 8px 8px;"></div>
+            </div>
+            
+            <div class="p-6 bg-pixel-dark/90 backdrop-blur-sm">
+              <div class="flex justify-between items-center mb-3">
+                <span class="px-3 py-1 text-xs font-pixel border border-pixel-green text-pixel-green rounded-full">
+                  <span class="lang-zh">像素風格</span>
+                  <span class="lang-en hidden">Pixel Style</span>
+                </span>
+                <span class="text-gray-400 text-sm">
+                  <span class="lang-zh">型式一</span>
+                  <span class="lang-en hidden">Version 1</span>
+                </span>
+              </div>
+              <h2 class="font-pixel text-xl md:text-2xl font-bold mb-2 text-pixel-green text-shadow text-depth">
+                <span class="lang-zh">復古遊戲</span>
+                <span class="lang-en hidden">Retro Games</span>
+              </h2>
+              <p class="text-gray-300 mb-4 text-sm">
+                <span class="lang-zh">重現80-90年代經典遊戲的像素美學，方塊組合出的獨特視覺世界。</span>
+                <span class="lang-en hidden">Recreating the pixel aesthetics of classic 80s-90s games, a unique visual world composed of squares.</span>
+              </p>
+              <button class="w-full py-3 font-pixel bg-transparent border-2 border-pixel-green text-pixel-green rounded-lg hover:bg-pixel-green hover:text-pixel-dark transition-all duration-300 flex items-center justify-center gap-2 group-hover:border-glow text-sm">
+                <span class="lang-zh">進入瀏覽</span>
+                <span class="lang-en hidden">Browse Now</span>
+                <i class="fa fa-external-link"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 像素風格網站型式二 -->
+        <div class="style-card card-3d group" data-url="https://ping763573.github.io/style-website/像素02.html">
+          <div class="card-3d-inner relative rounded-xl overflow-hidden border-2 border-pixel-accent transition-all duration-500 group-hover:pixel-border transform group-hover:-translate-y-2 card-shadow bg-pixel-dark pixel-flicker">
+            <div class="aspect-[4/3] bg-pixel-dark relative overflow-hidden">
+              <img src="https://picsum.photos/id/88/800/600" alt="像素風格網站型式二預覽" class="w-full h-full object-cover opacity-70 mix-blend-screen transition-opacity duration-500 group-hover:opacity-90">
+              
+              <div class="absolute inset-0 bg-gradient-to-t from-pixel-dark via-transparent to-transparent"></div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-24 h-24 border-4 border-pixel-accent rounded-full animate-ping opacity-50"></div>
+                <div class="w-16 h-16 border-4 border-pixel-accent rounded-full absolute flex items-center justify-center">
+                  <i class="fa fa-gamepad text-pixel-accent text-2xl"></i>
+                </div>
+              </div>
+              <!-- 新增像素掃描線效果 -->
+              <div class="absolute inset-0" style="background-image: 
+                repeating-linear-gradient(0deg, rgba(85, 255, 0, 0.1), rgba(85, 255, 0, 0.1) 1px, transparent 1px, transparent 3px);
+                background-size: 100% 4px;"></div>
+            </div>
+            
+            <div class="p-6 bg-pixel-dark/90 backdrop-blur-sm">
+              <div class="flex justify-between items-center mb-3">
+                <span class="px-3 py-1 text-xs font-pixel border border-pixel-accent text-pixel-accent rounded-full">
+                  <span class="lang-zh">像素風格</span>
+                  <span class="lang-en hidden">Pixel Style</span>
+                </span>
+                <span class="text-gray-400 text-sm">
+                  <span class="lang-zh">型式二</span>
+                  <span class="lang-en hidden">Version 2</span>
+                </span>
+              </div>
+              <h2 class="font-pixel text-xl md:text-2xl font-bold mb-2 text-pixel-accent text-shadow text-depth">
+                <span class="lang-zh">像素冒險</span>
+                <span class="lang-en hidden">Pixel Adventure</span>
+              </h2>
+              <p class="text-gray-300 mb-4 text-sm">
+                <span class="lang-zh">體驗像素化的冒險世界，感受經典遊戲的魅力。</span>
+                <span class="lang-en hidden">Experience the pixelated adventure world and feel the charm of classic games.</span>
+              </p>
+              <button class="w-full py-3 font-pixel bg-transparent border-2 border-pixel-accent text-pixel-accent rounded-lg hover:bg-pixel-accent hover:text-pixel-dark transition-all duration-300 flex items-center justify-center gap-2 group-hover:border-glow text-sm">
+                <span class="lang-zh">進入瀏覽</span>
+                <span class="lang-en hidden">Browse Now</span>
+                <i class="fa fa-external-link"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- 水彩畫風格分類 -->
+    <h2 class="font-watercolor text-3xl font-bold mb-8 text-watercolor-accent text-shadow">
+      <span class="lang-zh">水彩畫風格</span>
+      <span class="lang-en hidden">Watercolor Style</span>
+    </h2>
+    
+    <main class="max-w-6xl mx-auto mb-16">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+        <!-- 水彩畫風格網站型式一 -->
+        <div class="style-card card-3d group" data-url="https://ping763573.github.io/style-website/水彩畫01.html">
+          <div class="card-3d-inner relative rounded-xl overflow-hidden border-2 border-watercolor-accent transition-all duration-500 group-hover:border-glow card-shadow bg-watercolor-dark watercolor-swirl">
+            <div class="aspect-[4/3] bg-watercolor-dark relative overflow-hidden">
+              <img src="https://picsum.photos/id/91/800/600" alt="水彩畫風格網站型式一預覽" class="w-full h-full object-cover opacity-70 mix-blend-screen transition-opacity duration-500 group-hover:opacity-90">
+              
+              <div class="absolute inset-0 bg-gradient-to-t from-watercolor-dark via-transparent to-transparent"></div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-24 h-24 border-4 border-watercolor-accent rounded-full animate-ping opacity-50"></div>
+                <div class="w-16 h-16 border-4 border-watercolor-accent rounded-full absolute flex items-center justify-center">
+                  <i class="fa fa-arrow-right text-watercolor-accent text-2xl"></i>
+                </div>
+              </div>
+              <!-- 新增水彩暈染效果 -->
+              <div class="absolute inset-0 pointer-events-none" style="background: 
+                radial-gradient(ellipse at 30% 30%, rgba(115, 166, 255, 0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 70%, rgba(115, 166, 255, 0.2) 0%, transparent 50%)"></div>
+            </div>
+            
+            <div class="p-6 bg-watercolor-dark/90 backdrop-blur-sm">
+              <div class="flex justify-between items-center mb-3">
+                <span class="px-3 py-1 text-xs font-watercolor border border-watercolor-accent text-watercolor-accent rounded-full">
+                  <span class="lang-zh">水彩畫風格</span>
+                  <span class="lang-en hidden">Watercolor Style</span>
+                </span>
+                <span class="text-gray-400 text-sm">
+                  <span class="lang-zh">型式一</span>
+                  <span class="lang-en hidden">Version 1</span>
+                </span>
+              </div>
+              <h2 class="font-watercolor text-2xl font-bold mb-2 text-watercolor-accent text-shadow text-depth">
+                <span class="lang-zh">柔和水彩</span>
+                <span class="lang-en hidden">Soft Watercolor</span>
+              </h2>
+              <p class="text-gray-300 mb-4">
+                <span class="lang-zh">體驗柔和水彩畫的溫馨與浪漫，感受色彩的流動與融合。</span>
+                <span class="lang-en hidden">Experience the warmth and romance of soft watercolor paintings, feel the flow and fusion of colors.</span>
+              </p>
+              <button class="w-full py-3 font-watercolor bg-transparent border-2 border-watercolor-accent text-watercolor-accent rounded-lg hover:bg-watercolor-accent hover:text-watercolor-dark transition-all duration-300 flex items-center justify-center gap-2 group-hover:border-glow">
+                <span class="lang-zh">進入瀏覽</span>
+                <span class="lang-en hidden">Browse Now</span>
+                <i class="fa fa-external-link"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 水彩畫風格網站型式二 -->
+        <div class="style-card card-3d group" data-url="https://ping763573.github.io/style-website/水彩畫02.html">
+          <div class="card-3d-inner relative rounded-xl overflow-hidden border-2 border-watercolor-accent transition-all duration-500 group-hover:border-glow card-shadow bg-watercolor-dark watercolor-swirl">
+            <div class="aspect-[4/3] bg-watercolor-dark relative overflow-hidden">
+              <img src="https://picsum.photos/id/92/800/600" alt="水彩畫風格網站型式二預覽" class="w-full h-full object-cover opacity-70 mix-blend-screen transition-opacity duration-500 group-hover:opacity-90">
+              
+              <div class="absolute inset-0 bg-gradient-to-t from-watercolor-dark via-transparent to-transparent"></div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-24 h-24 border-4 border-watercolor-accent rounded-full animate-ping opacity-50"></div>
+                <div class="w-16 h-16 border-4 border-watercolor-accent rounded-full absolute flex items-center justify-center">
+                  <i class="fa fa-arrow-right text-watercolor-accent text-2xl"></i>
+                </div>
+              </div>
+              <!-- 新增水彩筆觸效果 -->
+              <div class="absolute inset-0 pointer-events-none" style="background: 
+                linear-gradient(45deg, rgba(115, 166, 255, 0.1) 0%, transparent 50%),
+                linear-gradient(-45deg, rgba(115, 166, 255, 0.1) 0%, transparent 50%)"></div>
+            </div>
+            
+            <div class="p-6 bg-watercolor-dark/90 backdrop-blur-sm">
+              <div class="flex justify-between items-center mb-3">
+                <span class="px-3 py-1 text-xs font-watercolor border border-watercolor-accent text-watercolor-accent rounded-full">
+                  <span class="lang-zh">明亮水彩</span>
+                  <span class="lang-en hidden">Bright Watercolor</span>
+                </span>
+                <span class="text-gray-400 text-sm">
+                  <span class="lang-zh">型式二</span>
+                  <span class="lang-en hidden">Version 2</span>
+                </span>
+              </div>
+              <h2 class="font-watercolor text-2xl font-bold mb-2 text-watercolor-accent text-shadow text-depth">
+                <span class="lang-zh">明亮水彩</span>
+                <span class="lang-en hidden">Bright Watercolor</span>
+              </h2>
+              <p class="text-gray-300 mb-4">
+                <span class="lang-zh">感受明亮水彩畫的鮮豔色彩，體驗色彩的活力與生機。</span>
+                <span class="lang-en hidden">Feel the bright colors of bright watercolor paintings, experience the vitality and energy of colors.</span>
+              </p>
+              <button class="w-full py-3 font-watercolor bg-transparent border-2 border-watercolor-accent text-watercolor-accent rounded-lg hover:bg-watercolor-accent hover:text-watercolor-dark transition-all duration-300 flex items-center justify-center gap-2 group-hover:border-glow">
+                <span class="lang-zh">進入瀏覽</span>
+                <span class="lang-en hidden">Browse Now</span>
+                <i class="fa fa-external-link"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- 水墨畫風格分類 -->
+    <h2 class="font-ink text-3xl font-bold mb-8 text-ink-accent text-shadow">
+      <span class="lang-zh">水墨畫風格</span>
+      <span class="lang-en hidden">Ink Painting Style</span>
+    </h2>
+    
+    <main class="max-w-6xl mx-auto mb-16">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+        <!-- 水墨畫風格網站型式一 -->
+        <div class="style-card card-3d group" data-url="https://ping763573.github.io/style-website/水墨畫01.html">
+          <div class="card-3d-inner relative rounded-xl overflow-hidden border-2 border-ink-accent transition-all duration-500 group-hover:border-glow card-shadow bg-ink-dark ink-spread">
+            <div class="aspect-[4/3] bg-ink-dark relative overflow-hidden">
+              <img src="https://picsum.photos/id/93/800/600" alt="水墨畫風格網站型式一預覽" class="w-full h-full object-cover opacity-70 mix-blend-screen transition-opacity duration-500 group-hover:opacity-90">
+              
+              <div class="absolute inset-0 bg-gradient-to-t from-ink-dark via-transparent to-transparent"></div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-24 h-24 border-4 border-ink-accent rounded-full animate-ping opacity-50"></div>
+                <div class="w-16 h-16 border-4 border-ink-accent rounded-full absolute flex items-center justify-center">
+                  <i class="fa fa-arrow-right text-ink-accent text-2xl"></i>
+                </div>
+              </div>
+              <!-- 新增水墨暈染效果 -->
+              <div class="absolute inset-0 pointer-events-none" style="background: 
+                radial-gradient(ellipse at center, rgba(85, 85, 85, 0.1) 0%, transparent 70%)"></div>
+            </div>
+            
+            <div class="p-6 bg-ink-dark/90 backdrop-blur-sm">
+              <div class="flex justify-between items-center mb-3">
+                <span class="px-3 py-1 text-xs font-ink border border-ink-accent text-ink-accent rounded-full">
+                  <span class="lang-zh">水墨畫風格</span>
+                  <span class="lang-en hidden">Ink Painting Style</span>
+                </span>
+                <span class="text-gray-400 text-sm">
+                  <span class="lang-zh">型式一</span>
+                  <span class="lang-en hidden">Version 1</span>
+                </span>
+              </div>
+              <h2 class="font-ink text-2xl font-bold mb-2 text-ink-accent text-shadow text-depth">
+                <span class="lang-zh">傳統水墨</span>
+                <span class="lang-en hidden">Traditional Ink Painting</span>
+              </h2>
+              <p class="text-gray-300 mb-4">
+                <span class="lang-zh">品味傳統水墨畫的意境，感受墨色的濃淡變化與筆觸的韻律。</span>
+                <span class="lang-en hidden">Appreciate the artistic conception of traditional ink paintings, feel the changes in ink shades and the rhythm of brushstrokes.</span>
+              </p>
+              <button class="w-full py-3 font-ink bg-transparent border-2 border-ink-accent text-ink-accent rounded-lg hover:bg-ink-accent hover:text-ink-dark transition-all duration-300 flex items-center justify-center gap-2 group-hover:border-glow">
+                <span class="lang-zh">進入瀏覽</span>
+                <span class="lang-en hidden">Browse Now</span>
+                <i class="fa fa-external-link"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 水墨畫風格網站型式二 -->
+        <div class="style-card card-3d group" data-url="https://ping763573.github.io/style-website/水墨畫02.html">
+          <div class="card-3d-inner relative rounded-xl overflow-hidden border-2 border-ink-accent transition-all duration-500 group-hover:border-glow card-shadow bg-ink-dark ink-spread">
+            <div class="aspect-[4/3] bg-ink-dark relative overflow-hidden">
+              <img src="https://picsum.photos/id/94/800/600" alt="水墨畫風格網站型式二預覽" class="w-full h-full object-cover opacity-70 mix-blend-screen transition-opacity duration-500 group-hover:opacity-90">
+              
+              <div class="absolute inset-0 bg-gradient-to-t from-ink-dark via-transparent to-transparent"></div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-24 h-24 border-4 border-ink-accent rounded-full animate-ping opacity-50"></div>
+                <div class="w-16 h-16 border-4 border-ink-accent rounded-full absolute flex items-center justify-center">
+                  <i class="fa fa-arrow-right text-ink-accent text-2xl"></i>
+                </div>
+              </div>
+              <!-- 新增水墨筆觸效果 -->
+              <div class="absolute inset-0 pointer-events-none" style="background: 
+                linear-gradient(45deg, rgba(85, 85, 85, 0.1) 0%, transparent 50%),
+                linear-gradient(-45deg, rgba(85, 85, 85, 0.1) 0%, transparent 50%)"></div>
+            </div>
+            
+            <div class="p-6 bg-ink-dark/90 backdrop-blur-sm">
+              <div class="flex justify-between items-center mb-3">
+                <span class="px-3 py-1 text-xs font-ink border border-ink-accent text-ink-accent rounded-full">
+                  <span class="lang-zh">現代水墨</span>
+                  <span class="lang-en hidden">Modern Ink Painting</span>
+                </span>
+                <span class="text-gray-400 text-sm">
+                  <span class="lang-zh">型式二</span>
+                  <span class="lang-en hidden">Version 2</span>
+                </span>
+              </div>
+              <h2 class="font-ink text-2xl font-bold mb-2 text-ink-accent text-shadow text-depth">
+                <span class="lang-zh">現代水墨</span>
+                <span class="lang-en hidden">Modern Ink Painting</span>
+              </h2>
+              <p class="text-gray-300 mb-4">
+                <span class="lang-zh">探索現代水墨畫的創新表現，融合傳統與現代的藝術魅力。</span>
+                <span class="lang-en hidden">Explore the innovative expressions of modern ink paintings, combining the artistic charm of tradition and modernity.</span>
+              </p>
+              <button class="w-full py-3 font-ink bg-transparent border-2 border-ink-accent text-ink-accent rounded-lg hover:bg-ink-accent hover:text-ink-dark transition-all duration-300 flex items-center justify-center gap-2 group-hover:border-glow">
+                <span class="lang-zh">進入瀏覽</span>
+                <span class="lang-en hidden">Browse Now</span>
+                <i class="fa fa-external-link"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- 油畫風格分類 -->
+    <h2 class="font-oil text-3xl font-bold mb-8 text-oil-accent text-shadow">
+      <span class="lang-zh">油畫風格</span>
+      <span class="lang-en hidden">Oil Painting Style</span>
+    </h2>
+    
+    <main class="max-w-6xl mx-auto mb-16">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+        <!-- 油畫風格網站型式一 -->
+        <div class="style-card card-3d group" data-url="https://ping763573.github.io/style-website/油畫01.html">
+          <div class="card-3d-inner relative rounded-xl overflow-hidden border-2 border-oil-accent transition-all duration-500 group-hover:border-glow card-shadow bg-oil-dark oil-texture">
+            <div class="aspect-[4/3] bg-oil-dark relative overflow-hidden">
+              <img src="https://picsum.photos/id/95/800/600" alt="油畫風格網站型式一預覽" class="w-full h-full object-cover opacity-70 mix-blend-screen transition-opacity duration-500 group-hover:opacity-90">
+              
+              <div class="absolute inset-0 bg-gradient-to-t from-oil-dark via-transparent to-transparent"></div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-24 h-24 border-4 border-oil-accent rounded-full animate-ping opacity-50"></div>
+                <div class="w-16 h-16 border-4 border-oil-accent rounded-full absolute flex items-center justify-center">
+                  <i class="fa fa-arrow-right text-oil-accent text-2xl"></i>
+                </div>
+              </div>
+              <!-- 新增油畫紋理效果 -->
+              <div class="absolute inset-0 pointer-events-none" style="background: 
+                linear-gradient(to right, rgba(184, 134, 11, 0.1) 0%, transparent 50%),
+                linear-gradient(to bottom, rgba(184, 134, 11, 0.1) 0%, transparent 50%)"></div>
+            </div>
+            
+            <div class="p-6 bg-oil-dark/90 backdrop-blur-sm">
+              <div class="flex justify-between items-center mb-3">
+                <span class="px-3 py-1 text-xs font-oil border border-oil-accent text-oil-accent rounded-full">
+                  <span class="lang-zh">油畫風格</span>
+                  <span class="lang-en hidden">Oil Painting Style</span>
+                </span>
+                <span class="text-gray-400 text-sm">
+                  <span class="lang-zh">型式一</span>
+                  <span class="lang-en hidden">Version 1</span>
+                </span>
+              </div>
+              <h2 class="font-oil text-2xl font-bold mb-2 text-oil-accent text-shadow text-depth">
+                <span class="lang-zh">古典油畫</span>
+                <span class="lang-en hidden">Classical Oil Painting</span>
+              </h2>
+              <p class="text-gray-300 mb-4">
+                <span class="lang-zh">體驗古典油畫的莊重與華美，感受色彩的厚重與細膩。</span>
+                <span class="lang-en hidden">Experience the dignity and splendor of classical oil paintings, feel the richness and delicacy of colors.</span>
+              </p>
+              <button class="w-full py-3 font-oil bg-transparent border-2 border-oil-accent text-oil-accent rounded-lg hover:bg-oil-accent hover:text-oil-dark transition-all duration-300 flex items-center justify-center gap-2 group-hover:border-glow">
+                <span class="lang-zh">進入瀏覽</span>
+                <span class="lang-en hidden">Browse Now</span>
+                <i class="fa fa-external-link"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 油畫風格網站型式二 -->
+        <div class="style-card card-3d group" data-url="https://ping763573.github.io/style-website/油畫02.html">
+          <div class="card-3d-inner relative rounded-xl overflow-hidden border-2 border-oil-accent transition-all duration-500 group-hover:border-glow card-shadow bg-oil-dark oil-texture">
+            <div class="aspect-[4/3] bg-oil-dark relative overflow-hidden">
+              <img src="https://picsum.photos/id/96/800/600" alt="油畫風格網站型式二預覽" class="w-full h-full object-cover opacity-70 mix-blend-screen transition-opacity duration-500 group-hover:opacity-90">
+              
+              <div class="absolute inset-0 bg-gradient-to-t from-oil-dark via-transparent to-transparent"></div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-24 h-24 border-4 border-oil-accent rounded-full animate-ping opacity-50"></div>
+                <div class="w-16 h-16 border-4 border-oil-accent rounded-full absolute flex items-center justify-center">
+                  <i class="fa fa-arrow-right text-oil-accent text-2xl"></i>
+                </div>
+              </div>
+              <!-- 新增油畫筆觸效果 -->
+              <div class="absolute inset-0 pointer-events-none" style="background: 
+                radial-gradient(ellipse at center, rgba(184, 134, 11, 0.1) 0%, transparent 70%)"></div>
+            </div>
+            
+            <div class="p-6 bg-oil-dark/90 backdrop-blur-sm">
+              <div class="flex justify-between items-center mb-3">
+                <span class="px-3 py-1 text-xs font-oil border border-oil-accent text-oil-accent rounded-full">
+                  <span class="lang-zh">現代油畫</span>
+                  <span class="lang-en hidden">Modern Oil Painting</span>
+                </span>
+                <span class="text-gray-400 text-sm">
+                  <span class="lang-zh">型式二</span>
+                  <span class="lang-en hidden">Version 2</span>
+                </span>
+              </div>
+              <h2 class="font-oil text-2xl font-bold mb-2 text-oil-accent text-shadow text-depth">
+                <span class="lang-zh">現代油畫</span>
+                <span class="lang-en hidden">Modern Oil Painting</span>
+              </h2>
+              <p class="text-gray-300 mb-4">
+                <span class="lang-zh">感受現代油畫的創新與自由，體驗色彩的碰撞與融合。</span>
+                <span class="lang-en hidden">Feel the innovation and freedom of modern oil paintings, experience the collision and fusion of colors.</span>
+              </p>
+              <button class="w-full py-3 font-oil bg-transparent border-2 border-oil-accent text-oil-accent rounded-lg hover:bg-oil-accent hover:text-oil-dark transition-all duration-300 flex items-center justify-center gap-2 group-hover:border-glow">
+                <span class="lang-zh">進入瀏覽</span>
+                <span class="lang-en hidden">Browse Now</span>
+                <i class="fa fa-external-link"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const langToggle = document.getElementById('lang-toggle');
+    const langZhElements = document.querySelectorAll('.lang-zh');
+    const langEnElements = document.querySelectorAll('.lang-en');
+
+    langToggle.addEventListener('click', () => {
+      langZhElements.forEach((element) => {
+        element.classList.toggle('hidden');
+      });
+      langEnElements.forEach((element) => {
+        element.classList.toggle('hidden');
+      });
+    });
+
+    const styleCards = document.querySelectorAll('.style-card');
+    styleCards.forEach((card) => {
+      card.addEventListener('click', () => {
+        const url = card.dataset.url;
+        window.open(url, '_blank');
+      });
+    });
+  </script>
+</body>
+</html>
