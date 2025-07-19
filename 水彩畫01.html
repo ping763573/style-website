@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>水彩艺术作品集</title>
+    <!-- 引入Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- 引入Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind配置 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#A8DADC',
+                        secondary: '#F1FAEE',
+                        accent: '#FFC8DD',
+                        neutral: '#F8F9FA',
+                        brown: '#E0E1DD',
+                        dark: '#333333',
+                        light: '#666666'
+                    },
+                    fontFamily: {
+                        handwritten: ['Dancing Script', 'cursive'],
+                        sansTc: ['Noto Sans TC', 'sans-serif'],
+                        sansEn: ['Noto Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            /* 自定义工具类 */
+            .text-shadow {
+                text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+            }
+            .watercolor-border {
+                position: relative;
+                border-radius: 8px;
+                z-index: 1;
+            }
+            .watercolor-border::before {
+                content: "";
+                position: absolute;
+                top: -2px;
+                left: -2px;
+                right: -2px;
+                bottom: -2px;
+                border-radius: 10px;
+                background: linear-gradient(135deg, rgba(168, 218, 220, 0.6), rgba(255, 200, 221, 0.6), rgba(241, 250, 238, 0.6));
+                z-index: -1;
+                filter: blur(4px);
+                opacity: 0.7;
+            }
+            .watercolor-btn {
+                position: relative;
+                overflow: hidden;
+                transition: all 0.3s ease;
+            }
+            .watercolor-btn::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+                transition: all 0.6s ease;
+            }
+            .watercolor-btn:hover::before {
+                left: 100%;
+            }
+            .brush-stroke {
+                position: relative;
+                display: inline-block;
+            }
+            .brush-stroke::after {
+                content: "";
+                position: absolute;
+                bottom: -2px;
+                left: 0;
+                width: 100%;
+                height: 6px;
+                background-color: rgba(168, 218, 220, 0.5);
+                border-radius: 3px;
+                z-index: -1;
+                transform: skew(-12deg) rotate(-1deg);
+            }
+            .cursor-paint {
+                cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='%23A8DADC'%3E%3Ccircle cx='12' cy='12' r='8' fill='%23A8DADC' fill-opacity='0.7'/%3E%3Ccircle cx='12' cy='12' r='4' fill='%23A8DADC'/%3E%3C/svg%3E"), auto;
+            }
+            .watercolor-card {
+                transition: all 0.4s ease;
+            }
+            .watercolor-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            }
+            .watercolor-card::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(135deg, rgba(168, 218, 220, 0.1), rgba(255, 200, 221, 0.1));
+                opacity: 0;
+                transition: opacity 0.4s ease;
+                border-radius: inherit;
+            }
+            .watercolor-card:hover::before {
+                opacity: 1;
+            }
+        }
+    </style>
+    
+    <style>
+        /* 全局样式 */
+        body {
+            background-color: #F8F9FA;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23a8dadc' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            scroll-behavior: smooth;
+            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='%23A8DADC'%3E%3Ccircle cx='12' cy='12' r='8' fill='%23A8DADC' fill-opacity='0.7'/%3E%3Ccircle cx='12' cy='12' r='4' fill='%23A8DADC'/%3E%3C/svg%3E"), auto;
+        }
+        
+        /* 动画效果 */
+        @keyframes brushStroke {
+            0% {
+                stroke-dashoffset: 1000;
+            }
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+        
+        @keyframes watercolorSpread {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+        
+        .animate-brush {
+            animation: brushStroke 3s ease-out forwards;
+        }
+        
+        .animate-spread {
+            animation: watercolorSpread 1.5s ease-out forwards;
+        }
+        
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .animate-float-delay {
+            animation: float 6s ease-in-out 2s infinite;
+        }
+        
+        /* 粒子效果容器 */
+        #particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        
+        /* 技能条动画 */
+        .skill-bar {
+            position: relative;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .skill-progress {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background: linear-gradient(90deg, #A8DADC, #FFC8DD);
+            transform-origin: left;
+            transform: scaleX(0);
+            transition: transform 1.5s ease-out;
+        }
+        
+        .skill-visible .skill-progress {
+            transform: scaleX(1);
+        }
+        
+        /* 筛选动画 */
+        .filter-item {
+            transition: all 0.5s ease;
+            opacity: 0;
+            transform: scale(0.95);
+        }
+        
+        .filter-item.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        /* 导航栏滚动效果 */
+        .navbar {
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-scrolled {
+            background-color: rgba(248, 249, 250, 0.9);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* 移动端菜单动画 */
+        .mobile-menu {
+            transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+            transform: translateX(-100%);
+        }
+        
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+        
+        /* 确保SVG动画正确显示 */
+        .stroked-text path {
+            fill: none;
+            stroke: #333;
+            stroke-width: 2;
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+        }
+    </style>
+</head>
+<body class="font-sansTc text-dark">
+    <!-- 导航栏 -->
+    <nav id="navbar" class="navbar fixed w-full z-50 py-4 px-6 md:px-12">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#hero" class="text-2xl md:text-3xl font-handwritten text-primary hover:text-accent transition-colors">
+                <span class="lang-zh">水彩藝術</span>
+                <span class="lang-en hidden">Watercolor Art</span>
+            </a>
+            
+            <!-- 桌面导航 -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#hero" class="nav-link lang-zh hover:text-primary transition-colors">首頁</a>
+                <a href="#about" class="nav-link lang-zh hover:text-primary transition-colors">關於我</a>
+                <a href="#portfolio" class="nav-link lang-zh hover:text-primary transition-colors">作品集</a>
+                <a href="#services" class="nav-link lang-zh hover:text-primary transition-colors">服務</a>
+                <a href="#contact" class="nav-link lang-zh hover:text-primary transition-colors">聯繫我</a>
+                
+                <a href="#hero" class="nav-link lang-en hidden hover:text-primary transition-colors">Home</a>
+                <a href="#about" class="nav-link lang-en hidden hover:text-primary transition-colors">About</a>
+                <a href="#portfolio" class="nav-link lang-en hidden hover:text-primary transition-colors">Portfolio</a>
+                <a href="#services" class="nav-link lang-en hidden hover:text-primary transition-colors">Services</a>
+                <a href="#contact" class="nav-link lang-en hidden hover:text-primary transition-colors">Contact</a>
+                
+                <!-- 语言切换 -->
+                <button id="langToggle" class="watercolor-btn bg-primary/30 hover:bg-primary/50 px-4 py-2 rounded-full text-dark transition-all">
+                    <span class="lang-zh">EN</span>
+                    <span class="lang-en hidden">繁體</span>
+                </button>
+            </div>
+            
+            <!-- 移动端菜单按钮 -->
+            <button id="menuToggle" class="md:hidden text-2xl">
+                <i class="fa fa-bars"></i>
+            </button>
+        </div>
+        
+        <!-- 移动端菜单 -->
+        <div id="mobileMenu" class="mobile-menu fixed top-0 left-0 h-full w-64 bg-neutral/95 p-6 shadow-lg z-50">
+            <div class="flex justify-between items-center mb-8">
+                <span class="text-2xl font-handwritten text-primary">
+                    <span class="lang-zh">水彩藝術</span>
+                    <span class="lang-en hidden">Watercolor Art</span>
+                </span>
+                <button id="closeMenu" class="text-xl">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="flex flex-col space-y-6">
+                <a href="#hero" class="mobile-nav-link lang-zh text-lg hover:text-primary transition-colors">首頁</a>
+                <a href="#about" class="mobile-nav-link lang-zh text-lg hover:text-primary transition-colors">關於我</a>
+                <a href="#portfolio" class="mobile-nav-link lang-zh text-lg hover:text-primary transition-colors">作品集</a>
+                <a href="#services" class="mobile-nav-link lang-zh text-lg hover:text-primary transition-colors">服務</a>
+                <a href="#contact" class="mobile-nav-link lang-zh text-lg hover:text-primary transition-colors">聯繫我</a>
+                
+                <a href="#hero" class="mobile-nav-link lang-en hidden text-lg hover:text-primary transition-colors">Home</a>
+                <a href="#about" class="mobile-nav-link lang-en hidden text-lg hover:text-primary transition-colors">About</a>
+                <a href="#portfolio" class="mobile-nav-link lang-en hidden text-lg hover:text-primary transition-colors">Portfolio</a>
+                <a href="#services" class="mobile-nav-link lang-en hidden text-lg hover:text-primary transition-colors">Services</a>
+                <a href="#contact" class="mobile-nav-link lang-en hidden text-lg hover:text-primary transition-colors">Contact</a>
+                
+                <button id="mobileLangToggle" class="watercolor-btn bg-primary/30 hover:bg-primary/50 px-4 py-2 rounded-full text-dark transition-all w-fit">
+                    <span class="lang-zh">EN</span>
+                    <span class="lang-en hidden">繁體</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 英雄部分 -->
+    <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+        <!-- 水彩背景SVG -->
+        <div class="absolute inset-0 z-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 1440 800" preserveAspectRatio="xMidYMid slice">
+                <!-- 背景水彩效果 -->
+                <defs>
+                    <filter id="blur" x="-20%" y="-20%" width="140%" height="140%">
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="30" />
+                    </filter>
+                </defs>
+                
+                <rect width="100%" height="100%" fill="#F8F9FA" />
+                
+                <!-- 蓝色水彩 -->
+                <circle cx="300" cy="200" r="300" fill="#A8DADC" fill-opacity="0.3" filter="url(#blur)" />
+                <circle cx="1100" cy="300" r="250" fill="#A8DADC" fill-opacity="0.2" filter="url(#blur)" />
+                
+                <!-- 粉色水彩 -->
+                <circle cx="800" cy="600" r="350" fill="#FFC8DD" fill-opacity="0.2" filter="url(#blur)" />
+                <circle cx="200" cy="500" r="200" fill="#FFC8DD" fill-opacity="0.15" filter="url(#blur)" />
+                
+                <!-- 绿色水彩 -->
+                <circle cx="1200" cy="650" r="220" fill="#F1FAEE" fill-opacity="0.4" filter="url(#blur)" />
+                <circle cx="500" cy="400" r="180" fill="#F1FAEE" fill-opacity="0.3" filter="url(#blur)" />
+            </svg>
+            
+            <!-- 粒子效果容器 -->
+            <div id="particles"></div>
+        </div>
+        
+        <div class="container mx-auto px-6 md:px-12 z-10 text-center">
+            <!-- 手绘风格标题 -->
+            <div class="mb-6 animate-spread">
+                <h1 class="text-[clamp(2.5rem,8vw,5rem)] font-handwritten font-bold text-dark leading-tight">
+                    <span class="lang-zh brush-stroke">水彩藝術作品集</span>
+                    <span class="lang-en hidden brush-stroke">Watercolor Portfolio</span>
+                </h1>
+            </div>
+            
+            <p class="text-[clamp(1rem,3vw,1.5rem)] text-light max-w-2xl mx-auto mb-10 animate-spread" style="animation-delay: 0.3s">
+                <span class="lang-zh">探索色彩與情感的交融，每一幅作品都是獨特的故事</span>
+                <span class="lang-en hidden">Explore the blend of colors and emotions, each piece tells a unique story</span>
+            </p>
+            
+            <a href="#portfolio" class="watercolor-btn inline-block bg-primary/50 hover:bg-primary/70 text-dark font-medium px-8 py-3 rounded-full transition-all animate-spread" style="animation-delay: 0.6s">
+                <span class="lang-zh">瀏覽作品</span>
+                <span class="lang-en hidden">View Works</span>
+            </a>
+        </div>
+        
+        <!-- 向下滚动指示 -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <a href="#about" class="text-primary/70 hover:text-primary text-2xl transition-colors">
+                <i class="fa fa-chevron-down"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- 关于部分 -->
+    <section id="about" class="py-20 px-6 md:px-12">
+        <div class="container mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-handwritten font-bold mb-4">
+                    <span class="lang-zh brush-stroke">關於我</span>
+                    <span class="lang-en hidden brush-stroke">About Me</span>
+                </h2>
+                <div class="w-24 h-1 bg-primary/50 mx-auto rounded-full"></div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <!-- 水彩风格头像 -->
+                <div class="w-full md:w-1/3 animate-spread">
+                    <div class="relative">
+                        <!-- 头像SVG -->
+                        <svg class="w-full h-auto rounded-full" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+                            <!-- 背景 -->
+                            <circle cx="150" cy="150" r="140" fill="#F8F9FA" />
+                            
+                            <!-- 水彩效果 -->
+                            <circle cx="150" cy="150" r="130" fill="none" stroke="#A8DADC" stroke-width="15" stroke-opacity="0.6" />
+                            <circle cx="150" cy="150" r="120" fill="none" stroke="#FFC8DD" stroke-width="10" stroke-opacity="0.4" />
+                            
+                            <!-- 抽象人像 -->
+                            <ellipse cx="150" cy="110" rx="60" ry="70" fill="#E0E1DD" fill-opacity="0.7" />
+                            <circle cx="120" cy="95" r="10" fill="#333333" fill-opacity="0.7" />
+                            <circle cx="180" cy="95" r="10" fill="#333333" fill-opacity="0.7" />
+                            <path d="M120 140 Q150 160 180 140" stroke="#333333" stroke-width="3" fill="none" stroke-opacity="0.7" />
+                        </svg>
+                        
+                        <!-- 水彩边框效果 -->
+                        <div class="absolute -inset-4 rounded-full border-4 border-primary/20 -z-10"></div>
+                        <div class="absolute -inset-6 rounded-full border-2 border-accent/30 -z-10"></div>
+                    </div>
+                </div>
+                
+                <!-- 个人介绍 -->
+                <div class="w-full md:w-2/3 animate-spread" style="animation-delay: 0.3s">
+                    <h3 class="text-2xl md:text-3xl font-handwritten mb-6 text-primary">
+                        <span class="lang-zh">水彩藝術家</span>
+                        <span class="lang-en hidden">Watercolor Artist</span>
+                    </h3>
+                    
+                    <p class="text-light mb-6 leading-relaxed">
+                        <span class="lang-zh">
+                            我是一位充滿熱情的水彩藝術家，擁有超過十年的繪畫經驗。我熱愛透過水彩的流動性和透明感來捕捉自然與生活中的美好瞬間。
+                            我的作品融合了傳統技法與現代審美，希望能帶給觀賞者平靜與感動。
+                        </span>
+                        <span class="lang-en hidden">
+                            I am a passionate watercolor artist with over ten years of painting experience. I love capturing beautiful moments in nature and life through the fluidity and transparency of watercolors.
+                            My works blend traditional techniques with modern aesthetics, hoping to bring peace and inspiration to viewers.
+                        </span>
+                    </p>
+                    
+                    <p class="text-light mb-8 leading-relaxed">
+                        <span class="lang-zh">
+                            除了創作，我也從事水彩教學工作，幫助更多人發現水彩畫的魅力。無論是風景、人物還是抽象題材，我都樂於探索與挑戰。
+                        </span>
+                        <span class="lang-en hidden">
+                            In addition to creating art, I also teach watercolor painting, helping more people discover the charm of this medium. Whether it's landscapes, portraits, or abstract themes, I enjoy exploring and challenging myself.
+                        </span>
+                    </p>
+                    
+                    <!-- 技能 -->
+                    <div class="mb-8">
+                        <h4 class="text-xl font-medium mb-4">
+                            <span class="lang-zh">我的專長</span>
+                            <span class="lang-en hidden">My Skills</span>
+                        </h4>
+                        
+                        <div class="space-y-4 skill-container">
+                            <div class="skill-item">
+                                <div class="flex justify-between mb-1">
+                                    <span class="lang-zh">風景水彩</span>
+                                    <span class="lang-en hidden">Landscape Watercolor</span>
+                                    <span>90%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 90%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="skill-item">
+                                <div class="flex justify-between mb-1">
+                                    <span class="lang-zh">人物肖像</span>
+                                    <span class="lang-en hidden">Portrait Painting</span>
+                                    <span>85%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="skill-item">
+                                <div class="flex justify-between mb-1">
+                                    <span class="lang-zh">抽象水彩</span>
+                                    <span class="lang-en hidden">Abstract Watercolor</span>
+                                    <span>80%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 80%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="skill-item">
+                                <div class="flex justify-between mb-1">
+                                    <span class="lang-zh">水彩教學</span>
+                                    <span class="lang-en hidden">Watercolor Teaching</span>
+                                    <span>95%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 95%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <a href="#contact" class="watercolor-btn inline-block bg-primary/50 hover:bg-primary/70 text-dark font-medium px-6 py-2 rounded-full transition-all">
+                        <span class="lang-zh">聯繫我</span>
+                        <span class="lang-en hidden">Contact Me</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 作品集部分 -->
+    <section id="portfolio" class="py-20 px-6 md:px-12 bg-secondary/30">
+        <div class="container mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-handwritten font-bold mb-4">
+                    <span class="lang-zh brush-stroke">我的作品</span>
+                    <span class="lang-en hidden brush-stroke">My Portfolio</span>
+                </h2>
+                <div class="w-24 h-1 bg-primary/50 mx-auto rounded-full mb-8"></div>
+                
+                <!-- 筛选按钮 -->
+                <div class="flex flex-wrap justify-center gap-3">
+                    <button class="filter-btn active watercolor-btn bg-primary/50 hover:bg-primary/70 px-5 py-2 rounded-full transition-all" data-filter="all">
+                        <span class="lang-zh">全部</span>
+                        <span class="lang-en hidden">All</span>
+                    </button>
+                    <button class="filter-btn watercolor-btn bg-neutral hover:bg-primary/30 px-5 py-2 rounded-full transition-all" data-filter="landscape">
+                        <span class="lang-zh">風景</span>
+                        <span class="lang-en hidden">Landscape</span>
+                    </button>
+                    <button class="filter-btn watercolor-btn bg-neutral hover:bg-primary/30 px-5 py-2 rounded-full transition-all" data-filter="portrait">
+                        <span class="lang-zh">人物</span>
+                        <span class="lang-en hidden">Portrait</span>
+                    </button>
+                    <button class="filter-btn watercolor-btn bg-neutral hover:bg-primary/30 px-5 py-2 rounded-full transition-all" data-filter="abstract">
+                        <span class="lang-zh">抽象</span>
+                        <span class="lang-en hidden">Abstract</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 作品网格 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 作品1 - 风景 -->
+                <div class="filter-item active watercolor-card relative bg-white rounded-lg overflow-hidden shadow-md" data-category="landscape">
+                    <div class="aspect-w-16 aspect-h-10 overflow-hidden">
+                        <!-- 风景主题水彩画 -->
+                        <img src="https://picsum.photos/id/15/800/600" alt="山间晨雾水彩画，展示了朦胧的山景和柔和的光线效果" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-handwritten font-bold mb-2 text-primary">
+                            <span class="lang-zh">山間晨霧</span>
+                            <span class="lang-en hidden">Mountain Mist</span>
+                        </h3>
+                        <p class="text-light mb-4">
+                            <span class="lang-zh">描繪山間清晨的朦朧美景，透過柔和的色彩表達寧靜的氛圍。</span>
+                            <span class="lang-en hidden">Depicting the hazy beauty of mountain mornings, expressing a peaceful atmosphere through soft colors.</span>
+                        </p>
+                        <span class="inline-block bg-primary/20 text-dark text-sm px-3 py-1 rounded-full">
+                            <span class="lang-zh">風景</span>
+                            <span class="lang-en hidden">Landscape</span>
+                        </span>
+                    </div>
+                </div>
+                
+                <!-- 作品2 - 人物 -->
+                <div class="filter-item active watercolor-card relative bg-white rounded-lg overflow-hidden shadow-md" data-category="portrait">
+                    <div class="aspect-w-16 aspect-h-10 overflow-hidden">
+                        <!-- 人物主题水彩画 -->
+                        <img src="https://picsum.photos/id/64/800/600" alt="沉思中的人物水彩画，柔和的色调和笔触表现内心平静" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-handwritten font-bold mb-2 text-primary">
+                            <span class="lang-zh">沉思</span>
+                            <span class="lang-en hidden">Contemplation</span>
+                        </h3>
+                        <p class="text-light mb-4">
+                            <span class="lang-zh">捕捉人物沉思的瞬間，透過柔和的筆觸展現內心的平靜。</span>
+                            <span class="lang-en hidden">Capturing a moment of contemplation, expressing inner peace through soft brushstrokes.</span>
+                        </p>
+                        <span class="inline-block bg-primary/20 text-dark text-sm px-3 py-1 rounded-full">
+                            <span class="lang-zh">人物</span>
+                            <span class="lang-en hidden">Portrait</span>
+                        </span>
+                    </div>
+                </div>
+                
+                <!-- 作品3 - 抽象 -->
+                <div class="filter-item active watercolor-card relative bg-white rounded-lg overflow-hidden shadow-md" data-category="abstract">
+                    <div class="aspect-w-16 aspect-h-10 overflow-hidden">
+                        <!-- 抽象主题水彩画 -->
+                        <img src="https://picsum.photos/id/96/800/600" alt="色彩流动的抽象水彩画，展现色彩交融的美感" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-handwritten font-bold mb-2 text-primary">
+                            <span class="lang-zh">流動</span>
+                            <span class="lang-en hidden">Flow</span>
+                        </h3>
+                        <p class="text-light mb-4">
+                            <span class="lang-zh">抽象表達色彩的流動與交融，傳達生命的活力與變化。</span>
+                            <span class="lang-en hidden">Abstract expression of color flow and blending, conveying the vitality and change of life.</span>
+                        </p>
+                        <span class="inline-block bg-primary/20 text-dark text-sm px-3 py-1 rounded-full">
+                            <span class="lang-zh">抽象</span>
+                            <span class="lang-en hidden">Abstract</span>
+                        </span>
+                    </div>
+                </div>
+                
+                <!-- 作品4 - 风景 -->
+                <div class="filter-item active watercolor-card relative bg-white rounded-lg overflow-hidden shadow-md" data-category="landscape">
+                    <div class="aspect-w-16 aspect-h-10 overflow-hidden">
+                        <!-- 风景主题水彩画 -->
+                        <img src="https://picsum.photos/id/18/800/600" alt="黄昏树影水彩画，展示夕阳下的树木剪影" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-handwritten font-bold mb-2 text-primary">
+                            <span class="lang-zh">黃昏樹影</span>
+                            <span class="lang-en hidden">Twilight Shadows</span>
+                        </h3>
+                        <p class="text-light mb-4">
+                            <span class="lang-zh">描繪黃昏時分的樹木剪影，溫暖的光線穿過枝葉灑落地面。</span>
+                            <span class="lang-en hidden">Depicting tree silhouettes at dusk, with warm light filtering through the leaves onto the ground.</span>
+                        </p>
+                        <span class="inline-block bg-primary/20 text-dark text-sm px-3 py-1 rounded-full">
+                            <span class="lang-zh">風景</span>
+                            <span class="lang-en hidden">Landscape</span>
+                        </span>
+                    </div>
+                </div>
+                
+                <!-- 作品5 - 人物 -->
+                <div class="filter-item active watercolor-card relative bg-white rounded-lg overflow-hidden shadow-md" data-category="portrait">
+                    <div class="aspect-w-16 aspect-h-10 overflow-hidden">
+                        <!-- 人物主题水彩画 -->
+                        <img src="https://picsum.photos/id/65/800/600" alt="微笑的人物水彩画，柔和的色彩传达幸福感" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-handwritten font-bold mb-2 text-primary">
+                            <span class="lang-zh">微笑</span>
+                            <span class="lang-en hidden">Smile</span>
+                        </h3>
+                        <p class="text-light mb-4">
+                            <span class="lang-zh">透過微妙的表情捕捉快樂的瞬間，溫暖的色彩傳達幸福感。</span>
+                            <span class="lang-en hidden">Capturing a moment of joy through subtle expressions, warm colors convey a sense of happiness.</span>
+                        </p>
+                        <span class="inline-block bg-primary/20 text-dark text-sm px-3 py-1 rounded-full">
+                            <span class="lang-zh">人物</span>
+                            <span class="lang-en hidden">Portrait</span>
+                        </span>
+                    </div>
+                </div>
+                
+                <!-- 作品6 - 抽象 -->
+                <div class="filter-item active watercolor-card relative bg-white rounded-lg overflow-hidden shadow-md" data-category="abstract">
+                    <div class="aspect-w-16 aspect-h-10 overflow-hidden">
+                        <!-- 抽象主题水彩画 -->
+                        <img src="https://picsum.photos/id/91/800/600" alt="和谐主题抽象水彩画，不同形状与色彩的和谐共存" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-handwritten font-bold mb-2 text-primary">
+                            <span class="lang-zh">和諧</span>
+                            <span class="lang-en hidden">Harmony</span>
+                        </h3>
+                        <p class="text-light mb-4">
+                            <span class="lang-zh">不同形狀與色彩的和諧共存，象徵多元世界中的平衡與統一。</span>
+                            <span class="lang-en hidden">Harmonious coexistence of different shapes and colors, symbolizing balance and unity in a diverse world.</span>
+                        </p>
+                        <span class="inline-block bg-primary/20 text-dark text-sm px-3 py-1 rounded-full">
+                            <span class="lang-zh">抽象</span>
+                            <span class="lang-en hidden">Abstract</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 服务区 -->
+    <section id="services" class="py-20 px-6 md:px-12">
+        <div class="container mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-handwritten font-bold mb-4">
+                    <span class="lang-zh brush-stroke">我的服務</span>
+                    <span class="lang-en hidden brush-stroke">My Services</span>
+                </h2>
+                <div class="w-24 h-1 bg-primary/50 mx-auto rounded-full"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- 服务1 - 水彩创作 -->
+                <div class="watercolor-card relative bg-white p-8 rounded-lg shadow-md text-center" data-aos="fade-up">
+                    <div class="w-20 h-20 mx-auto mb-6 flex items-center justify-center">
+                        <!-- 水彩创作图标SVG -->
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+                            <!-- 画板 -->
+                            <rect x="20" y="20" width="60" height="60" rx="5" fill="none" stroke="#A8DADC" stroke-width="4" stroke-opacity="0.8" />
+                            
+                            <!-- 画笔 -->
+                            <path d="M70,30 L90,10 L85,5 L65,25 Z" fill="#E0E1DD" fill-opacity="0.8" />
+                            <path d="M65,25 L40,50" stroke="#333333" stroke-width="2" stroke-opacity="0.6" stroke-linecap="round" />
+                            
+                            <!-- 颜料滴 -->
+                            <circle cx="35" cy="70" r="5" fill="#FFC8DD" fill-opacity="0.7" />
+                            <circle cx="45" cy="75" r="4" fill="#A8DADC" fill-opacity="0.7" />
+                            <circle cx="55" cy="68" r="3" fill="#F1FAEE" fill-opacity="0.7" />
+                        </svg>
+                    </div>
+                    
+                    <h3 class="text-xl font-handwritten font-bold mb-4 text-primary">
+                        <span class="lang-zh">水彩創作</span>
+                        <span class="lang-en hidden">Watercolor Creation</span>
+                    </h3>
+                    
+                    <p class="text-light">
+                        <span class="lang-zh">
+                            接受客製化水彩繪畫委託，包括肖像、風景、寵物等題材，為您創作獨一無二的藝術作品。
+                        </span>
+                        <span class="lang-en hidden">
+                            Accepting custom watercolor painting commissions, including portraits, landscapes, pets, and other subjects, creating unique works of art for you.
+                        </span>
+                    </p>
+                </div>
+                
+                <!-- 服务2 - 水彩教学 -->
+                <div class="watercolor-card relative bg-white p-8 rounded-lg shadow-md text-center" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-20 h-20 mx-auto mb-6 flex items-center justify-center">
+                        <!-- 水彩教学图标SVG -->
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+                            <!-- 书本 -->
+                            <rect x="25" y="30" width="50" height="40" rx="2" fill="none" stroke="#A8DADC" stroke-width="3" stroke-opacity="0.8" />
+                            <line x1="50" y1="30" x2="50" y2="70" stroke="#A8DADC" stroke-width="2" stroke-opacity="0.6" />
+                            
+                            <!-- 画笔 -->
+                            <path d="M60,25 L80,5 L75,0 L55,20 Z" fill="#E0E1DD" fill-opacity="0.8" />
+                            <path d="M55,20 L40,35" stroke="#333333" stroke-width="2" stroke-opacity="0.6" stroke-linecap="round" />
+                            
+                            <!-- 颜料盘 -->
+                            <circle cx="35" cy="25" r="8" fill="none" stroke="#FFC8DD" stroke-width="2" stroke-opacity="0.7" />
+                            <circle cx="32" cy="22" r="2" fill="#FFC8DD" fill-opacity="0.7" />
+                            <circle cx="38" cy="22" r="2" fill="#A8DADC" fill-opacity="0.7" />
+                            <circle cx="35" cy="27" r="2" fill="#F1FAEE" fill-opacity="0.7" />
+                        </svg>
+                    </div>
+                    
+                    <h3 class="text-xl font-handwritten font-bold mb-4 text-primary">
+                        <span class="lang-zh">水彩教學</span>
+                        <span class="lang-en hidden">Watercolor Teaching</span>
+                    </h3>
+                    
+                    <p class="text-light">
+                        <span class="lang-zh">
+                            提供一對一或小班制水彩教學，適合初學者到進階學員，從基礎技巧到創作理念全方位指導。
+                        </span>
+                        <span class="lang-en hidden">
+                            Offering one-on-one or small-class watercolor teaching, suitable for beginners to advanced students, with comprehensive guidance from basic skills to creative concepts.
+                        </span>
+                    </p>
+                </div>
+                
+                <!-- 服务3 - 作品展览 -->
+                <div class="watercolor-card relative bg-white p-8 rounded-lg shadow-md text-center" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-20 h-20 mx-auto mb-6 flex items-center justify-center">
+                        <!-- 作品展览图标SVG -->
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+                            <!-- 画框 -->
+                            <rect x="25" y="25" width="30" height="40" rx="1" fill="none" stroke="#A8DADC" stroke-width="3" stroke-opacity="0.8" />
+                            <rect x="45" y="35" width="25" height="30" rx="1" fill="none" stroke="#FFC8DD" stroke-width="2" stroke-opacity="0.7" />
+                            
+                            <!-- 墙上挂钩 -->
+                            <circle cx="40" cy="15" r="2" fill="#333333" fill-opacity="0.5" />
+                            <line x1="40" y1="17" x2="40" y2="25" stroke="#333333" stroke-width="1" stroke-opacity="0.5" />
+                            
+                            <!-- 展览标签 -->
+                            <rect x="55" y="60" width="15" height="10" rx="1" fill="none" stroke="#F1FAEE" stroke-width="2" stroke-opacity="0.7" />
+                            <line x1="62.5" y1="60" x2="62.5" y2="70" stroke="#F1FAEE" stroke-width="1" stroke-opacity="0.7" />
+                        </svg>
+                    </div>
+                    
+                    <h3 class="text-xl font-handwritten font-bold mb-4 text-primary">
+                        <span class="lang-zh">作品展覽</span>
+                        <span class="lang-en hidden">Art Exhibitions</span>
+                    </h3>
+                    
+                    <p class="text-light">
+                        <span class="lang-zh">
+                            定期舉辦個人水彩作品展覽，並提供作品購買服務，歡迎藝術愛好者參觀交流。
+                        </span>
+                        <span class="lang-en hidden">
+                            Regularly holding personal watercolor exhibitions and providing artwork purchase services. Art lovers are welcome to visit and exchange ideas.
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系部分 -->
+    <section id="contact" class="py-20 px-6 md:px-12 bg-secondary/30">
+        <div class="container mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-handwritten font-bold mb-4">
+                    <span class="lang-zh brush-stroke">聯繫我</span>
+                    <span class="lang-en hidden brush-stroke">Contact Me</span>
+                </h2>
+                <div class="w-24 h-1 bg-primary/50 mx-auto rounded-full"></div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row gap-12">
+                <div class="w-full md:w-1/2">
+                    <form id="contactForm" class="bg-white p-8 rounded-lg shadow-md">
+                        <div class="mb-6">
+                            <label for="name" class="block mb-2 font-medium">
+                                <span class="lang-zh">姓名</span>
+                                <span class="lang-en hidden">Name</span>
+                            </label>
+                            <input type="text" id="name" class="w-full px-4 py-3 border border-primary/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all" placeholder="您的姓名" required>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="email" class="block mb-2 font-medium">
+                                <span class="lang-zh">郵箱</span>
+                                <span class="lang-en hidden">Email</span>
+                            </label>
+                            <input type="email" id="email" class="w-full px-4 py-3 border border-primary/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all" placeholder="您的郵箱" required>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="subject" class="block mb-2 font-medium">
+                                <span class="lang-zh">主題</span>
+                                <span class="lang-en hidden">Subject</span>
+                            </label>
+                            <select id="subject" class="w-full px-4 py-3 border border-primary/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all">
+                                <option value="" class="lang-zh">請選擇諮詢主題</option>
+                                <option value="" class="lang-en hidden">Please select a subject</option>
+                                <option value="commission" class="lang-zh">委託創作</option>
+                                <option value="commission" class="lang-en hidden">Commission Work</option>
+                                <option value="teaching" class="lang-zh">水彩教學</option>
+                                <option value="teaching" class="lang-en hidden">Watercolor Teaching</option>
+                                <option value="exhibition" class="lang-zh">展覽資訊</option>
+                                <option value="exhibition" class="lang-en hidden">Exhibition Information</option>
+                                <option value="other" class="lang-zh">其他諮詢</option>
+                                <option value="other" class="lang-en hidden">Other Inquiries</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-8">
+                            <label for="message" class="block mb-2 font-medium">
+                                <span class="lang-zh">訊息</span>
+                                <span class="lang-en hidden">Message</span>
+                            </label>
+                            <textarea id="message" rows="5" class="w-full px-4 py-3 border border-primary/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all" placeholder="請輸入您的訊息" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="watercolor-btn w-full bg-primary/50 hover:bg-primary/70 text-dark font-medium px-6 py-3 rounded-lg transition-all">
+                            <span class="lang-zh">發送訊息</span>
+                            <span class="lang-en hidden">Send Message</span>
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="w-full md:w-1/2 flex flex-col justify-center">
+                    <div class="mb-12">
+                        <h3 class="text-2xl md:text-3xl font-handwritten mb-6 text-primary">
+                            <span class="lang-zh">歡迎與我聯繫</span>
+                            <span class="lang-en hidden">Feel Free to Contact Me</span>
+                        </h3>
+                        
+                        <p class="text-light mb-8 leading-relaxed">
+                            <span class="lang-zh">
+                                無論您是想委託創作、參加課程，還是了解展覽信息，都歡迎隨時與我聯繫。我會盡快回復您的訊息。
+                            </span>
+                            <span class="lang-en hidden">
+                                Whether you want to commission a work, join a course, or learn about exhibition information, feel free to contact me at any time. I will reply to your message as soon as possible.
+                            </span>
+                        </p>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 rounded-full bg-primary/30 flex items-center justify-center mr-4 flex-shrink-0">
+                                <i class="fa fa-envelope text-primary"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium mb-1">
+                                    <span class="lang-zh">郵箱</span>
+                                    <span class="lang-en hidden">Email</span>
+                                </h4>
+                                <p class="text-light">contact@watercolorart.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 rounded-full bg-primary/30 flex items-center justify-center mr-4 flex-shrink-0">
+                                <i class="fa fa-phone text-primary"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium mb-1">
+                                    <span class="lang-zh">電話</span>
+                                    <span class="lang-en hidden">Phone</span>
+                                </h4>
+                                <p class="text-light">+886 123 456 7890</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 rounded-full bg-primary/30 flex items-center justify-center mr-4 flex-shrink-0">
+                                <i class="fa fa-map-marker text-primary"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium mb-1">
+                                    <span class="lang-zh">工作室地址</span>
+                                    <span class="lang-en hidden">Studio Address</span>
+                                </h4>
+                                <p class="text-light">
+                                    <span class="lang-zh">台北市大安區藝文街123號</span>
+                                    <span class="lang-en hidden">No.123, Art Street, Da'an District, Taipei</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-12">
+                        <h4 class="font-medium mb-4">
+                            <span class="lang-zh">追蹤我的社交媒體</span>
+                            <span class="lang-en hidden">Follow My Social Media</span>
+                        </h4>
+                        
+                        <div class="flex space-x-4">
+                            <a href="#" class="w-10 h-10 rounded-full bg-primary/30 hover:bg-primary/50 flex items-center justify-center transition-all">
+                                <i class="fa fa-facebook text-dark"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-primary/30 hover:bg-primary/50 flex items-center justify-center transition-all">
+                                <i class="fa fa-instagram text-dark"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-primary/30 hover:bg-primary/50 flex items-center justify-center transition-all">
+                                <i class="fa fa-twitter text-dark"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-primary/30 hover:bg-primary/50 flex items-center justify-center transition-all">
+                                <i class="fa fa-pinterest text-dark"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="py-12 px-6 md:px-12 bg-white/50">
+        <div class="container mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <a href="#hero" class="text-2xl font-handwritten text-primary">
+                        <span class="lang-zh">水彩藝術</span>
+                        <span class="lang-en hidden">Watercolor Art</span>
+                    </a>
+                    <p class="text-light mt-2">
+                        <span class="lang-zh">用色彩描繪生活的美好</span>
+                        <span class="lang-en hidden">Painting the beauty of life with colors</span>
+                    </p>
+                </div>
+                
+                <div class="text-light text-sm text-center md:text-right">
+                    <p>
+                        <span class="lang-zh">&copy; 2023 水彩藝術作品集. 保留所有權利.</span>
+                        <span class="lang-en hidden">&copy; 2023 Watercolor Portfolio. All rights reserved.</span>
+                    </p>
+                    <p class="mt-1">
+                        <span class="lang-zh">精心設計與製作</span>
+                        <span class="lang-en hidden">Designed and crafted with love</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 返回顶部按钮 -->
+    <button id="backToTop" class="fixed bottom-8 right-8 w-12 h-12 rounded-full bg-primary/50 hover:bg-primary/70 flex items-center justify-center shadow-md transition-all opacity-0 invisible">
+        <i class="fa fa-chevron-up text-dark"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script>
+        // 等待DOM加载完成
+        document.addEventListener('DOMContentLoaded', function() {
+            // 导航栏滚动效果
+            const navbar = document.getElementById('navbar');
+            const backToTop = document.getElementById('backToTop');
+            
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('navbar-scrolled');
+                    backToTop.classList.remove('opacity-0', 'invisible');
+                    backToTop.classList.add('opacity-100', 'visible');
+                } else {
+                    navbar.classList.remove('navbar-scrolled');
+                    backToTop.classList.add('opacity-0', 'invisible');
+                    backToTop.classList.remove('opacity-100', 'visible');
+                }
+                
+                // 技能条动画
+                const skillItems = document.querySelectorAll('.skill-item');
+                skillItems.forEach(item => {
+                    const rect = item.getBoundingClientRect();
+                    if (rect.top < window.innerHeight - 100) {
+                        item.classList.add('skill-visible');
+                    }
+                });
+            });
+            
+            // 返回顶部功能
+            backToTop.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // 移动端菜单
+            const menuToggle = document.getElementById('menuToggle');
+            const closeMenu = document.getElementById('closeMenu');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+            
+            menuToggle.addEventListener('click', function() {
+                mobileMenu.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+            
+            function closeMobileMenu() {
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+            
+            closeMenu.addEventListener('click', closeMobileMenu);
+            
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', closeMobileMenu);
+            });
+            
+            // 语言切换功能
+            const langToggle = document.getElementById('langToggle');
+            const mobileLangToggle = document.getElementById('mobileLangToggle');
+            let isChinese = true;
+            
+            function toggleLanguage() {
+                isChinese = !isChinese;
+                
+                if (isChinese) {
+                    document.querySelectorAll('.lang-zh').forEach(el => {
+                        el.classList.remove('hidden');
+                    });
+                    document.querySelectorAll('.lang-en').forEach(el => {
+                        el.classList.add('hidden');
+                    });
+                } else {
+                    document.querySelectorAll('.lang-zh').forEach(el => {
+                        el.classList.add('hidden');
+                    });
+                    document.querySelectorAll('.lang-en').forEach(el => {
+                        el.classList.remove('hidden');
+                    });
+                }
+            }
+            
+            langToggle.addEventListener('click', toggleLanguage);
+            mobileLangToggle.addEventListener('click', toggleLanguage);
+            
+            // 作品集筛选功能
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const filterItems = document.querySelectorAll('.filter-item');
+            
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // 移除所有按钮的活跃状态
+                    filterBtns.forEach(b => {
+                        b.classList.remove('bg-primary/50', 'active');
+                        b.classList.add('bg-neutral', 'hover:bg-primary/30');
+                    });
+                    
+                    // 添加当前按钮的活跃状态
+                    this.classList.add('bg-primary/50', 'active');
+                    this.classList.remove('bg-neutral', 'hover:bg-primary/30');
+                    
+                    const filter = this.getAttribute('data-filter');
+                    
+                    // 筛选项目
+                    filterItems.forEach(item => {
+                        item.classList.remove('active');
+                        
+                        setTimeout(() => {
+                            if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                                item.classList.add('active');
+                            }
+                        }, 300);
+                    });
+                });
+            });
+            
+            // 表单提交处理
+            const contactForm = document.getElementById('contactForm');
+            
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // 模拟表单提交
+                const submitBtn = this.querySelector('button[type="submit"]');
+                const originalText = submitBtn.innerHTML;
+                
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fa fa-spinner fa-spin mr-2"></i>' + (isChinese ? '發送中...' : 'Sending...');
+                
+                setTimeout(() => {
+                    alert(isChinese ? '訊息已成功發送！我會盡快回復您。' : 'Message sent successfully! I will reply to you as soon as possible.');
+                    contactForm.reset();
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                }, 1500);
+            });
+            
+            // 粒子效果
+            createParticles();
+        });
+        
+        // 创建水彩粒子效果
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                
+                // 随机大小
+                const size = Math.random() * 10 + 5;
+                
+                // 随机位置
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                
+                // 随机颜色
+                const colors = ['#A8DADC', '#F1FAEE', '#FFC8DD', '#E0E1DD'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                
+                // 随机动画延迟和持续时间
+                const delay = Math.random() * 5;
+                const duration = Math.random() * 10 + 10;
+                
+                // 设置粒子样式
+                particle.style.cssText = `
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${size}px;
+                    background-color: ${color};
+                    border-radius: 50%;
+                    opacity: ${Math.random() * 0.3 + 0.1};
+                    top: ${posY}%;
+                    left: ${posX}%;
+                    animation: float ${duration}s ease-in-out ${delay}s infinite;
+                    pointer-events: none;
+                `;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+    </script>
+</body>
+</html>

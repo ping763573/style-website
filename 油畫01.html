@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>油畫作品集 | Oil Painting Portfolio</title>
+    <!-- 引入外部资源 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+    
+    <!-- 字体引入 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind 配置 -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        indigo: {
+                            dark: '#1E293B',
+                            oil: '#2C3E50'
+                        },
+                        burgundy: {
+                            light: '#992E42',
+                            DEFAULT: '#800020',
+                            dark: '#4E0011'
+                        },
+                        ochre: {
+                            light: '#D4A024',
+                            DEFAULT: '#C19A6B',
+                            dark: '#8B6E4E'
+                        },
+                        olive: {
+                            light: '#808000',
+                            DEFAULT: '#556B2F',
+                            dark: '#3E501E'
+                        },
+                        canvas: {
+                            light: '#F5F1E6',
+                            DEFAULT: '#F0E6D2',
+                            dark: '#E6D9C2'
+                        },
+                        studio: {
+                            dark: '#1A1409',
+                            medium: '#3A2E18',
+                            light: '#5C4D2C'
+                        }
+                    },
+                    fontFamily: {
+                        'playfair': ['"Playfair Display"', 'serif'],
+                        'cormorant': ['"Cormorant Garamond"', 'serif'],
+                        'noto': ['"Noto Serif TC"', 'serif']
+                    },
+                    backgroundImage: {
+                        'canvas-texture': "url('data:image/svg+xml,%3Csvg width=\"100\" height=\"100\" viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cpath d=\"M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z\" fill=\"%23c1b492\" fill-opacity=\"0.1\" fill-rule=\"evenodd\"/%3E%3C/svg%3E')",
+                        'brush-stroke': "url('data:image/svg+xml,%3Csvg xmlns=\"http://www.w3.org/2000/svg\" width=\"200\" height=\"100\" viewBox=\"0 0 200 100\"%3E%3Cpath d=\"M10,50 Q50,10 100,50 T190,50\" stroke=\"%23800020\" stroke-width=\"8\" fill=\"none\" stroke-linecap=\"round\" /%3E%3C/svg%3E')"
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            }
+            .brush-border {
+                position: relative;
+            }
+            .brush-border::after {
+                content: "";
+                position: absolute;
+                bottom: -8px;
+                left: 10%;
+                width: 80%;
+                height: 4px;
+                background-image: url('data:image/svg+xml,%3Csvg xmlns=\"http://www.w3.org/2000/svg\" width=\"200\" height=\"10\" viewBox=\"0 0 200 10\"%3E%3Cpath d=\"M10,5 Q50,1 100,5 T190,5\" stroke=\"%23800020\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\" /%3E%3C/svg%3E');
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+            }
+            .canvas-frame {
+                position: relative;
+                border: 15px solid #8B4513;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 
+                            inset 0 0 20px rgba(0, 0, 0, 0.2);
+                background-color: #F0E6D2;
+                background-image: var(--tw-bg-opacity);
+            }
+            .canvas-frame::before {
+                content: "";
+                position: absolute;
+                top: 15px;
+                left: 15px;
+                right: 15px;
+                bottom: 15px;
+                border: 1px solid rgba(139, 69, 19, 0.2);
+                pointer-events: none;
+            }
+            .paint-splash {
+                position: relative;
+                overflow: hidden;
+            }
+            .paint-splash::after {
+                content: "";
+                position: absolute;
+                width: 100px;
+                height: 100px;
+                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+                background: rgba(128, 0, 32, 0.1);
+                top: -20px;
+                right: -20px;
+                z-index: 0;
+            }
+            .paint-splash::before {
+                content: "";
+                position: absolute;
+                width: 80px;
+                height: 80px;
+                border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+                background: rgba(193, 154, 107, 0.1);
+                bottom: -10px;
+                left: -10px;
+                z-index: 0;
+            }
+            .custom-cursor {
+                cursor: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="%23800020"%3E%3Cpath d="M20.38 16.76c-1.3 1.3-3.42 1.3-4.72 0l-2.34-2.34-1.93 1.91L8.34 15.2l1.91-1.93-2.34-2.34c-1.3-1.3-1.3-3.42 0-4.72s3.42-1.3 4.72 0l2.34 2.34 1.93-1.91 1.91 1.93-2.34 2.34c-1.3 1.3-1.3 3.42 0 4.72 1.3 1.3 3.42 1.3 4.72 0l2.34-2.34 1.91 1.93-1.93 1.93-2.34 2.34z"/%3E%3C/svg%3E'), auto;
+            }
+            .gallery-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                gap: 2rem;
+            }
+            @media (max-width: 768px) {
+                .gallery-grid {
+                    grid-template-columns: 1fr;
+                }
+            }
+            .painting-card {
+                transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+                transform-origin: center;
+            }
+            .painting-card:hover {
+                transform: scale(1.03) rotate(1deg);
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            }
+            .ink-transition {
+                transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            }
+            .brush-stroke-animation {
+                position: relative;
+                overflow: hidden;
+            }
+            .brush-stroke-animation::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+                animation: brush-stroke 3s infinite;
+            }
+            @keyframes brush-stroke {
+                100% {
+                    left: 100%;
+                }
+            }
+            .paint-drop {
+                animation: drop 2s ease-in-out;
+            }
+            @keyframes drop {
+                0% {
+                    opacity: 0;
+                    transform: translateY(-20px) scale(0.8);
+                }
+                50% {
+                    opacity: 1;
+                    transform: translateY(5px) scale(1.05);
+                }
+                100% {
+                    opacity: 1;
+                    transform: translateY(0) scale(1);
+                }
+            }
+            .canvas-roll {
+                animation: unroll 1s ease-out forwards;
+                transform-origin: top;
+                transform: scaleY(0);
+            }
+            @keyframes unroll {
+                0% {
+                    transform: scaleY(0);
+                }
+                100% {
+                    transform: scaleY(1);
+                }
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-canvas bg-canvas-texture font-noto text-indigo-oil dark:bg-studio-dark dark:text-canvas-light custom-cursor ink-transition">
+    <!-- 导航栏 -->
+    <header class="fixed w-full top-0 z-50 bg-canvas/90 dark:bg-studio-dark/90 backdrop-blur-sm border-b border-ochre/30 ink-transition">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="#" class="flex items-center space-x-2">
+                <svg class="w-8 h-8 text-burgundy" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12C20,14.5 18.5,16.7 16.3,18L7.8,9.5C9.6,7.3 11.8,6 14.4,6C13.6,5.2 12.8,4.5 12,4M5.6,13.8L13.5,21.7C11.1,23 8.2,23 5.6,21.2C3.1,19.5 1.7,16.7 1.7,13.5C1.8,13.6 1.8,13.7 1.9,13.8C2.1,14 2.2,14.1 2.4,14.2C4.3,15.6 7.9,15.6 9.8,14.2C10.3,13.8 10.7,13.3 11,12.8L5.6,13.8Z" />
+                </svg>
+                <span class="font-playfair text-xl md:text-2xl font-bold text-burgundy dark:text-ochre-light" data-i18n="brand">藝術畫廊</span>
+            </a>
+            
+            <!-- 桌面导航 -->
+            <nav class="hidden md:flex space-x-8 items-center">
+                <a href="#hero" class="font-cormorant text-lg hover:text-burgundy dark:hover:text-ochre-light ink-transition" data-i18n="nav.home">首頁</a>
+                <a href="#about" class="font-cormorant text-lg hover:text-burgundy dark:hover:text-ochre-light ink-transition" data-i18n="nav.about">關於我</a>
+                <a href="#portfolio" class="font-cormorant text-lg hover:text-burgundy dark:hover:text-ochre-light ink-transition" data-i18n="nav.portfolio">作品集</a>
+                <a href="#services" class="font-cormorant text-lg hover:text-burgundy dark:hover:text-ochre-light ink-transition" data-i18n="nav.services">服務</a>
+                <a href="#contact" class="font-cormorant text-lg hover:text-burgundy dark:hover:text-ochre-light ink-transition" data-i18n="nav.contact">聯絡</a>
+                
+                <!-- 语言切换 -->
+                <div class="flex items-center space-x-2">
+                    <button id="lang-zh" class="text-sm font-medium text-burgundy dark:text-ochre-light ink-transition">中</button>
+                    <span class="text-ochre/50">|</span>
+                    <button id="lang-en" class="text-sm font-medium text-indigo-oil/60 dark:text-canvas/60 ink-transition">En</button>
+                </div>
+                
+                <!-- 明暗模式切换 -->
+                <button id="theme-toggle" class="p-2 rounded-full hover:bg-ochre/10 dark:hover:bg-studio-medium ink-transition">
+                    <i class="fa fa-sun-o text-ochre dark:hidden"></i>
+                    <i class="fa fa-moon-o text-ochre-light hidden dark:block"></i>
+                </button>
+            </nav>
+            
+            <!-- 移动端菜单按钮 -->
+            <button id="menu-toggle" class="md:hidden p-2 rounded-md hover:bg-ochre/10 dark:hover:bg-studio-medium ink-transition">
+                <i class="fa fa-bars text-xl text-indigo-oil dark:text-canvas-light"></i>
+            </button>
+        </div>
+        
+        <!-- 移动端导航菜单 -->
+        <div id="mobile-menu" class="hidden md:hidden bg-canvas dark:bg-studio-medium border-b border-ochre/20 canvas-roll">
+            <div class="container mx-auto px-4 py-3 flex flex-col space-y-4">
+                <a href="#hero" class="font-cormorant text-lg py-2 hover:text-burgundy dark:hover:text-ochre-light ink-transition" data-i18n="nav.home">首頁</a>
+                <a href="#about" class="font-cormorant text-lg py-2 hover:text-burgundy dark:hover:text-ochre-light ink-transition" data-i18n="nav.about">關於我</a>
+                <a href="#portfolio" class="font-cormorant text-lg py-2 hover:text-burgundy dark:hover:text-ochre-light ink-transition" data-i18n="nav.portfolio">作品集</a>
+                <a href="#services" class="font-cormorant text-lg py-2 hover:text-burgundy dark:hover:text-ochre-light ink-transition" data-i18n="nav.services">服務</a>
+                <a href="#contact" class="font-cormorant text-lg py-2 hover:text-burgundy dark:hover:text-ochre-light ink-transition" data-i18n="nav.contact">聯絡</a>
+                
+                <div class="flex items-center justify-between pt-2 border-t border-ochre/20">
+                    <div class="flex items-center space-x-2">
+                        <button id="mobile-lang-zh" class="text-sm font-medium text-burgundy dark:text-ochre-light ink-transition">中</button>
+                        <span class="text-ochre/50">|</span>
+                        <button id="mobile-lang-en" class="text-sm font-medium text-indigo-oil/60 dark:text-canvas/60 ink-transition">En</button>
+                    </div>
+                    
+                    <button id="mobile-theme-toggle" class="p-2 rounded-full hover:bg-ochre/10 dark:hover:bg-studio-dark ink-transition">
+                        <i class="fa fa-sun-o text-ochre dark:hidden"></i>
+                        <i class="fa fa-moon-o text-ochre-light hidden dark:block"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-16">
+        <!-- Hero 区域 -->
+        <section id="hero" class="min-h-screen flex items-center relative overflow-hidden brush-stroke-animation">
+            <div class="absolute inset-0 bg-gradient-to-b from-canvas-dark/30 to-canvas/30 z-0"></div>
+            
+            <!-- 装饰性笔触元素 -->
+            <div class="absolute top-1/4 left-10 w-32 h-32 md:w-64 md:h-64 opacity-10 dark:opacity-20">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10,50 Q50,10 90,50 T190,50" stroke="#800020" stroke-width="20" fill="none" stroke-linecap="round" />
+                </svg>
+            </div>
+            <div class="absolute bottom-1/3 right-10 w-40 h-40 md:w-80 md:h-80 opacity-10 dark:opacity-20">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10,50 Q50,90 90,50 T190,50" stroke="#C19A6B" stroke-width="20" fill="none" stroke-linecap="round" />
+                </svg>
+            </div>
+            
+            <div class="container mx-auto px-4 py-20 relative z-10">
+                <div class="max-w-3xl mx-auto text-center">
+                    <h1 class="font-playfair text-4xl md:text-6xl lg:text-7xl font-bold mb-6 text-burgundy dark:text-ochre-light text-shadow paint-drop" data-i18n="hero.title">油畫藝術作品集</h1>
+                    <p class="font-cormorant text-xl md:text-2xl mb-10 text-indigo-oil/80 dark:text-canvas-light/80 paint-drop" style="animation-delay: 0.3s" data-i18n="hero.subtitle">探索色彩與情感的交融，感受油畫藝術的永恆魅力</p>
+                    <a href="#portfolio" class="inline-block bg-burgundy hover:bg-burgundy-dark text-canvas px-8 py-3 rounded-sm font-cormorant text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 paint-drop" style="animation-delay: 0.6s" data-i18n="hero.cta">瀏覽作品</a>
+                </div>
+            </div>
+            
+            <!-- 向下滚动指示 -->
+            <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+                <a href="#about" class="text-ochre dark:text-ochre-light opacity-70 hover:opacity-100 transition-opacity">
+                    <i class="fa fa-chevron-down text-2xl"></i>
+                </a>
+            </div>
+        </section>
+
+        <!-- 关于我 -->
+        <section id="about" class="py-20 relative">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="font-playfair text-3xl md:text-4xl font-bold text-burgundy dark:text-ochre-light brush-border inline-block" data-i18n="about.title">關於藝術家</h2>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="canvas-frame p-1 paint-splash">
+                        <img src="https://picsum.photos/id/64/800/1000" alt="藝術家肖像" class="w-full h-auto object-cover brush-stroke-animation">
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <p class="font-cormorant text-lg leading-relaxed" data-i18n="about.p1">我是一位熱愛油畫藝術的畫家，深耕繪畫領域超過15年。我的作品融合了文藝復興時期的寫實風格與印象派的色彩運用，力圖在畫布上捕捉光影與情感的微妙變化。</p>
+                        
+                        <p class="font-cormorant text-lg leading-relaxed" data-i18n="about.p2">畢業於著名美術學院，曾在歐洲多國遊學，深受古典繪畫大師的啟發。我的創作題材多樣，從靜物、風景到人物肖像，都力圖展現對生活細節的獨特觀察。</p>
+                        
+                        <div class="pt-4">
+                            <h3 class="font-playfair text-xl font-semibold mb-4 text-burgundy dark:text-ochre-light" data-i18n="about.skills">繪畫技巧</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="font-cormorant" data-i18n="about.oilTechnique">油畫技法</span>
+                                        <span class="font-cormorant">95%</span>
+                                    </div>
+                                    <div class="h-2 bg-canvas-dark dark:bg-studio-medium rounded-full overflow-hidden">
+                                        <div class="h-full bg-burgundy dark:bg-ochre-light" style="width: 95%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="font-cormorant" data-i18n="about.lightShadow">光影處理</span>
+                                        <span class="font-cormorant">90%</span>
+                                    </div>
+                                    <div class="h-2 bg-canvas-dark dark:bg-studio-medium rounded-full overflow-hidden">
+                                        <div class="h-full bg-burgundy dark:bg-ochre-light" style="width: 90%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="font-cormorant" data-i18n="about.colorMixing">色彩調配</span>
+                                        <span class="font-cormorant">88%</span>
+                                    </div>
+                                    <div class="h-2 bg-canvas-dark dark:bg-studio-medium rounded-full overflow-hidden">
+                                        <div class="h-full bg-burgundy dark:bg-ochre-light" style="width: 88%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 作品集 -->
+        <section id="portfolio" class="py-20 bg-canvas-dark/30 dark:bg-studio-medium/30 relative">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="font-playfair text-3xl md:text-4xl font-bold text-burgundy dark:text-ochre-light brush-border inline-block" data-i18n="portfolio.title">油畫作品集</h2>
+                    <p class="font-cormorant text-lg mt-4 max-w-2xl mx-auto" data-i18n="portfolio.subtitle">精選多年來的藝術創作，每一幅作品都承載著獨特的故事與情感</p>
+                </div>
+                
+                <!-- 作品分类筛选 -->
+                <div class="flex flex-wrap justify-center gap-3 mb-12">
+                    <button class="filter-btn active px-5 py-2 bg-burgundy text-canvas font-cormorant rounded-sm hover:bg-burgundy-dark transition-colors" data-filter="all" data-i18n="portfolio.all">全部作品</button>
+                    <button class="filter-btn px-5 py-2 bg-canvas-dark/50 dark:bg-studio-dark/50 font-cormorant rounded-sm hover:bg-burgundy hover:text-canvas transition-colors" data-filter="landscape" data-i18n="portfolio.landscape">風景</button>
+                    <button class="filter-btn px-5 py-2 bg-canvas-dark/50 dark:bg-studio-dark/50 font-cormorant rounded-sm hover:bg-burgundy hover:text-canvas transition-colors" data-filter="portrait" data-i18n="portfolio.portrait">肖像</button>
+                    <button class="filter-btn px-5 py-2 bg-canvas-dark/50 dark:bg-studio-dark/50 font-cormorant rounded-sm hover:bg-burgundy hover:text-canvas transition-colors" data-filter="stillLife" data-i18n="portfolio.stillLife">靜物</button>
+                    <button class="filter-btn px-5 py-2 bg-canvas-dark/50 dark:bg-studio-dark/50 font-cormorant rounded-sm hover:bg-burgundy hover:text-canvas transition-colors" data-filter="abstract" data-i18n="portfolio.abstract">抽象</button>
+                </div>
+                
+                <!-- 作品网格 -->
+                <div class="gallery-grid">
+                    <!-- 风景作品 -->
+                    <div class="painting-card canvas-frame overflow-hidden" data-category="landscape">
+                        <img src="https://picsum.photos/id/1018/800/600" alt="山景油畫" class="w-full h-64 object-cover">
+                        <div class="p-4">
+                            <h3 class="font-playfair text-xl font-semibold text-burgundy dark:text-ochre-light" data-i18n="portfolio.mountain">山巒暮色</h3>
+                            <p class="font-cormorant mt-2" data-i18n="portfolio.mountainDesc">描繪山區日落時分的壯麗景色，運用厚重的油彩表現層巒疊嶂的質感。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="painting-card canvas-frame overflow-hidden" data-category="landscape">
+                        <img src="https://picsum.photos/id/1015/800/600" alt="森林油畫" class="w-full h-64 object-cover">
+                        <div class="p-4">
+                            <h3 class="font-playfair text-xl font-semibold text-burgundy dark:text-ochre-light" data-i18n="portfolio.forest">森林深處</h3>
+                            <p class="font-cormorant mt-2" data-i18n="portfolio.forestDesc">捕捉陽光穿透樹葉灑落地面的光影效果，展現大自然的神秘與寧靜。</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 肖像作品 -->
+                    <div class="painting-card canvas-frame overflow-hidden" data-category="portrait">
+                        <img src="https://picsum.photos/id/64/800/600" alt="女子肖像" class="w-full h-64 object-cover">
+                        <div class="p-4">
+                            <h3 class="font-playfair text-xl font-semibold text-burgundy dark:text-ochre-light" data-i18n="portfolio.lady">沉思的女子</h3>
+                            <p class="font-cormorant mt-2" data-i18n="portfolio.ladyDesc">透過細膩的筆觸與微妙的表情變化，刻畫人物內心深處的情感世界。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="painting-card canvas-frame overflow-hidden" data-category="portrait">
+                        <img src="https://picsum.photos/id/91/800/600" alt="老人肖像" class="w-full h-64 object-cover">
+                        <div class="p-4">
+                            <h3 class="font-playfair text-xl font-semibold text-burgundy dark:text-ochre-light" data-i18n="portfolio.elder">歲月的智慧</h3>
+                            <p class="font-cormorant mt-2" data-i18n="portfolio.elderDesc">透過皺紋與眼神的描寫，展現人生歷練的深度與智慧的沉澱。</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 静物作品 -->
+                    <div class="painting-card canvas-frame overflow-hidden" data-category="stillLife">
+                        <img src="https://picsum.photos/id/292/800/600" alt="水果靜物" class="w-full h-64 object-cover">
+                        <div class="p-4">
+                            <h3 class="font-playfair text-xl font-semibold text-burgundy dark:text-ochre-light" data-i18n="portfolio.fruits">豐盛的果盤</h3>
+                            <p class="font-cormorant mt-2" data-i18n="portfolio.fruitsDesc">運用豐富的色彩層次，表現水果的新鮮質感與光影折射效果。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="painting-card canvas-frame overflow-hidden" data-category="stillLife">
+                        <img src="https://picsum.photos/id/1060/800/600" alt="花卉靜物" class="w-full h-64 object-cover">
+                        <div class="p-4">
+                            <h3 class="font-playfair text-xl font-semibold text-burgundy dark:text-ochre-light" data-i18n="portfolio.flowers">盛開的玫瑰</h3>
+                            <p class="font-cormorant mt-2" data-i18n="portfolio.flowersDesc">以細膩的筆觸描寫花瓣的層次與質感，展現花卉的嬌豔與脆弱。</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 抽象作品 -->
+                    <div class="painting-card canvas-frame overflow-hidden" data-category="abstract">
+                        <img src="https://picsum.photos/id/1042/800/600" alt="抽象油畫" class="w-full h-64 object-cover">
+                        <div class="p-4">
+                            <h3 class="font-playfair text-xl font-semibold text-burgundy dark:text-ochre-light" data-i18n="portfolio.emotions">情感波動</h3>
+                            <p class="font-cormorant mt-2" data-i18n="portfolio.emotionsDesc">以抽象的色彩與線條，表現內心情感的複雜變化與波動。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="painting-card canvas-frame overflow-hidden" data-category="abstract">
+                        <img src="https://picsum.photos/id/1039/800/600" alt="抽象油畫" class="w-full h-64 object-cover">
+                        <div class="p-4">
+                            <h3 class="font-playfair text-xl font-semibold text-burgundy dark:text-ochre-light" data-i18n="portfolio.dreams">夢境碎片</h3>
+                            <p class="font-cormorant mt-2" data-i18n="portfolio.dreamsDesc">透過非傳統的視覺元素組合，呈現夢境中破碎而超現實的景象。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 服务 -->
+        <section id="services" class="py-20 relative">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="font-playfair text-3xl md:text-4xl font-bold text-burgundy dark:text-ochre-light brush-border inline-block" data-i18n="services.title">藝術服務</h2>
+                    <p class="font-cormorant text-lg mt-4 max-w-2xl mx-auto" data-i18n="services.subtitle">提供多樣化的油畫相關服務，為您的生活與空間增添藝術氣息</p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- 服务1 -->
+                    <div class="bg-canvas dark:bg-studio-medium p-6 rounded-sm shadow-md hover:shadow-xl transition-shadow paint-splash">
+                        <div class="w-16 h-16 mb-6">
+                            <svg viewBox="0 0 24 24" fill="#800020" class="dark:fill#C19A6B">
+                                <path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" />
+                            </svg>
+                        </div>
+                        <h3 class="font-playfair text-xl font-semibold mb-4 text-burgundy dark:text-ochre-light" data-i18n="services.portrait">肖像繪製</h3>
+                        <p class="font-cormorant" data-i18n="services.portraitDesc">根據照片或現場寫生，為您或親友繪製精美的油畫肖像，成為獨特的紀念。</p>
+                    </div>
+                    
+                    <!-- 服务2 -->
+                    <div class="bg-canvas dark:bg-studio-medium p-6 rounded-sm shadow-md hover:shadow-xl transition-shadow paint-splash">
+                        <div class="w-16 h-16 mb-6">
+                            <svg viewBox="0 0 24 24" fill="#800020" class="dark:fill#C19A6B">
+                                <path d="M12,3.77L5,9.03V19H19V9.03L12,3.77M12,6.9L16.73,10.81H13V16H11V10.81H7.27L12,6.9Z" />
+                            </svg>
+                        </div>
+                        <h3 class="font-playfair text-xl font-semibold mb-4 text-burgundy dark:text-ochre-light" data-i18n="services.landscape">風景定制</h3>
+                        <p class="font-cormorant" data-i18n="services.landscapeDesc">將您喜愛的風景或地點轉化為藝術油畫，捕捉獨特的光影與氛圍。</p>
+                    </div>
+                    
+                    <!-- 服务3 -->
+                    <div class="bg-canvas dark:bg-studio-medium p-6 rounded-sm shadow-md hover:shadow-xl transition-shadow paint-splash">
+                        <div class="w-16 h-16 mb-6">
+                            <svg viewBox="0 0 24 24" fill="#800020" class="dark:fill#C19A6B">
+                                <path d="M12,3.77L5,9.03V19H19V9.03L12,3.77M12,6.9L16.73,10.81H13V16H11V10.81H7.27L12,6.9Z" />
+                            </svg>
+                        </div>
+                        <h3 class="font-playfair text-xl font-semibold mb-4 text-burgundy dark:text-ochre-light" data-i18n="services.teaching">繪畫教學</h3>
+                        <p class="font-cormorant" data-i18n="services.teachingDesc">一對一或小班教學，從基礎到高級油畫技巧，適合各個層次的學習者。</p>
+                    </div>
+                    
+                    <!-- 服务4 -->
+                    <div class="bg-canvas dark:bg-studio-medium p-6 rounded-sm shadow-md hover:shadow-xl transition-shadow paint-splash">
+                        <div class="w-16 h-16 mb-6">
+                            <svg viewBox="0 0 24 24" fill="#800020" class="dark:fill#C19A6B">
+                                <path d="M15,4V7H18V4H20V7H23V9H20V12H18V9H15V4M4,2H18A2,2 0 0,1 20,4V20A2,2 0 0,1 18,22H4A2,2 0 0,1 2,20V4A2,2 0 0,1 4,2M4,20H18V4H4V20Z" />
+                            </svg>
+                        </div>
+                        <h3 class="font-playfair text-xl font-semibold mb-4 text-burgundy dark:text-ochre-light" data-i18n="services.restoration">作品修復</h3>
+                        <p class="font-cormorant" data-i18n="services.restorationDesc">專業的油畫修復服務，修復受損的藝術作品，恢復其原有的光彩。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 联系表单 -->
+        <section id="contact" class="py-20 bg-canvas-dark/30 dark:bg-studio-medium/30 relative">
+            <div class="container mx-auto px-4">
+                <div class="max-w-4xl mx-auto">
+                    <div class="text-center mb-16">
+                        <h2 class="font-playfair text-3xl md:text-4xl font-bold text-burgundy dark:text-ochre-light brush-border inline-block" data-i18n="contact.title">聯絡藝術家</h2>
+                        <p class="font-cormorant text-lg mt-4 max-w-2xl mx-auto" data-i18n="contact.subtitle">無論是購買作品、定制繪畫或學習油畫，歡迎與我聯絡</p>
+                    </div>
+                    
+                    <div class="canvas-frame p-6 md:p-10">
+                        <form id="contact-form" class="space-y-6">
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="name" class="block font-cormorant text-lg mb-2" data-i18n="contact.name">姓名</label>
+                                    <input type="text" id="name" name="name" class="w-full bg-canvas-dark/30 dark:bg-studio-dark/50 border border-ochre/30 dark:border-ochre/50 p-3 focus:outline-none focus:border-burgundy dark:focus:border-ochre-light transition-colors" required>
+                                </div>
+                                
+                                <div>
+                                    <label for="email" class="block font-cormorant text-lg mb-2" data-i18n="contact.email">郵箱</label>
+                                    <input type="email" id="email" name="email" class="w-full bg-canvas-dark/30 dark:bg-studio-dark/50 border border-ochre/30 dark:border-ochre/50 p-3 focus:outline-none focus:border-burgundy dark:focus:border-ochre-light transition-colors" required>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label for="subject" class="block font-cormorant text-lg mb-2" data-i18n="contact.subject">主題</label>
+                                <input type="text" id="subject" name="subject" class="w-full bg-canvas-dark/30 dark:bg-studio-dark/50 border border-ochre/30 dark:border-ochre/50 p-3 focus:outline-none focus:border-burgundy dark:focus:border-ochre-light transition-colors" required>
+                            </div>
+                            
+                            <div>
+                                <label for="message" class="block font-cormorant text-lg mb-2" data-i18n="contact.message">訊息</label>
+                                <textarea id="message" name="message" rows="6" class="w-full bg-canvas-dark/30 dark:bg-studio-dark/50 border border-ochre/30 dark:border-ochre/50 p-3 focus:outline-none focus:border-burgundy dark:focus:border-ochre-light transition-colors" required></textarea>
+                            </div>
+                            
+                            <div class="text-center">
+                                <button type="submit" class="bg-burgundy hover:bg-burgundy-dark text-canvas px-8 py-3 rounded-sm font-cormorant text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                                    <span data-i18n="contact.send">發送訊息</span>
+                                    <i class="fa fa-paper-plane ml-2"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-indigo-oil dark:bg-studio-dark text-canvas py-12 relative overflow-hidden">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-3 gap-8 mb-10">
+                <div>
+                    <h3 class="font-playfair text-2xl font-bold mb-4 text-ochre-light">
+                        <span data-i18n="footer.brand">藝術畫廊</span>
+                    </h3>
+                    <p class="font-cormorant leading-relaxed" data-i18n="footer.description">透過油畫的色彩與質感，捕捉生活中的美好瞬間，創造永恆的藝術回憶。</p>
+                </div>
+                
+                <div>
+                    <h4 class="font-playfair text-xl font-semibold mb-4 text-ochre-light" data-i18n="footer.quickLinks">快速鏈接</h4>
+                    <ul class="space-y-2 font-cormorant">
+                        <li><a href="#hero" class="hover:text-ochre-light transition-colors" data-i18n="footer.home">首頁</a></li>
+                        <li><a href="#about" class="hover:text-ochre-light transition-colors" data-i18n="footer.about">關於我</a></li>
+                        <li><a href="#portfolio" class="hover:text-ochre-light transition-colors" data-i18n="footer.portfolio">作品集</a></li>
+                        <li><a href="#services" class="hover:text-ochre-light transition-colors" data-i18n="footer.services">服務</a></li>
+                        <li><a href="#contact" class="hover:text-ochre-light transition-colors" data-i18n="footer.contact">聯絡</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-playfair text-xl font-semibold mb-4 text-ochre-light" data-i18n="footer.follow">關注我</h4>
+                    <div class="flex space-x-4 mb-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-canvas/10 flex items-center justify-center hover:bg-burgundy transition-colors">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-canvas/10 flex items-center justify-center hover:bg-burgundy transition-colors">
+                            <i class="fa fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-canvas/10 flex items-center justify-center hover:bg-burgundy transition-colors">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-canvas/10 flex items-center justify-center hover:bg-burgundy transition-colors">
+                            <i class="fa fa-pinterest"></i>
+                        </a>
+                    </div>
+                    <p class="font-cormorant" data-i18n="footer.email">郵箱：contact@artgallery.com</p>
+                </div>
+            </div>
+            
+            <div class="border-t border-canvas/20 pt-6 text-center font-cormorant" data-i18n="footer.copyright">© 2023 藝術畫廊 版權所有</div>
+        </div>
+        
+        <!-- 装饰元素 - 画笔笔触 -->
+        <div class="absolute bottom-0 left-0 w-full h-16 opacity-10">
+            <svg viewBox="0 0 1200 100" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0,50 Q300,10 600,50 T1200,50" stroke="#F0E6D2" stroke-width="20" fill="none" stroke-linecap="round" />
+            </svg>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // 语言切换功能
+        const translations = {
+            en: {
+                brand: "Art Gallery",
+                "nav.home": "Home",
+                "nav.about": "About",
+                "nav.portfolio": "Portfolio",
+                "nav.services": "Services",
+                "nav.contact": "Contact",
+                "hero.title": "Oil Painting Portfolio",
+                "hero.subtitle": "Explore the blend of colors and emotions, feel the timeless charm of oil painting art",
+                "hero.cta": "Browse Works",
+                "about.title": "About the Artist",
+                "about.p1": "I am a painter passionate about oil painting art, with over 15 years of experience in the field. My works combine Renaissance realism with Impressionist use of color, striving to capture the subtle changes of light, shadow and emotion on canvas.",
+                "about.p2": "Graduated from a famous academy of fine arts, I studied in several European countries and was deeply inspired by classical painting masters. My creative themes are diverse, from still lifes, landscapes to portraits, all striving to show a unique observation of life details.",
+                "about.skills": "Painting Skills",
+                "about.oilTechnique": "Oil Painting Techniques",
+                "about.lightShadow": "Light and Shadow Processing",
+                "about.colorMixing": "Color Mixing",
+                "portfolio.title": "Oil Painting Collection",
+                "portfolio.subtitle": "A selection of artistic creations over the years, each work carries a unique story and emotion",
+                "portfolio.all": "All Works",
+                "portfolio.landscape": "Landscape",
+                "portfolio.portrait": "Portrait",
+                "portfolio.stillLife": "Still Life",
+                "portfolio.abstract": "Abstract",
+                "portfolio.mountain": "Mountain Twilight",
+                "portfolio.mountainDesc": "Depicting the magnificent scenery of mountainous areas at sunset, using thick oil paint to express the texture of overlapping mountains.",
+                "portfolio.forest": "Deep in the Forest",
+                "portfolio.forestDesc": "Capturing the light and shadow effects of sunlight penetrating through leaves and falling on the ground, showing the mystery and tranquility of nature.",
+                "portfolio.lady": "Contemplative Woman",
+                "portfolio.ladyDesc": "Through delicate brushstrokes and subtle changes in expression, depicting the emotional world deep in the character's heart.",
+                "portfolio.elder": "Wisdom of the Years",
+                "portfolio.elderDesc": "Through the description of wrinkles and eyes, showing the depth of life experience and the precipitation of wisdom.",
+                "portfolio.fruits": "Abundant Fruit Plate",
+                "portfolio.fruitsDesc": "Using rich color layers to express the fresh texture of fruits and light refraction effects.",
+                "portfolio.flowers": "Blooming Roses",
+                "portfolio.flowersDesc": "Depicting the layers and texture of petals with delicate brushstrokes, showing the beauty and fragility of flowers.",
+                "portfolio.emotions": "Emotional Fluctuations",
+                "portfolio.emotionsDesc": "Expressing complex changes and fluctuations of inner emotions through abstract colors and lines.",
+                "portfolio.dreams": "Dream Fragments",
+                "portfolio.dreamsDesc": "Presenting fragmented and surreal scenes in dreams through non-traditional visual element combinations.",
+                "services.title": "Art Services",
+                "services.subtitle": "Providing a variety of oil painting related services to add artistic atmosphere to your life and space",
+                "services.portrait": "Portrait Painting",
+                "services.portraitDesc": "Based on photos or live sketches, create exquisite oil portraits for you or your relatives and friends, becoming a unique commemoration.",
+                "services.landscape": "Landscape Customization",
+                "services.landscapeDesc": "Transform your favorite scenery or place into an artistic oil painting, capturing unique light and atmosphere.",
+                "services.teaching": "Painting Teaching",
+                "services.teachingDesc": "One-on-one or small class teaching, from basic to advanced oil painting techniques, suitable for learners at all levels.",
+                "services.restoration": "Work Restoration",
+                "services.restorationDesc": "Professional oil painting restoration services to repair damaged works of art and restore their original glory.",
+                "contact.title": "Contact the Artist",
+                "contact.subtitle": "Whether it's purchasing works, customizing paintings or learning oil painting, feel free to contact me",
+                "contact.name": "Name",
+                "contact.email": "Email",
+                "contact.subject": "Subject",
+                "contact.message": "Message",
+                "contact.send": "Send Message",
+                "footer.brand": "Art Gallery",
+                "footer.description": "Through the colors and textures of oil paintings, capture the beautiful moments in life and create eternal artistic memories.",
+                "footer.quickLinks": "Quick Links",
+                "footer.home": "Home",
+                "footer.about": "About",
+                "footer.portfolio": "Portfolio",
+                "footer.services": "Services",
+                "footer.contact": "Contact",
+                "footer.follow": "Follow Me",
+                "footer.email": "Email: contact@artgallery.com",
+                "footer.copyright": "© 2023 Art Gallery. All rights reserved."
+            },
+            zh: {
+                brand: "藝術畫廊",
+                "nav.home": "首頁",
+                "nav.about": "關於我",
+                "nav.portfolio": "作品集",
+                "nav.services": "服務",
+                "nav.contact": "聯絡",
+                "hero.title": "油畫藝術作品集",
+                "hero.subtitle": "探索色彩與情感的交融，感受油畫藝術的永恆魅力",
+                "hero.cta": "瀏覽作品",
+                "about.title": "關於藝術家",
+                "about.p1": "我是一位熱愛油畫藝術的畫家，深耕繪畫領域超過15年。我的作品融合了文藝復興時期的寫實風格與印象派的色彩運用，力圖在畫布上捕捉光影與情感的微妙變化。",
+                "about.p2": "畢業於著名美術學院，曾在歐洲多國遊學，深受古典繪畫大師的啟發。我的創作題材多樣，從靜物、風景到人物肖像，都力圖展現對生活細節的獨特觀察。",
+                "about.skills": "繪畫技巧",
+                "about.oilTechnique": "油畫技法",
+                "about.lightShadow": "光影處理",
+                "about.colorMixing": "色彩調配",
+                "portfolio.title": "油畫作品集",
+                "portfolio.subtitle": "精選多年來的藝術創作，每一幅作品都承載著獨特的故事與情感",
+                "portfolio.all": "全部作品",
+                "portfolio.landscape": "風景",
+                "portfolio.portrait": "肖像",
+                "portfolio.stillLife": "靜物",
+                "portfolio.abstract": "抽象",
+                "portfolio.mountain": "山巒暮色",
+                "portfolio.mountainDesc": "描繪山區日落時分的壯麗景色，運用厚重的油彩表現層巒疊嶂的質感。",
+                "portfolio.forest": "森林深處",
+                "portfolio.forestDesc": "捕捉陽光穿透樹葉灑落地面的光影效果，展現大自然的神秘與寧靜。",
+                "portfolio.lady": "沉思的女子",
+                "portfolio.ladyDesc": "透過細膩的筆觸與微妙的表情變化，刻畫人物內心深處的情感世界。",
+                "portfolio.elder": "歲月的智慧",
+                "portfolio.elderDesc": "透過皺紋與眼神的描寫，展現人生歷練的深度與智慧的沉澱。",
+                "portfolio.fruits": "豐盛的果盤",
+                "portfolio.fruitsDesc": "運用豐富的色彩層次，表現水果的新鮮質感與光影折射效果。",
+                "portfolio.flowers": "盛開的玫瑰",
+                "portfolio.flowersDesc": "以細膩的筆觸描寫花瓣的層次與質感，展現花卉的嬌豔與脆弱。",
+                "portfolio.emotions": "情感波動",
+                "portfolio.emotionsDesc": "以抽象的色彩與線條，表現內心情感的複雜變化與波動。",
+                "portfolio.dreams": "夢境碎片",
+                "portfolio.dreamsDesc": "透過非傳統的視覺元素組合，呈現夢境中破碎而超現實的景象。",
+                "services.title": "藝術服務",
+                "services.subtitle": "提供多樣化的油畫相關服務，為您的生活與空間增添藝術氣息",
+                "services.portrait": "肖像繪製",
+                "services.portraitDesc": "根據照片或現場寫生，為您或親友繪製精美的油畫肖像，成為獨特的紀念。",
+                "services.landscape": "風景定制",
+                "services.landscapeDesc": "將您喜愛的風景或地點轉化為藝術油畫，捕捉獨特的光影與氛圍。",
+                "services.teaching": "繪畫教學",
+                "services.teachingDesc": "一對一或小班教學，從基礎到高級油畫技巧，適合各個層次的學習者。",
+                "services.restoration": "作品修復",
+                "services.restorationDesc": "專業的油畫修復服務，修復受損的藝術作品，恢復其原有的光彩。",
+                "contact.title": "聯絡藝術家",
+                "contact.subtitle": "無論是購買作品、定制繪畫或學習油畫，歡迎與我聯絡",
+                "contact.name": "姓名",
+                "contact.email": "郵箱",
+                "contact.subject": "主題",
+                "contact.message": "訊息",
+                "contact.send": "發送訊息",
+                "footer.brand": "藝術畫廊",
+                "footer.description": "透過油畫的色彩與質感，捕捉生活中的美好瞬間，創造永恆的藝術回憶。",
+                "footer.quickLinks": "快速鏈接",
+                "footer.home": "首頁",
+                "footer.about": "關於我",
+                "footer.portfolio": "作品集",
+                "footer.services": "服務",
+                "footer.contact": "聯絡",
+                "footer.follow": "關注我",
+                "footer.email": "郵箱：contact@artgallery.com",
+                "footer.copyright": "© 2023 藝術畫廊 版權所有"
+            }
+        };
+
+        // 设置语言
+        function setLanguage(lang) {
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+            
+            // 更新语言按钮状态
+            document.getElementById('lang-zh').classList.toggle('text-burgundy', lang === 'zh');
+            document.getElementById('lang-zh').classList.toggle('text-indigo-oil/60', lang !== 'zh');
+            document.getElementById('lang-en').classList.toggle('text-burgundy', lang === 'en');
+            document.getElementById('lang-en').classList.toggle('text-indigo-oil/60', lang !== 'en');
+            
+            document.getElementById('mobile-lang-zh').classList.toggle('text-burgundy', lang === 'zh');
+            document.getElementById('mobile-lang-zh').classList.toggle('text-indigo-oil/60', lang !== 'zh');
+            document.getElementById('mobile-lang-en').classList.toggle('text-burgundy', lang === 'en');
+            document.getElementById('mobile-lang-en').classList.toggle('text-indigo-oil/60', lang !== 'en');
+            
+            // 保存语言偏好
+            localStorage.setItem('preferredLanguage', lang);
+        }
+
+        // 初始化语言
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('preferredLanguage') || 'zh';
+            setLanguage(savedLang);
+            
+            // 语言切换事件
+            document.getElementById('lang-zh').addEventListener('click', () => setLanguage('zh'));
+            document.getElementById('lang-en').addEventListener('click', () => setLanguage('en'));
+            document.getElementById('mobile-lang-zh').addEventListener('click', () => setLanguage('zh'));
+            document.getElementById('mobile-lang-en').addEventListener('click', () => setLanguage('en'));
+            
+            // 移动端菜单切换
+            const menuToggle = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            menuToggle.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                // 切换图标
+                const icon = menuToggle.querySelector('i');
+                if (mobileMenu.classList.contains('hidden')) {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                } else {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                }
+            });
+            
+            // 明暗模式切换
+            const themeToggle = document.getElementById('theme-toggle');
+            const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
+            
+            // 检查用户偏好
+            if (localStorage.getItem('theme') === 'dark' || 
+                (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+            
+            function toggleTheme() {
+                document.documentElement.classList.toggle('dark');
+                localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+            }
+            
+            themeToggle.addEventListener('click', toggleTheme);
+            mobileThemeToggle.addEventListener('click', toggleTheme);
+            
+            // 作品过滤
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const paintingCards = document.querySelectorAll('.painting-card');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // 更新按钮状态
+                    filterButtons.forEach(btn => {
+                        btn.classList.remove('active', 'bg-burgundy', 'text-canvas');
+                        btn.classList.add('bg-canvas-dark/50', 'dark:bg-studio-dark/50');
+                    });
+                    
+                    button.classList.add('active', 'bg-burgundy', 'text-canvas');
+                    button.classList.remove('bg-canvas-dark/50', 'dark:bg-studio-dark/50');
+                    
+                    const filter = button.getAttribute('data-filter');
+                    
+                    // 过滤作品
+                    paintingCards.forEach(card => {
+                        if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                            card.style.display = 'block';
+                            setTimeout(() => {
+                                card.classList.add('paint-drop');
+                            }, 10);
+                        } else {
+                            card.style.display = 'none';
+                            card.classList.remove('paint-drop');
+                        }
+                    });
+                });
+            });
+            
+            // 平滑滚动
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // 关闭移动菜单（如果打开）
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                        const icon = menuToggle.querySelector('i');
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-bars');
+                    }
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // 表单提交
+            const contactForm = document.getElementById('contact-form');
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // 简单的表单验证
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const message = document.getElementById('message').value;
+                
+                if (name && email && message) {
+                    // 模拟提交成功
+                    alert('訊息已發送，感謝您的聯繫！');
+                    contactForm.reset();
+                } else {
+                    alert('請填寫完整的訊息內容');
+                }
+            });
+            
+            // 滚动动画
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('paint-drop');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            
+            // 观察所有section
+            document.querySelectorAll('section > div > div').forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>水墨丹青 | 水彩风格作品集</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+TC:wght@400;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+    <style>
+        /* 基础样式 */
+        :root {
+            --primary-blue: #a8d0e6;
+            --secondary-green: #c7ecc7;
+            --accent-pink: #f8c7cc;
+            --light-beige: #f9f4e8;
+            --dark-brown: #5d4037;
+            --paper-texture: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"><filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"></feTurbulence></filter><rect width="100%" height="100%" filter="url(%23grain)" opacity="0.15"></rect></svg>');
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Serif TC', serif;
+            background-color: var(--light-beige);
+            background-image: var(--paper-texture);
+            color: var(--dark-brown);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* 水彩粒子背景 */
+        .watercolor-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: float 15s infinite linear;
+        }
+
+        /* 自定义光标 */
+        body {
+            cursor: none;
+        }
+
+        .custom-cursor {
+            position: fixed;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(168, 208, 230, 0.3);
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background 0.3s;
+            mix-blend-mode: multiply;
+        }
+
+        .custom-cursor::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 8px;
+            height: 8px;
+            background: var(--primary-blue);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .custom-cursor.active {
+            width: 50px;
+            height: 50px;
+            background: rgba(199, 236, 199, 0.2);
+        }
+
+        /* 导航栏 */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            padding: 20px 0;
+            transition: all 0.4s ease;
+        }
+
+        header.scrolled {
+            background: rgba(249, 244, 232, 0.9);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(5px);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 2rem;
+            color: var(--dark-brown);
+            text-decoration: none;
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent-pink);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.4s ease;
+        }
+
+        .logo:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            color: var(--dark-brown);
+            text-decoration: none;
+            font-size: 1.1rem;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-blue);
+            transition: width 0.4s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .language-toggle {
+            background: none;
+            border: none;
+            color: var(--dark-brown);
+            font-family: 'Noto Serif TC', serif;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-left: 20px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .language-toggle::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(199, 236, 199, 0.3);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.4s ease;
+            z-index: -1;
+        }
+
+        .language-toggle:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--dark-brown);
+            cursor: pointer;
+        }
+
+        /* 英雄区域 */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 0 20px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(248, 199, 204, 0.2) 0%, rgba(168, 208, 230, 0.1) 50%, rgba(249, 244, 232, 0) 100%);
+            z-index: -1;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-family: 'ZCOOL XiaoWei', serif;
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: var(--dark-brown);
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 4px;
+            background: var(--primary-blue);
+            border-radius: 2px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: var(--dark-brown);
+            opacity: 0.9;
+        }
+
+        .hero-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--primary-blue);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: none;
+        }
+
+        .hero-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-100%);
+            transition: transform 0.4s ease;
+        }
+
+        .hero-btn:hover::before {
+            transform: translateX(0);
+        }
+
+        .hero-btn:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 水彩笔触效果 */
+        .watercolor-stroke {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.15;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .stroke-1 {
+            width: 300px;
+            height: 500px;
+            background: var(--accent-pink);
+            top: -100px;
+            left: -100px;
+            transform: rotate(30deg);
+        }
+
+        .stroke-2 {
+            width: 400px;
+            height: 600px;
+            background: var(--primary-blue);
+            bottom: -200px;
+            right: -150px;
+            transform: rotate(-20deg);
+        }
+
+        /* 关于区域 */
+        .section {
+            padding: 100px 20px;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            font-family: 'ZCOOL XiaoWei', serif;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 3px;
+            background: var(--secondary-green);
+            border-radius: 2px;
+        }
+
+        .about-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .about-img {
+            flex: 1;
+            position: relative;
+            padding: 20px;
+        }
+
+        .portrait {
+            width: 100%;
+            border-radius: 5px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 2;
+        }
+
+        .portrait-frame {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 2px solid var(--primary-blue);
+            border-radius: 5px;
+            transform: rotate(3deg) translate(10px, 10px);
+            z-index: 1;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--dark-brown);
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: #5d4037cc;
+        }
+
+        .skills-container {
+            margin-top: 30px;
+        }
+
+        .skill {
+            margin-bottom: 20px;
+        }
+
+        .skill-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .skill-bar {
+            height: 10px;
+            background: rgba(93, 64, 55, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .skill-progress {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background: var(--primary-blue);
+            border-radius: 5px;
+            width: 0;
+            transition: width 1.5s ease-in-out;
+        }
+
+        /* 作品集区域 */
+        .portfolio {
+            background: rgba(249, 244, 232, 0.6);
+        }
+
+        .portfolio-filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .filter-btn {
+            padding: 8px 20px;
+            background: transparent;
+            border: 1px solid var(--dark-brown);
+            color: var(--dark-brown);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Noto Serif TC', serif;
+            font-size: 1rem;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--primary-blue);
+            color: white;
+            border-color: var(--primary-blue);
+        }
+
+        .portfolio-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .portfolio-item {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            position: relative;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .portfolio-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(168, 208, 230, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+
+        .portfolio-info {
+            padding: 20px;
+        }
+
+        .portfolio-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--dark-brown);
+        }
+
+        .portfolio-info p {
+            color: #5d4037aa;
+            line-height: 1.6;
+        }
+
+        /* 服务区域 */
+        .services-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--accent-pink);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+        }
+
+        .service-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--dark-brown);
+        }
+
+        .service-desc {
+            color: #5d4037aa;
+            line-height: 1.7;
+        }
+
+        /* 联系区域 */
+        .contact {
+            background: rgba(199, 236, 199, 0.1);
+        }
+
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+
+        .contact-container::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(45deg, var(--primary-blue), var(--secondary-green), var(--accent-pink));
+            z-index: -1;
+            border-radius: 15px;
+            opacity: 0.3;
+            filter: blur(10px);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+            color: var(--dark-brown);
+        }
+
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid rgba(93, 64, 55, 0.2);
+            border-radius: 5px;
+            font-family: 'Noto Serif TC', serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(249, 244, 232, 0.3);
+        }
+
+        .form-input:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 2px rgba(168, 208, 230, 0.3);
+        }
+
+        .form-textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Noto Serif TC', serif;
+        }
+
+        .submit-btn:hover {
+            background: #8ab8d4;
+        }
+
+        /* 页脚 */
+        footer {
+            background: var(--dark-brown);
+            color: var(--light-beige);
+            padding: 60px 20px 30px;
+            position: relative;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-col h3 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 50%;
+            height: 2px;
+            background: var(--accent-pink);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: rgba(249, 244, 232, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-pink);
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(249, 244, 232, 0.1);
+            border-radius: 50%;
+            color: var(--light-beige);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background: var(--accent-pink);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 40px;
+            margin-top: 40px;
+            border-top: 1px solid rgba(249, 244, 232, 0.1);
+            color: rgba(249, 244, 232, 0.6);
+        }
+
+        /* 水彩动画 */
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.1;
+            }
+            90% {
+                opacity: 0.1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes brushStroke {
+            0% {
+                stroke-dashoffset: 1000;
+            }
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+            .about-content {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 70%;
+                background: rgba(249, 244, 232, 0.95);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.5s ease;
+                backdrop-filter: blur(10px);
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.05);
+            }
+            .nav-links.active {
+                right: 0;
+            }
+            .nav-links li {
+                margin: 20px 0;
+            }
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            .section {
+                padding: 60px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 自定义光标 -->
+    <div class="custom-cursor"></div>
+    
+    <!-- 水彩粒子背景 -->
+    <div class="watercolor-particles"></div>
+    
+    <!-- 导航栏 -->
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo">水墨丹青</a>
+            <button class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links">
+                <li><a href="#home">首页</a></li>
+                <li><a href="#about">关于我</a></li>
+                <li><a href="#portfolio">作品集</a></li>
+                <li><a href="#services">服务项目</a></li>
+                <li><a href="#contact">联系方式</a></li>
+                <li>
+                    <button class="language-toggle">EN/中文</button>
+                </li>
+            </ul>
+        </div>
+    </header>
+    
+    <!-- 英雄区域 -->
+    <section class="hero" id="home">
+        <div class="watercolor-stroke stroke-1"></div>
+        <div class="watercolor-stroke stroke-2"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">水彩的艺术世界</h1>
+            <p class="hero-subtitle">每一笔都蕴含着自然与情感的流动，让色彩在纸上绽放生命</p>
+            <a href="#portfolio" class="hero-btn">探索作品</a>
+        </div>
+    </section>
+    
+    <!-- 关于区域 -->
+    <section class="section" id="about">
+        <h2 class="section-title">关于我</h2>
+        <div class="about-content">
+            <div class="about-img">
+                <div class="portrait-frame"></div>
+                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80" alt="艺术家肖像" class="portrait">
+            </div>
+            <div class="about-text">
+                <h3>水彩艺术家 & 设计师</h3>
+                <p>我是一位专注于水彩艺术创作的艺术家，拥有十年以上的绘画经验。我的作品融合了传统水彩技法与现代艺术表达，擅长捕捉自然光影的微妙变化和情感流动。</p>
+                <p>我的创作灵感来源于自然景观、城市风光和人文情感，每一幅作品都是心灵与色彩的对话。通过水彩的透明性与流动性，我努力在画纸上呈现生命的诗意与美好。</p>
+                
+                <div class="skills-container">
+                    <div class="skill">
+                        <div class="skill-info">
+                            <span>水彩技法</span>
+                            <span>95%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="95"></div>
+                        </div>
+                    </div>
+                    <div class="skill">
+                        <div class="skill-info">
+                            <span>色彩理论</span>
+                            <span>90%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="90"></div>
+                        </div>
+                    </div>
+                    <div class="skill">
+                        <div class="skill-info">
+                            <span>数字艺术</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="85"></div>
+                        </div>
+                    </div>
+                    <div class="skill">
+                        <div class="skill-info">
+                            <span>艺术教学</span>
+                            <span>88%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="88"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 作品集区域 -->
+    <section class="section portfolio" id="portfolio">
+        <h2 class="section-title">作品集</h2>
+        <div class="portfolio-filters">
+            <button class="filter-btn active" data-filter="all">全部</button>
+            <button class="filter-btn" data-filter="landscape">自然景观</button>
+            <button class="filter-btn" data-filter="cityscape">城市风光</button>
+            <button class="filter-btn" data-filter="portrait">人物肖像</button>
+            <button class="filter-btn" data-filter="abstract">抽象艺术</button>
+        </div>
+        <div class="portfolio-grid">
+            <div class="portfolio-item" data-category="landscape">
+                <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="山水水彩画" class="portfolio-img">
+                <div class="portfolio-overlay">
+                    <button class="hero-btn">查看详情</button>
+                </div>
+                <div class="portfolio-info">
+                    <h3>晨曦山色</h3>
+                    <p>捕捉日出时分山峦间的光影变化，运用水彩的透明特性表现晨雾的朦胧感。</p>
+                </div>
+            </div>
+            <div class="portfolio-item" data-category="cityscape">
+                <img src="https://images.unsplash.com/photo-1530126483408-aa533e55bdb2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1141&q=80" alt="城市水彩画" class="portfolio-img">
+                <div class="portfolio-overlay">
+                    <button class="hero-btn">查看详情</button>
+                </div>
+                <div class="portfolio-info">
+                    <h3>雨巷</h3>
+                    <p>雨天老街的水彩表现，湿润的街道与斑驳的墙面形成富有诗意的城市画卷。</p>
+                </div>
+            </div>
+            <div class="portfolio-item" data-category="portrait">
+                <img src="https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="人物水彩画" class="portfolio-img">
+                <div class="portfolio-overlay">
+                    <button class="hero-btn">查看详情</button>
+                </div>
+                <div class="portfolio-info">
+                    <h3>沉思</h3>
+                    <p>人物肖像水彩，通过色彩层叠表现面部光影与情感深度。</p>
+                </div>
+            </div>
+            <div class="portfolio-item" data-category="abstract">
+                <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=745&q=80" alt="抽象水彩画" class="portfolio-img">
+                <div class="portfolio-overlay">
+                    <button class="hero-btn">查看详情</button>
+                </div>
+                <div class="portfolio-info">
+                    <h3>色彩交响</h3>
+                    <p>抽象水彩创作，探索色彩流动与融合的无限可能性。</p>
+                </div>
+            </div>
+            <div class="portfolio-item" data-category="landscape">
+                <img src="https://images.unsplash.com/photo-1506260408121-e353d10b87c7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1128&q=80" alt="森林水彩画" class="portfolio-img">
+                <div class="portfolio-overlay">
+                    <button class="hero-btn">查看详情</button>
+                </div>
+                <div class="portfolio-info">
+                    <h3>林间秘境</h3>
+                    <p>森林深处的水彩表现，通过绿色调的变化展现自然生态的丰富层次。</p>
+                </div>
+            </div>
+            <div class="portfolio-item" data-category="cityscape">
+                <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1144&q=80" alt="都市水彩画" class="portfolio-img">
+                <div class="portfolio-overlay">
+                    <button class="hero-btn">查看详情</button>
+                </div>
+                <div class="portfolio-info">
+                    <h3>都市节奏</h3>
+                    <p>现代都市的水彩速写，捕捉城市建筑的几何美感与动态韵律。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 服务区域 -->
+    <section class="section" id="services">
+        <h2 class="section-title">服务项目</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-paint-brush"></i>
+                </div>
+                <h3 class="service-title">水彩定制创作</h3>
+                <p class="service-desc">根据您的需求创作独一无二的水彩艺术作品，无论是风景、肖像还是抽象主题，都能完美呈现。</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <h3 class="service-title">插画与书籍设计</h3>
+                <p class="service-desc">为书籍、杂志提供专业水彩插画，营造独特的视觉氛围和艺术质感。</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                </div>
+                <h3 class="service-title">水彩教学工作坊</h3>
+                <p class="service-desc">线上线下水彩教学课程，从基础技法到创作理念，帮助您掌握水彩艺术的精髓。</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 联系区域 -->
+    <section class="section contact" id="contact">
+        <h2 class="section-title">与我联系</h2>
+        <div class="contact-container">
+            <form>
+                <div class="form-group">
+                    <label for="name" class="form-label">姓名</label>
+                    <input type="text" id="name" class="form-input" placeholder="请输入您的姓名">
+                </div>
+                <div class="form-group">
+                    <label for="email" class="form-label">电子邮箱</label>
+                    <input type="email" id="email" class="form-input" placeholder="请输入您的电子邮箱">
+                </div>
+                <div class="form-group">
+                    <label for="subject" class="form-label">主题</label>
+                    <input type="text" id="subject" class="form-input" placeholder="请输入邮件主题">
+                </div>
+                <div class="form-group">
+                    <label for="message" class="form-label">留言内容</label>
+                    <textarea id="message" class="form-textarea" placeholder="请输入您的留言内容..."></textarea>
+                </div>
+                <button type="submit" class="submit-btn">发送留言</button>
+            </form>
+        </div>
+    </section>
+    
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col">
+                <h3>水墨丹青</h3>
+                <p>水彩艺术创作与设计工作室，致力于推广水彩艺术，创造美的视觉体验。</p>
+                <div class="social-links">
+                    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-pinterest-p"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>快速链接</h3>
+                <ul class="footer-links">
+                    <li><a href="#home">首页</a></li>
+                    <li><a href="#about">关于我</a></li>
+                    <li><a href="#portfolio">作品集</a></li>
+                    <li><a href="#services">服务项目</a></li>
+                    <li><a href="#contact">联系方式</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>服务项目</h3>
+                <ul class="footer-links">
+                    <li><a href="#">水彩定制创作</a></li>
+                    <li><a href="#">插画与书籍设计</a></li>
+                    <li><a href="#">水彩教学工作坊</a></li>
+                    <li><a href="#">艺术展览合作</a></li>
+                    <li><a href="#">商业授权许可</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>联系信息</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-map-marker-alt"></i> 台北市大安区艺术大道100号</li>
+                    <li><i class="fas fa-phone"></i> +886 2 1234 5678</li>
+                    <li><i class="fas fa-envelope"></i> contact@watercolor-art.com</li>
+                    <li><i class="fas fa-clock"></i> 周一至周五: 10:00 - 18:00</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 水墨丹青水彩艺术工作室. 保留所有权利。</p>
+        </div>
+    </footer>
+    
+    <script>
+        // 自定义光标效果
+        const cursor = document.querySelector('.custom-cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+        
+        // 为可点击元素添加光标效果
+        const clickableElements = document.querySelectorAll('a, button, .portfolio-item');
+        clickableElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.classList.add('active');
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.classList.remove('active');
+            });
+        });
+        
+        // 导航栏滚动效果
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // 移动端菜单切换
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            menuToggle.innerHTML = navLinks.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+        
+        // 作品集筛选
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const portfolioItems = document.querySelectorAll('.portfolio-item');
+        
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // 更新按钮状态
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const filter = btn.dataset.filter;
+                
+                portfolioItems.forEach(item => {
+                    if (filter === 'all' || item.dataset.category === filter) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // 技能条动画
+        const skillProgresses = document.querySelectorAll('.skill-progress');
+        
+        // 当技能条进入视口时触发动画
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const progress = entry.target;
+                    const width = progress.dataset.width;
+                    progress.style.width = width + '%';
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        skillProgresses.forEach(progress => {
+            observer.observe(progress);
+        });
+        
+        // 水彩粒子背景
+        const particlesContainer = document.querySelector('.watercolor-particles');
+        const colors = ['#a8d0e6', '#c7ecc7', '#f8c7cc', '#f9f4e8'];
+        
+        for (let i = 0; i < 20; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            
+            // 随机属性
+            const size = Math.random() * 100 + 20;
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            const left = Math.random() * 100;
+            const top = Math.random() * 100;
+            const animationDuration = Math.random() * 20 + 10;
+            const animationDelay = Math.random() * 5;
+            
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.background = color;
+            particle.style.left = `${left}%`;
+            particle.style.top = `${top}%`;
+            particle.style.animationDuration = `${animationDuration}s`;
+            particle.style.animationDelay = `${animationDelay}s`;
+            
+            particlesContainer.appendChild(particle);
+        }
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // 关闭移动端菜单
+                    if (navLinks.classList.contains('active')) {
+                        navLinks.classList.remove('active');
+                        menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                    }
+                }
+            });
+        });
+        
+        // 语言切换
+        const languageToggle = document.querySelector('.language-toggle');
+        languageToggle.addEventListener('click', () => {
+            const currentLang = languageToggle.textContent;
+            languageToggle.textContent = currentLang === 'EN/中文' ? '中/EN' : 'EN/中文';
+        });
+    </script>
+</body>
+</html>
