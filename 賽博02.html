@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-lang-zh="賽博龐克作品集 | 未來主義創意展示" data-lang-en="Cyberpunk Portfolio | Futuristic Creative Showcase">賽博龐克作品集 | 未來主義創意展示</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    
+    <!-- 配置Tailwind自訂顏色和字體 -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'cyber-black': '#0A0A0F',
+                        'cyber-dark': '#121218',
+                        'cyber-blue': '#00F0FF',
+                        'cyber-pink': '#FF2A6D',
+                        'cyber-green': '#05FF00',
+                        'cyber-purple': '#BF00FF',
+                    },
+                    fontFamily: {
+                        'cyber': ['Orbitron', 'Rajdhani', 'sans-serif'],
+                        'terminal': ['Courier New', 'monospace'],
+                    },
+                    animation: {
+                        'glitch': 'glitch 1s infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'flicker': 'flicker 3s linear infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'scanline': 'scanline 4s linear infinite',
+                    },
+                    keyframes: {
+                        glitch: {
+                            '0%, 100%': { transform: 'translate(0)' },
+                            '20%': { transform: 'translate(-2px, 2px)' },
+                            '40%': { transform: 'translate(-2px, -2px)' },
+                            '60%': { transform: 'translate(2px, 2px)' },
+                            '80%': { transform: 'translate(2px, -2px)' },
+                        },
+                        flicker: {
+                            '0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100%': { opacity: '1' },
+                            '20%, 21.999%, 63%, 63.999%, 65%, 69.999%': { opacity: '0.4' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        scanline: {
+                            '0%': { transform: 'translateY(-100%)' },
+                            '100%': { transform: 'translateY(100%)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- 自訂工具類 -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow-neon-blue {
+                text-shadow: 0 0 5px #00F0FF, 0 0 10px #00F0FF, 0 0 20px #00F0FF;
+            }
+            .text-shadow-neon-pink {
+                text-shadow: 0 0 5px #FF2A6D, 0 0 10px #FF2A6D, 0 0 20px #FF2A6D;
+            }
+            .text-shadow-neon-green {
+                text-shadow: 0 0 5px #05FF00, 0 0 10px #05FF00, 0 0 20px #05FF00;
+            }
+            .border-glow-blue {
+                box-shadow: 0 0 5px #00F0FF, 0 0 10px #00F0FF;
+            }
+            .border-glow-pink {
+                box-shadow: 0 0 5px #FF2A6D, 0 0 10px #FF2A6D;
+            }
+            .border-glow-green {
+                box-shadow: 0 0 5px #05FF00, 0 0 10px #05FF00;
+            }
+            .bg-grid {
+                background-size: 40px 40px;
+                background-image: 
+                    linear-gradient(to right, rgba(0, 240, 255, 0.1) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(0, 240, 255, 0.1) 1px, transparent 1px);
+            }
+            .clip-polygon {
+                clip-path: polygon(0 0, 100% 0, 95% 100%, 5% 100%);
+            }
+            .terminal-cursor {
+                border-right: 2px solid #05FF00;
+                animation: cursor-blink 1s step-end infinite;
+            }
+            @keyframes cursor-blink {
+                from, to { border-color: transparent }
+                50% { border-color: #05FF00 }
+            }
+            .custom-cursor {
+                cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2300F0FF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'/%3E%3C/svg%3E"), auto;
+            }
+            .glitch-effect {
+                position: relative;
+            }
+            .glitch-effect::before, .glitch-effect::after {
+                content: attr(data-text);
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }
+            .glitch-effect::before {
+                left: 2px;
+                text-shadow: -2px 0 #FF2A6D;
+                clip: rect(44px, 450px, 56px, 0);
+                animation: glitch-anim 5s infinite linear alternate-reverse;
+            }
+            .glitch-effect::after {
+                left: -2px;
+                text-shadow: -2px 0 #00F0FF;
+                clip: rect(44px, 450px, 56px, 0);
+                animation: glitch-anim2 5s infinite linear alternate-reverse;
+            }
+            @keyframes glitch-anim {
+                0% { clip: rect(42px, 9999px, 44px, 0); } 5% { clip: rect(12px, 9999px, 59px, 0); } 10% { clip: rect(48px, 9999px, 29px, 0); } 15% { clip: rect(42px, 9999px, 73px, 0); } 20% { clip: rect(63px, 9999px, 27px, 0); } 25% { clip: rect(34px, 9999px, 55px, 0); } 30% { clip: rect(86px, 9999px, 73px, 0); } 35% { clip: rect(20px, 9999px, 20px, 0); } 40% { clip: rect(26px, 9999px, 60px, 0); } 45% { clip: rect(25px, 9999px, 66px, 0); } 50% { clip: rect(57px, 9999px, 98px, 0); } 55% { clip: rect(5px, 9999px, 46px, 0); } 60% { clip: rect(82px, 9999px, 31px, 0); } 65% { clip: rect(54px, 9999px, 27px, 0); } 70% { clip: rect(28px, 9999px, 99px, 0); } 75% { clip: rect(45px, 9999px, 69px, 0); } 80% { clip: rect(23px, 9999px, 85px, 0); } 85% { clip: rect(54px, 9999px, 84px, 0); } 90% { clip: rect(45px, 9999px, 47px, 0); } 95% { clip: rect(37px, 9999px, 20px, 0); } 100% { clip: rect(4px, 9999px, 91px, 0); }
+            }
+            @keyframes glitch-anim2 {
+                0% { clip: rect(65px, 9999px, 100px, 0); } 5% { clip: rect(52px, 9999px, 74px, 0); } 10% { clip: rect(79px, 9999px, 85px, 0); } 15% { clip: rect(75px, 9999px, 5px, 0); } 20% { clip: rect(67px, 9999px, 61px, 0); } 25% { clip: rect(14px, 9999px, 79px, 0); } 30% { clip: rect(1px, 9999px, 66px, 0); } 35% { clip: rect(86px, 9999px, 30px, 0); } 40% { clip: rect(23px, 9999px, 98px, 0); } 45% { clip: rect(85px, 9999px, 72px, 0); } 50% { clip: rect(71px, 9999px, 75px, 0); } 55% { clip: rect(2px, 9999px, 48px, 0); } 60% { clip: rect(30px, 9999px, 16px, 0); } 65% { clip: rect(59px, 9999px, 50px, 0); } 70% { clip: rect(41px, 9999px, 62px, 0); } 75% { clip: rect(2px, 9999px, 82px, 0); } 80% { clip: rect(47px, 9999px, 73px, 0); } 85% { clip: rect(3px, 9999px, 27px, 0); } 90% { clip: rect(26px, 9999px, 55px, 0); } 95% { clip: rect(42px, 9999px, 97px, 0); } 100% { clip: rect(38px, 9999px, 49px, 0); }
+            }
+        }
+    </style>
+    
+    <!-- 導入字體 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-cyber-black text-gray-300 font-cyber custom-cursor overflow-x-hidden">
+    <!-- 掃描線效果 -->
+    <div class="fixed top-0 left-0 w-full h-1 bg-cyber-blue/20 animate-scanline pointer-events-none z-50"></div>
+    
+    <!-- 粒子背景容器 -->
+    <div id="particles-js" class="fixed top-0 left-0 w-full h-full opacity-40 z-0"></div>
+    
+    <!-- 導覽列 -->
+    <header id="navbar" class="fixed w-full z-40 transition-all duration-500 bg-cyber-black/80 backdrop-blur-md">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="#" class="text-cyber-blue text-2xl font-bold tracking-wider text-shadow-neon-blue">
+                N30N<span class="text-cyber-pink text-shadow-neon-pink">C0DE</span>
+            </a>
+            
+            <!-- 桌面導覽 -->
+            <nav class="hidden md:flex space-x-8">
+                <a href="#hero" class="hover:text-cyber-blue transition-colors duration-300 text-shadow-neon-blue hover:scale-105" data-lang-zh="首頁" data-lang-en="Home">首頁</a>
+                <a href="#about" class="hover:text-cyber-pink transition-colors duration-300 text-shadow-neon-pink hover:scale-105" data-lang-zh="關於" data-lang-en="About">關於</a>
+                <a href="#portfolio" class="hover:text-cyber-green transition-colors duration-300 text-shadow-neon-green hover:scale-105" data-lang-zh="作品" data-lang-en="Portfolio">作品</a>
+                <a href="#services" class="hover:text-cyber-blue transition-colors duration-300 text-shadow-neon-blue hover:scale-105" data-lang-zh="服務" data-lang-en="Services">服務</a>
+                <a href="#contact" class="hover:text-cyber-pink transition-colors duration-300 text-shadow-neon-pink hover:scale-105" data-lang-zh="聯繫" data-lang-en="Contact">聯繫</a>
+            </nav>
+            
+            <!-- 語言切換按鈕 -->
+            <div class="flex items-center mr-2">
+                <button id="lang-zh" class="px-2 py-1 text-sm transition-colors">中</button>
+                <button id="lang-en" class="px-2 py-1 text-sm transition-colors">En</button>
+            </div>
+            
+            <!-- 主題切換按鈕 -->
+            <button id="theme-toggle" class="mx-4 text-gray-400 hover:text-cyber-green transition-colors">
+                <i class="fa fa-moon-o text-xl"></i>
+            </button>
+            
+            <!-- 行動端菜單按鈕 -->
+            <button id="menu-toggle" class="md:hidden text-gray-400 hover:text-cyber-blue transition-colors">
+                <i class="fa fa-bars text-2xl"></i>
+            </button>
+        </div>
+        
+        <!-- 行動端導覽菜單 -->
+        <div id="mobile-menu" class="md:hidden hidden bg-cyber-dark/95 backdrop-blur-lg border-t border-cyber-blue/30">
+            <div class="container mx-auto px-4 py-4 flex flex-col space-y-4">
+                <a href="#hero" class="hover:text-cyber-blue transition-colors duration-300 py-2" data-lang-zh="首頁" data-lang-en="Home">首頁</a>
+                <a href="#about" class="hover:text-cyber-pink transition-colors duration-300 py-2" data-lang-zh="關於" data-lang-en="About">關於</a>
+                <a href="#portfolio" class="hover:text-cyber-green transition-colors duration-300 py-2" data-lang-zh="作品" data-lang-en="Portfolio">作品</a>
+                <a href="#services" class="hover:text-cyber-blue transition-colors duration-300 py-2" data-lang-zh="服務" data-lang-en="Services">服務</a>
+                <a href="#contact" class="hover:text-cyber-pink transition-colors duration-300 py-2" data-lang-zh="聯繫" data-lang-en="Contact">聯繫</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 英雄區域 -->
+    <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden bg-grid pt-20">
+        <!-- 賽博龐克背景SVG -->
+        <div class="absolute inset-0 w-full h-full opacity-30">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+                <g stroke="#00F0FF" stroke-width="0.5" fill="none"><path d="M0,200 H1000" /><path d="M0,400 H1000" /><path d="M200,0 V1000" /><path d="M400,0 V1000" /><path d="M600,0 V1000" /><path d="M800,0 V1000" /></g>
+                <g fill="#00F0FF" opacity="0.3"><circle cx="200" cy="200" r="3" /><circle cx="400" cy="200" r="3" /><circle cx="600" cy="200" r="3" /><circle cx="800" cy="200" r="3" /><circle cx="200" cy="400" r="3" /><circle cx="400" cy="400" r="3" /><circle cx="600" cy="400" r="3" /><circle cx="800" cy="400" r="3" /></g>
+                <path d="M100,100 C200,50 300,150 400,100" stroke="#FF2A6D" stroke-width="2" fill="none" stroke-dasharray="10,5" />
+                <path d="M600,300 C700,250 800,350 900,300" stroke="#05FF00" stroke-width="2" fill="none" stroke-dasharray="10,5" />
+                <path d="M100,500 C200,450 300,550 400,500" stroke="#00F0FF" stroke-width="2" fill="none" stroke-dasharray="10,5" />
+                <polygon points="700,100 800,50 900,100 850,200 750,200" fill="none" stroke="#FF2A6D" stroke-width="1" opacity="0.5" />
+                <rect x="100" y="600" width="150" height="100" fill="none" stroke="#05FF00" stroke-width="1" opacity="0.5" />
+                <circle cx="800" cy="600" r="70" fill="none" stroke="#00F0FF" stroke-width="1" opacity="0.5" />
+            </svg>
+        </div>
+        
+        <div class="container mx-auto px-4 z-10 flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 text-center md:text-left mb-12 md:mb-0">
+                <h4 class="text-cyber-blue mb-2 text-shadow-neon-blue terminal-text" id="terminal-text">
+                    > 加載身份信息中...<span class="terminal-cursor"></span>
+                </h4>
+                <h1 class="text-[clamp(2.5rem,8vw,5rem)] font-bold leading-tight mb-6 glitch-effect" data-text="賽博創作者" data-lang-zh="賽博創作者" data-lang-en="Cyber Creator">
+                    賽博<span class="text-cyber-pink text-shadow-neon-pink">創作者</span>
+                </h1>
+                <h2 class="text-[clamp(1.2rem,4vw,2rem)] text-gray-400 mb-8" data-lang-zh="融合技術與藝術的未來主義作品" data-lang-en="Fusing technology and art in futuristic works">
+                    融合 <span class="text-cyber-blue text-shadow-neon-blue">技術</span> 與 <span class="text-cyber-pink text-shadow-neon-pink">藝術</span> 的未來主義作品
+                </h2>
+                <p class="text-gray-400 mb-8 max-w-lg mx-auto md:mx-0" data-lang-zh="探索數字世界的邊界，創造突破現實的賽博龐克體驗。每一個作品都是對未來的獨特詮釋。" data-lang-en="Exploring the boundaries of the digital world, creating cyberpunk experiences that transcend reality. Each work is a unique interpretation of the future.">
+                    探索數字世界的邊界，創造突破現實的賽博龐克體驗。每一個作品都是對未來的獨特詮釋。
+                </p>
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center md:justify-start">
+                    <a href="#portfolio" class="px-8 py-3 bg-cyber-blue/20 border border-cyber-blue text-cyber-blue hover:bg-cyber-blue hover:text-cyber-black transition-all duration-300 rounded-sm text-shadow-neon-blue border-glow-blue hover:scale-105" data-lang-zh="瀏覽作品" data-lang-en="Browse Works">
+                        瀏覽作品
+                    </a>
+                    <a href="#contact" class="px-8 py-3 bg-transparent border border-cyber-pink text-cyber-pink hover:bg-cyber-pink hover:text-cyber-black transition-all duration-300 rounded-sm text-shadow-neon-pink border-glow-pink hover:scale-105" data-lang-zh="聯繫我" data-lang-en="Contact Me">
+                        聯繫我
+                    </a>
+                </div>
+            </div>
+            
+            <div class="md:w-1/2 flex justify-center">
+                <div class="relative w-[280px] h-[280px] animate-float">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 200 200">
+                        <circle cx="100" cy="70" r="50" fill="#121218" stroke="#00F0FF" stroke-width="1" /><ellipse cx="100" cy="150" rx="60" ry="50" fill="#121218" stroke="#00F0FF" stroke-width="1" />
+                        <circle cx="80" cy="60" r="3" fill="#05FF00" /><circle cx="120" cy="60" r="3" fill="#05FF00" /><path d="M80,80 Q100,90 120,80" stroke="#05FF00" stroke-width="1" fill="none" />
+                        <path d="M50,70 C70,50 130,50 150,70" stroke="#00F0FF" stroke-width="0.5" fill="none" /><path d="M50,90 C70,110 130,110 150,90" stroke="#00F0FF" stroke-width="0.5" fill="none" /><path d="M50,110 C100,130 100,130 150,110" stroke="#00F0FF" stroke-width="0.5" fill="none" />
+                        <rect x="30" y="60" width="10" height="20" fill="#FF2A6D" opacity="0.7" /><path d="M40,70 L50,70" stroke="#FF2A6D" stroke-width="0.5" />
+                        <circle cx="100" cy="70" r="55" fill="none" stroke="#00F0FF" stroke-width="1" opacity="0.3" /><ellipse cx="100" cy="150" rx="65" ry="55" fill="none" stroke="#FF2A6D" stroke-width="1" opacity="0.3" />
+                    </svg>
+                    <div class="absolute -inset-4 border-2 border-cyber-blue/30 rounded-full animate-pulse-slow"></div>
+                    <div class="absolute -inset-8 border-2 border-cyber-pink/20 rounded-full animate-pulse-slow" style="animation-delay: 1s;"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <a href="#about" class="text-cyber-green text-shadow-neon-green"><i class="fa fa-chevron-down"></i></a>
+        </div>
+    </section>
+
+    <!-- 關於部分 -->
+    <section id="about" class="py-20 relative overflow-hidden bg-cyber-dark">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold mb-4" data-lang-zh="關於我" data-lang-en="About Me">
+                    <span class="text-cyber-pink text-shadow-neon-pink">關於</span> 我
+                </h2>
+                <div class="w-24 h-1 bg-cyber-blue mx-auto mb-6 border-glow-blue"></div>
+                <p class="text-gray-400 max-w-2xl mx-auto" data-lang-zh="探索我的數字身份和技能矩陣，了解我如何將賽博龐克美學與前沿技術融合" data-lang-en="Explore my digital identity and skill matrix, see how I fuse cyberpunk aesthetics with cutting-edge technology">
+                    探索我的數字身份和技能矩陣，了解我如何將賽博龐克美學與前沿技術融合
+                </p>
+            </div>
+            
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2">
+                    <div class="relative">
+                        <div class="absolute -top-4 -left-4 w-full h-full border border-cyber-pink"></div>
+                        <div class="absolute -bottom-4 -right-4 w-full h-full border border-cyber-blue"></div>
+                        <div class="relative bg-cyber-black p-1 overflow-hidden">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="500" viewBox="0 0 400 500">
+                                <pattern id="grid-about" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="#00F0FF" stroke-width="0.5" opacity="0.2" /></pattern>
+                                <rect width="100%" height="100%" fill="url(#grid-about)" />
+                                <rect x="50" y="100" width="300" height="300" fill="none" stroke="#FF2A6D" stroke-width="1" /><rect x="70" y="120" width="260" height="260" fill="none" stroke="#00F0FF" stroke-width="1" />
+                                <path d="M 100,200 L 300,200" stroke="#05FF00" stroke-width="1" stroke-dasharray="5,5"><animate attributeName="stroke-dashoffset" from="0" to="10" dur="1s" repeatCount="indefinite" /></path>
+                                <path d="M 100,250 L 300,250" stroke="#05FF00" stroke-width="1" stroke-dasharray="5,5"><animate attributeName="stroke-dashoffset" from="10" to="0" dur="1.2s" repeatCount="indefinite" /></path>
+                                <path d="M 100,300 L 300,300" stroke="#05FF00" stroke-width="1" stroke-dasharray="5,5"><animate attributeName="stroke-dashoffset" from="0" to="10" dur="0.8s" repeatCount="indefinite" /></path>
+                                <polygon points="200,150 230,170 230,210 200,230 170,210 170,170" fill="none" stroke="#FF2A6D" stroke-width="1" />
+                                <g transform="translate(120, 350)"><rect x="0" y="0" width="30" height="30" fill="none" stroke="#00F0FF" stroke-width="1" /><path d="M5,15 L25,15 M15,5 L15,25" stroke="#00F0FF" stroke-width="1" /></g>
+                                <g transform="translate(180, 350)"><circle cx="15" cy="15" r="15" fill="none" stroke="#00F0FF" stroke-width="1" /><circle cx="15" cy="15" r="5" fill="#00F0FF" /></g>
+                                <g transform="translate(240, 350)"><rect x="0" y="0" width="30" height="30" fill="none" stroke="#00F0FF" stroke-width="1" /><path d="M5,5 L25,25 M5,25 L25,5" stroke="#00F0FF" stroke-width="1" /></g>
+                                <rect x="50" y="420" width="300" height="10" fill="none" stroke="#00F0FF" stroke-width="1" /><rect x="50" y="420" width="200" height="10" fill="#00F0FF" opacity="0.5"><animate attributeName="width" from="0" to="200" dur="2s" fill="freeze" /></rect>
+                                <rect x="50" y="440" width="300" height="10" fill="none" stroke="#FF2A6D" stroke-width="1" /><rect x="50" y="440" width="250" height="10" fill="#FF2A6D" opacity="0.5"><animate attributeName="width" from="0" to="250" dur="2.5s" fill="freeze" /></rect>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2">
+                    <h3 class="text-2xl font-bold mb-6 text-cyber-blue text-shadow-neon-blue" data-lang-zh="數字身份檔案" data-lang-en="Digital Identity Profile">數字身份檔案</h3>
+                    <p class="text-gray-400 mb-6" data-lang-zh="我是一名融合技術與藝術的數字創作者，專注於賽博龐克美學與前沿設計。我的作品探索人類與技術的邊界，創造沉浸式的未來主義體驗。" data-lang-en="I am a digital creator who fuses technology and art, focusing on cyberpunk aesthetics and cutting-edge design. My works explore the boundaries between humans and technology, creating immersive futuristic experiences.">
+                        我是一名融合技術與藝術的數字創作者，專注於賽博龐克美學與前沿設計。我的作品探索人類與技術的邊界，創造沉浸式的未來主義體驗。
+                    </p>
+                    <p class="text-gray-400 mb-8" data-lang-zh="擁有超過5年的數字創作經驗，擅長將複雜概念轉化為引人入勝的視覺體驗。我的技能涵蓋全棧開發、UI/UX設計和數字藝術創作。" data-lang-en="With over 5 years of digital creation experience, I excel at transforming complex concepts into engaging visual experiences. My skills include full-stack development, UI/UX design, and digital art creation.">
+                        擁有超過5年的數字創作經驗，擅長將複雜概念轉化為引人入勝的視覺體驗。我的技能涵蓋全棧開發、UI/UX設計和數字藝術創作。
+                    </p>
+                    
+                    <div class="mb-8">
+                        <h4 class="text-xl font-semibold mb-4 text-cyber-pink text-shadow-neon-pink" data-lang-zh="核心技能矩陣" data-lang-en="Core Skill Matrix">核心技能矩陣</h4>
+                        <div class="mb-4"><div class="flex justify-between mb-1"><span class="text-gray-300" data-lang-zh="Web開發" data-lang-en="Web Development">Web開發</span><span class="text-cyber-green">95%</span></div><div class="w-full h-2 bg-gray-800"><div class="h-full bg-cyber-blue border-glow-blue skill-bar" data-width="95%"></div></div></div>
+                        <div class="mb-4"><div class="flex justify-between mb-1"><span class="text-gray-300" data-lang-zh="UI/UX設計" data-lang-en="UI/UX Design">UI/UX設計</span><span class="text-cyber-green">90%</span></div><div class="w-full h-2 bg-gray-800"><div class="h-full bg-cyber-pink border-glow-pink skill-bar" data-width="90%"></div></div></div>
+                        <div class="mb-4"><div class="flex justify-between mb-1"><span class="text-gray-300" data-lang-zh="3D建模" data-lang-en="3D Modeling">3D建模</span><span class="text-cyber-green">75%</span></div><div class="w-full h-2 bg-gray-800"><div class="h-full bg-cyber-green border-glow-green skill-bar" data-width="75%"></div></div></div>
+                        <div class="mb-4"><div class="flex justify-between mb-1"><span class="text-gray-300" data-lang-zh="數字藝術" data-lang-en="Digital Art">數字藝術</span><span class="text-cyber-green">85%</span></div><div class="w-full h-2 bg-gray-800"><div class="h-full bg-cyber-blue border-glow-blue skill-bar" data-width="85%"></div></div></div>
+                    </div>
+                    
+                    <a href="#contact" class="inline-block px-8 py-3 bg-transparent border border-cyber-green text-cyber-green hover:bg-cyber-green hover:text-cyber-black transition-all duration-300 rounded-sm text-shadow-neon-green border-glow-green hover:scale-105" data-lang-zh="聯繫我" data-lang-en="Contact Me">
+                        聯繫我 <i class="fa fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 作品集部分 -->
+    <section id="portfolio" class="py-20 relative overflow-hidden bg-grid">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold mb-4" data-lang-zh="我的作品" data-lang-en="My Works">
+                    我的 <span class="text-cyber-green text-shadow-neon-green">作品</span>
+                </h2>
+                <div class="w-24 h-1 bg-cyber-green mx-auto mb-6 border-glow-green"></div>
+                <p class="text-gray-400 max-w-2xl mx-auto" data-lang-zh="探索我的賽博龐克風格作品集，每項作品都融合了未來主義美學與前沿技術" data-lang-en="Explore my cyberpunk-style portfolio, where each work fuses futuristic aesthetics with cutting-edge technology">
+                    探索我的賽博龐克風格作品集，每項作品都融合了未來主義美學與前沿技術
+                </p>
+            </div>
+            
+            <div class="flex flex-wrap justify-center gap-4 mb-12">
+                <button class="filter-btn active px-4 py-2 rounded-sm bg-cyber-green/20 border border-cyber-green text-cyber-green transition-all duration-300" data-filter="all" data-lang-zh="全部作品" data-lang-en="All Works">全部作品</button>
+                <button class="filter-btn px-4 py-2 rounded-sm bg-transparent border border-cyber-blue text-cyber-blue hover:bg-cyber-blue/20 transition-all duration-300" data-filter="web" data-lang-zh="網站開發" data-lang-en="Web Development">網站開發</button>
+                <button class="filter-btn px-4 py-2 rounded-sm bg-transparent border border-cyber-pink text-cyber-pink hover:bg-cyber-pink/20 transition-all duration-300" data-filter="design" data-lang-zh="界面設計" data-lang-en="UI Design">界面設計</button>
+                <button class="filter-btn px-4 py-2 rounded-sm bg-transparent border border-cyber-green text-cyber-green hover:bg-cyber-green/20 transition-all duration-300" data-filter="art" data-lang-zh="數字藝術" data-lang-en="Digital Art">數字藝術</button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="portfolio-item group" data-category="web">
+                    <div class="relative overflow-hidden bg-cyber-dark border border-gray-800 transition-all duration-500 hover:border-cyber-blue hover:border-glow-blue">
+                        <div class="aspect-w-4 aspect-h-3 overflow-hidden">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="300" viewBox="0 0 400 300">
+                                <rect width="100%" height="100%" fill="#121218" /><rect width="100%" height="25" fill="#1e1e1e" /><circle cx="20" cy="12" r="6" fill="#FF2A6D" /><circle cx="40" cy="12" r="6" fill="#FFCC00" /><circle cx="60" cy="12" r="6" fill="#05FF00" /><text x="100" y="18" font-family="Courier New" font-size="12" fill="#aaa">terminal_project.exe</text>
+                                <text x="15" y="45" font-family="Courier New" font-size="12" fill="#05FF00">> 加載項目配置...</text><text x="15" y="65" font-family="Courier New" font-size="12" fill="#05FF00">> 連接到主服務器...</text><text x="15" y="85" font-family="Courier New" font-size="12" fill="#05FF00">> 數據傳輸協議: TCP/IP</text><text x="15" y="105" font-family="Courier New" font-size="12" fill="#05FF00">> 加密級別: 高級AES-256</text><text x="15" y="125" font-family="Courier New" font-size="12" fill="#05FF00">> 系統狀態: 在線</text><text x="15" y="145" font-family="Courier New" font-size="12" fill="#05FF00">> 內存使用: 45%</text><text x="15" y="165" font-family="Courier New" font-size="12" fill="#05FF00">> 處理器負載: 23%</text><text x="15" y="185" font-family="Courier New" font-size="12" fill="#05FF00">> 網絡速度: 1.2 Gbps</text><text x="15" y="205" font-family="Courier New" font-size="12" fill="#05FF00">> 安全狀態: 已驗證</text><text x="15" y="225" font-family="Courier New" font-size="12" fill="#05FF00">> 項目完成度: 100%</text><text x="15" y="245" font-family="Courier New" font-size="12" fill="#00F0FF">> 系統正常運行中</text><text x="15" y="265" font-family="Courier New" font-size="12" fill="#aaa">></text>
+                                <rect x="25" y="253" width="8" height="12" fill="#05FF00"><animate attributeName="opacity" values="0;1;0" dur="1s" repeatCount="indefinite" /></rect>
+                            </svg>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-center mb-3"><h3 class="text-xl font-bold text-white" data-lang-zh="賽博終端系統" data-lang-en="Cyber Terminal System">賽博終端系統</h3><span class="px-3 py-1 text-xs bg-cyber-blue/20 text-cyber-blue border border-cyber-blue/50 rounded" data-lang-zh="網站開發" data-lang-en="Web Development">網站開發</span></div>
+                            <p class="text-gray-400 mb-4" data-lang-zh="基於終端風格的交互網站，融合復古命令行界面與現代Web技術，創造獨特的用戶體驗。" data-lang-en="Terminal-style interactive website that combines retro command line interface with modern Web technology to create a unique user experience.">基於終端風格的交互網站，融合復古命令行界面與現代Web技術，創造獨特的用戶體驗。</p>
+                            <a href="#" class="inline-flex items-center text-cyber-blue hover:text-white transition-colors" data-lang-zh="查看詳情" data-lang-en="View Details">查看詳情 <i class="fa fa-arrow-right ml-2"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item group" data-category="design">
+                    <div class="relative overflow-hidden bg-cyber-dark border border-gray-800 transition-all duration-500 hover:border-cyber-pink hover:border-glow-pink">
+                        <div class="aspect-w-4 aspect-h-3 overflow-hidden">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="300" viewBox="0 0 400 300">
+                                <rect width="100%" height="100%" fill="#0A0A0F" /><rect x="50" y="180" width="20" height="120" fill="#121218" /><rect x="80" y="150" width="30" height="150" fill="#121218" /><rect x="120" y="200" width="15" height="100" fill="#121218" /><rect x="145" y="120" width="40" height="180" fill="#121218" /><rect x="195" y="170" width="25" height="130" fill="#121218" /><rect x="230" y="140" width="35" height="160" fill="#121218" /><rect x="275" y="190" width="20" height="110" fill="#121218" /><rect x="305" y="160" width="30" height="140" fill="#121218" />
+                                <rect x="50" y="180" width="20" height="5" fill="#00F0FF" opacity="0.7"><animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite" /></rect><rect x="80" y="150" width="30" height="5" fill="#FF2A6D" opacity="0.7"><animate attributeName="opacity" values="0.5;1;0.5" dur="2.5s" repeatCount="indefinite" /></rect><rect x="145" y="120" width="40" height="5" fill="#00F0FF" opacity="0.7"><animate attributeName="opacity" values="0.5;1;0.5" dur="1.8s" repeatCount="indefinite" /></rect><rect x="230" y="140" width="35" height="5" fill="#05FF00" opacity="0.7"><animate attributeName="opacity" values="0.5;1;0.5" dur="2.2s" repeatCount="indefinite" /></rect><rect x="305" y="160" width="30" height="5" fill="#FF2A6D" opacity="0.7"><animate attributeName="opacity" values="0.5;1;0.5" dur="1.5s" repeatCount="indefinite" /></rect>
+                                <rect x="55" y="200" width="5" height="5" fill="#05FF00" opacity="0.5"><animate attributeName="opacity" values="0.3;0.8;0.3" dur="3s" repeatCount="indefinite" /></rect><rect x="65" y="220" width="5" height="5" fill="#05FF00" opacity="0.5"><animate attributeName="opacity" values="0.3;0.8;0.3" dur="2.7s" repeatCount="indefinite" /></rect><rect x="85" y="180" width="5" height="5" fill="#00F0FF" opacity="0.5"><animate attributeName="opacity" values="0.3;0.8;0.3" dur="2.3s" repeatCount="indefinite" /></rect><rect x="105" y="200" width="5" height="5" fill="#00F0FF" opacity="0.5"><animate attributeName="opacity" values="0.3;0.8;0.3" dur="2.9s" repeatCount="indefinite" /></rect><rect x="155" y="150" width="5" height="5" fill="#FF2A6D" opacity="0.5"><animate attributeName="opacity" values="0.3;0.8;0.3" dur="3.1s" repeatCount="indefinite" /></rect><rect x="175" y="180" width="5" height="5" fill="#FF2A6D" opacity="0.5"><animate attributeName="opacity" values="0.3;0.8;0.3" dur="2.6s" repeatCount="indefinite" /></rect>
+                                <path d="M320,80 L340,70 L360,80 L340,90 Z" fill="#00F0FF" opacity="0.7"><animate attributeName="transform" attributeType="XML" type="translate" from="-400 0" to="400 0" dur="20s" repeatCount="indefinite" /></path>
+                                <circle cx="350" cy="50" r="20" fill="#121218" stroke="#00F0FF" stroke-width="1" opacity="0.7" />
+                            </svg>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-center mb-3"><h3 class="text-xl font-bold text-white" data-lang-zh="霓虹都市" data-lang-en="Neon Metropolis">霓虹都市</h3><span class="px-3 py-1 text-xs bg-cyber-pink/20 text-cyber-pink border border-cyber-pink/50 rounded" data-lang-zh="界面設計" data-lang-en="UI Design">界面設計</span></div>
+                            <p class="text-gray-400 mb-4" data-lang-zh="未來主義城市界面設計，融合多層建築與動態霓虹燈效果，打造沉浸式賽博龐克體驗。" data-lang-en="Futuristic city interface design that combines multi-layered architecture with dynamic neon lighting effects to create an immersive cyberpunk experience.">未來主義城市界面設計，融合多層建築與動態霓虹燈效果，打造沉浸式賽博龐克體驗。</p>
+                            <a href="#" class="inline-flex items-center text-cyber-pink hover:text-white transition-colors" data-lang-zh="查看詳情" data-lang-en="View Details">查看詳情 <i class="fa fa-arrow-right ml-2"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item group" data-category="art">
+                    <div class="relative overflow-hidden bg-cyber-dark border border-gray-800 transition-all duration-500 hover:border-cyber-green hover:border-glow-green">
+                        <div class="aspect-w-4 aspect-h-3 overflow-hidden">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="300" viewBox="0 0 400 300">
+                                <rect width="100%" height="100%" fill="#0A0A0F" /><circle cx="100" cy="100" r="8" fill="#05FF00" opacity="0.7"><animate attributeName="r" values="8;10;8" dur="3s" repeatCount="indefinite" /></circle><circle cx="100" cy="200" r="8" fill="#05FF00" opacity="0.7"><animate attributeName="r" values="8;10;8" dur="2.5s" repeatCount="indefinite" /></circle><circle cx="200" cy="50" r="8" fill="#05FF00" opacity="0.7"><animate attributeName="r" values="8;10;8" dur="2s" repeatCount="indefinite" /></circle><circle cx="200" cy="150" r="8" fill="#05FF00" opacity="0.7"><animate attributeName="r" values="8;10;8" dur="3.5s" repeatCount="indefinite" /></circle><circle cx="200" cy="250" r="8" fill="#05FF00" opacity="0.7"><animate attributeName="r" values="8;10;8" dur="2.8s" repeatCount="indefinite" /></circle><circle cx="300" cy="100" r="8" fill="#05FF00" opacity="0.7"><animate attributeName="r" values="8;10;8" dur="3.2s" repeatCount="indefinite" /></circle><circle cx="300" cy="200" r="8" fill="#05FF00" opacity="0.7"><animate attributeName="r" values="8;10;8" dur="2.3s" repeatCount="indefinite" /></circle>
+                                <path d="M100,100 L200,50" stroke="#05FF00" stroke-width="1" opacity="0.5"><animate attributeName="opacity" values="0.3;0.7;0.3" dur="2s" repeatCount="indefinite" /></path><path d="M100,100 L200,150" stroke="#05FF00" stroke-width="1" opacity="0.5"><animate attributeName="opacity" values="0.3;0.7;0.3" dur="2.5s" repeatCount="indefinite" /></path><path d="M100,200 L200,150" stroke="#05FF00" stroke-width="1" opacity="0.5"><animate attributeName="opacity" values="0.3;0.7;0.3" dur="3s" repeatCount="indefinite" /></path><path d="M100,200 L200,250" stroke="#05FF00" stroke-width="1" opacity="0.5"><animate attributeName="opacity" values="0.3;0.7;0.3" dur="1.8s" repeatCount="indefinite" /></path><path d="M200,50 L300,100" stroke="#05FF00" stroke-width="1" opacity="0.5"><animate attributeName="opacity" values="0.3;0.7;0.3" dur="2.2s" repeatCount="indefinite" /></path><path d="M200,150 L300,100" stroke="#05FF00" stroke-width="1" opacity="0.5"><animate attributeName="opacity" values="0.3;0.7;0.3" dur="2.7s" repeatCount="indefinite" /></path><path d="M200,150 L300,200" stroke="#05FF00" stroke-width="1" opacity="0.5"><animate attributeName="opacity" values="0.3;0.7;0.3" dur="3.3s" repeatCount="indefinite" /></path><path d="M200,250 L300,200" stroke="#05FF00" stroke-width="1" opacity="0.5"><animate attributeName="opacity" values="0.3;0.7;0.3" dur="2.4s" repeatCount="indefinite" /></path>
+                                <circle cx="100" cy="100" r="20" fill="none" stroke="#05FF00" stroke-width="0.5" opacity="0.3"><animate attributeName="r" values="20;50;20" dur="4s" repeatCount="indefinite" /></circle><circle cx="300" cy="200" r="20" fill="none" stroke="#05FF00" stroke-width="0.5" opacity="0.3"><animate attributeName="r" values="20;50;20" dur="4.5s" repeatCount="indefinite" /></circle>
+                                <path d="M50,50 L50,250" stroke="#00F0FF" stroke-width="0.5" opacity="0.3" stroke-dasharray="5,5" /><path d="M350,50 L350,250" stroke="#FF2A6D" stroke-width="0.5" opacity="0.3" stroke-dasharray="5,5" />
+                            </svg>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-center mb-3"><h3 class="text-xl font-bold text-white" data-lang-zh="神經連接" data-lang-en="Neural Connection">神經連接</h3><span class="px-3 py-1 text-xs bg-cyber-green/20 text-cyber-green border border-cyber-green/50 rounded" data-lang-zh="數字藝術" data-lang-en="Digital Art">數字藝術</span></div>
+                            <p class="text-gray-400 mb-4" data-lang-zh="神經網路可視化藝術作品，展示數據在節點間的流動，探索人工智能與人類思維的邊界。" data-lang-en="Neural network visualization artwork showing data flow between nodes, exploring the boundaries between artificial intelligence and human thinking.">神經網路可視化藝術作品，展示數據在節點間的流動，探索人工智能與人類思維的邊界。</p>
+                            <a href="#" class="inline-flex items-center text-cyber-green hover:text-white transition-colors" data-lang-zh="查看詳情" data-lang-en="View Details">查看詳情 <i class="fa fa-arrow-right ml-2"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item group" data-category="web">
+                    <div class="relative overflow-hidden bg-cyber-dark border border-gray-800 transition-all duration-500 hover:border-cyber-blue hover:border-glow-blue">
+                        <div class="aspect-w-4 aspect-h-3 overflow-hidden">
+                            <img src="https://picsum.photos/seed/cyber1/600/400" alt="賽博龐克風格網站界面" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-gradient-to-t from-cyber-black to-transparent opacity-70"></div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-center mb-3"><h3 class="text-xl font-bold text-white" data-lang-zh="賽博商店" data-lang-en="Cyber Store">賽博商店</h3><span class="px-3 py-1 text-xs bg-cyber-blue/20 text-cyber-blue border border-cyber-blue/50 rounded" data-lang-zh="網站開發" data-lang-en="Web Development">網站開發</span></div>
+                            <p class="text-gray-400 mb-4" data-lang-zh="未來主義電子商務平台，融合霓虹色彩與交互式UI元素，提供沉浸式購物體驗。" data-lang-en="Futuristic e-commerce platform that combines neon colors with interactive UI elements to provide an immersive shopping experience.">未來主義電子商務平台，融合霓虹色彩與交互式UI元素，提供沉浸式購物體驗。</p>
+                            <a href="#" class="inline-flex items-center text-cyber-blue hover:text-white transition-colors" data-lang-zh="查看詳情" data-lang-en="View Details">查看詳情 <i class="fa fa-arrow-right ml-2"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item group" data-category="design">
+                    <div class="relative overflow-hidden bg-cyber-dark border border-gray-800 transition-all duration-500 hover:border-cyber-pink hover:border-glow-pink">
+                        <div class="aspect-w-4 aspect-h-3 overflow-hidden">
+                            <img src="https://picsum.photos/seed/cyber2/600/400" alt="未來主義應用界面設計" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-gradient-to-t from-cyber-black to-transparent opacity-70"></div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-center mb-3"><h3 class="text-xl font-bold text-white" data-lang-zh="霓虹界面" data-lang-en="Neon Interface">霓虹界面</h3><span class="px-3 py-1 text-xs bg-cyber-pink/20 text-cyber-pink border border-cyber-pink/50 rounded" data-lang-zh="界面設計" data-lang-en="UI Design">界面設計</span></div>
+                            <p class="text-gray-400 mb-4" data-lang-zh="移動應用UI設計，採用賽博龐克美學與直觀導航，打造未來感十足的用戶界面。" data-lang-en="Mobile app UI design using cyberpunk aesthetics and intuitive navigation to create a futuristic user interface.">移動應用UI設計，採用賽博龐克美學與直觀導航，打造未來感十足的用戶界面。</p>
+                            <a href="#" class="inline-flex items-center text-cyber-pink hover:text-white transition-colors" data-lang-zh="查看詳情" data-lang-en="View Details">查看詳情 <i class="fa fa-arrow-right ml-2"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item group" data-category="art">
+                    <div class="relative overflow-hidden bg-cyber-dark border border-gray-800 transition-all duration-500 hover:border-cyber-green hover:border-glow-green">
+                        <div class="aspect-w-4 aspect-h-3 overflow-hidden">
+                            <img src="https://picsum.photos/seed/cyber3/600/400" alt="數字藝術作品" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-gradient-to-t from-cyber-black to-transparent opacity-70"></div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-center mb-3"><h3 class="text-xl font-bold text-white" data-lang-zh="數據幽靈" data-lang-en="Data Ghost">數據幽靈</h3><span class="px-3 py-1 text-xs bg-cyber-green/20 text-cyber-green border border-cyber-green/50 rounded" data-lang-zh="數字藝術" data-lang-en="Digital Art">數字藝術</span></div>
+                            <p class="text-gray-400 mb-4" data-lang-zh="探索數據與實體邊界的數字藝術作品，融合glitch效果與未來主義視覺元素。" data-lang-en="Digital art exploring the boundaries between data and physical reality, combining glitch effects with futuristic visual elements.">探索數據與實體邊界的數字藝術作品，融合glitch效果與未來主義視覺元素。</p>
+                            <a href="#" class="inline-flex items-center text-cyber-green hover:text-white transition-colors" data-lang-zh="查看詳情" data-lang-en="View Details">查看詳情 <i class="fa fa-arrow-right ml-2"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 服務部分 -->
+    <section id="services" class="py-20 relative overflow-hidden bg-cyber-dark">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold mb-4" data-lang-zh="我的服務" data-lang-en="My Services">
+                    我的 <span class="text-cyber-blue text-shadow-neon-blue">服務</span>
+                </h2>
+                <div class="w-24 h-1 bg-cyber-blue mx-auto mb-6 border-glow-blue"></div>
+                <p class="text-gray-400 max-w-2xl mx-auto" data-lang-zh="提供前沿的數字創作服務，將賽博龐克美學與先進技術完美融合" data-lang-en="Offering cutting-edge digital creation services that perfectly fuse cyberpunk aesthetics with advanced technology">
+                    提供前沿的數字創作服務，將賽博龐克美學與先進技術完美融合
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="service-card bg-cyber-black border border-gray-800 p-8 transition-all duration-500 hover:border-cyber-blue hover:border-glow-blue hover:-translate-y-2 group">
+                    <div class="w-16 h-16 flex items-center justify-center mb-6 bg-cyber-blue/10 border border-cyber-blue text-cyber-blue text-2xl group-hover:bg-cyber-blue group-hover:text-cyber-black transition-all duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="4" width="20" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2" /><rect x="2" y="2" width="20" height="2" fill="currentColor" /><circle cx="6" cy="3" r="1" fill="currentColor" /><circle cx="10" cy="3" r="1" fill="currentColor" /><circle cx="14" cy="3" r="1" fill="currentColor" /><path d="M6,10 L10,10 M8,8 L8,12" stroke="currentColor" stroke-width="1.5" /><path d="M14,10 L18,10 M16,8 L16,12" stroke="currentColor" stroke-width="1.5" /><path d="M6,16 L10,16 M8,14 L8,18" stroke="currentColor" stroke-width="1" stroke-dasharray="2,2" /><path d="M14,16 L18,16 M16,14 L16,18" stroke="currentColor" stroke-width="1" stroke-dasharray="2,2" /></svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-white" data-lang-zh="Web開發" data-lang-en="Web Development">Web開發</h3>
+                    <p class="text-gray-400 mb-6" data-lang-zh="打造具有未來感的網站與Web應用，融合前沿技術與賽博龐克美學，提供卓越的用戶體驗。" data-lang-en="Creating futuristic websites and web applications that fuse cutting-edge technology with cyberpunk aesthetics to deliver exceptional user experiences.">打造具有未來感的網站與Web應用，融合前沿技術與賽博龐克美學，提供卓越的用戶體驗。</p>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center text-gray-400"><i class="fa fa-check text-cyber-green mr-2"></i><span data-lang-zh="響應式設計" data-lang-en="Responsive Design">響應式設計</span></li>
+                        <li class="flex items-center text-gray-400"><i class="fa fa-check text-cyber-green mr-2"></i><span data-lang-zh="交互動畫效果" data-lang-en="Interactive Animations">交互動畫效果</span></li>
+                        <li class="flex items-center text-gray-400"><i class="fa fa-check text-cyber-green mr-2"></i><span data-lang-zh="性能優化" data-lang-en="Performance Optimization">性能優化</span></li>
+                    </ul>
+                    <a href="#contact" class="inline-block px-6 py-2 border border-cyber-blue text-cyber-blue hover:bg-cyber-blue hover:text-cyber-black transition-all duration-300 text-sm" data-lang-zh="了解更多" data-lang-en="Learn More">了解更多</a>
+                </div>
+                <div class="service-card bg-cyber-black border border-gray-800 p-8 transition-all duration-500 hover:border-cyber-pink hover:border-glow-pink hover:-translate-y-2 group">
+                    <div class="w-16 h-16 flex items-center justify-center mb-6 bg-cyber-pink/10 border border-cyber-pink text-cyber-pink text-2xl group-hover:bg-cyber-pink group-hover:text-cyber-black transition-all duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="18" height="18" rx="1" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="2,2" /><line x1="9" y1="3" x2="9" y2="21" stroke="currentColor" stroke-width="1" stroke-dasharray="2,2" /><line x1="15" y1="3" x2="15" y2="21" stroke="currentColor" stroke-width="1" stroke-dasharray="2,2" /><line x1="3" y1="9" x2="21" y2="9" stroke="currentColor" stroke-width="1" stroke-dasharray="2,2" /><line x1="3" y1="15" x2="21" y2="15" stroke="currentColor" stroke-width="1" stroke-dasharray="2,2" /><rect x="5" y="5" width="6" height="2" fill="currentColor" /><rect x="13" y="5" width="4" height="2" fill="currentColor" /><rect x="5" y="11" width="4" height="4" fill="none" stroke="currentColor" stroke-width="1.5" /><rect x="11" y="11" width="8" height="4" fill="none" stroke="currentColor" stroke-width="1.5" /><rect x="5" y="17" width="14" height="2" fill="none" stroke="currentColor" stroke-width="1.5" /></svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-white" data-lang-zh="UI/UX設計" data-lang-en="UI/UX Design">UI/UX設計</h3>
+                    <p class="text-gray-400 mb-6" data-lang-zh="設計具有未來主義美學的用戶界面與體驗，融合霓虹色彩與幾何元素，創造獨特的視覺語言。" data-lang-en="Designing user interfaces and experiences with futuristic aesthetics, combining neon colors and geometric elements to create a unique visual language.">設計具有未來主義美學的用戶界面與體驗，融合霓虹色彩與幾何元素，創造獨特的視覺語言。</p>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center text-gray-400"><i class="fa fa-check text-cyber-green mr-2"></i><span data-lang-zh="界面原型設計" data-lang-en="Interface Prototyping">界面原型設計</span></li>
+                        <li class="flex items-center text-gray-400"><i class="fa fa-check text-cyber-green mr-2"></i><span data-lang-zh="用戶體驗優化" data-lang-en="User Experience Optimization">用戶體驗優化</span></li>
+                        <li class="flex items-center text-gray-400"><i class="fa fa-check text-cyber-green mr-2"></i><span data-lang-zh="視覺設計系統" data-lang-en="Visual Design Systems">視覺設計系統</span></li>
+                    </ul>
+                    <a href="#contact" class="inline-block px-6 py-2 border border-cyber-pink text-cyber-pink hover:bg-cyber-pink hover:text-cyber-black transition-all duration-300 text-sm" data-lang-zh="了解更多" data-lang-en="Learn More">了解更多</a>
+                </div>
+                <div class="service-card bg-cyber-black border border-gray-800 p-8 transition-all duration-500 hover:border-cyber-green hover:border-glow-green hover:-translate-y-2 group">
+                    <div class="w-16 h-16 flex items-center justify-center mb-6 bg-cyber-green/10 border border-cyber-green text-cyber-green text-2xl group-hover:bg-cyber-green group-hover:text-cyber-black transition-all duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M5,20 L5,4 L19,4 L19,20" fill="none" stroke="currentColor" stroke-width="1.5" /><path d="M8,16 L11,13 L14,17 L17,12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /><circle cx="18" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1" /><circle cx="18" cy="8" r="1.5" fill="none" stroke="currentColor" stroke-width="1" /><path d="M3,12 L5,12" stroke="currentColor" stroke-width="1" stroke-dasharray="2,2" /><path d="M19,12 L21,12" stroke="currentColor" stroke-width="1" stroke-dasharray="2,2" /><path d="M12,3 L12,5" stroke="currentColor" stroke-width="1" stroke-dasharray="2,2" /><path d="M12,19 L12,21" stroke="currentColor" stroke-width="1" stroke-dasharray="2,2" /></svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-white" data-lang-zh="數字藝術" data-lang-en="Digital Art">數字藝術</h3>
+                    <p class="text-gray-400 mb-6" data-lang-zh="創作賽博龐克風格的數字藝術作品，融合glitch效果、霓虹色彩與未來主義主題，打造獨特視覺體驗。" data-lang-en="Creating cyberpunk-style digital artworks that fuse glitch effects, neon colors and futuristic themes to create unique visual experiences.">創作賽博龐克風格的數字藝術作品，融合glitch效果、霓虹色彩與未來主義主題，打造獨特視覺體驗。</p>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center text-gray-400"><i class="fa fa-check text-cyber-green mr-2"></i><span data-lang-zh="數字插畫" data-lang-en="Digital Illustration">數字插畫</span></li>
+                        <li class="flex items-center text-gray-400"><i class="fa fa-check text-cyber-green mr-2"></i><span data-lang-zh="動態視覺效果" data-lang-en="Dynamic Visual Effects">動態視覺效果</span></li>
+                        <li class="flex items-center text-gray-400"><i class="fa fa-check text-cyber-green mr-2"></i><span data-lang-zh="3D建模與渲染" data-lang-en="3D Modeling & Rendering">3D建模與渲染</span></li>
+                    </ul>
+                    <a href="#contact" class="inline-block px-6 py-2 border border-cyber-green text-cyber-green hover:bg-cyber-green hover:text-cyber-black transition-all duration-300 text-sm" data-lang-zh="了解更多" data-lang-en="Learn More">了解更多</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 聯繫部分 -->
+    <section id="contact" class="py-20 relative overflow-hidden bg-grid">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold mb-4" data-lang-zh="聯繫我" data-lang-en="Contact Me">
+                    <span class="text-cyber-pink text-shadow-neon-pink">聯繫</span> 我
+                </h2>
+                <div class="w-24 h-1 bg-cyber-pink mx-auto mb-6 border-glow-pink"></div>
+                <p class="text-gray-400 max-w-2xl mx-auto" data-lang-zh="準備好開始你的賽博龐克項目了嗎？通過以下終端界面發送消息，連接到我的系統" data-lang-en="Ready to start your cyberpunk project? Send a message through the terminal interface below to connect to my system">
+                    準備好開始你的賽博龐克項目了嗎？通過以下終端界面發送消息，連接到我的系統
+                </p>
+            </div>
+            
+            <div class="flex flex-col lg:flex-row gap-12">
+                <div class="lg:w-1/2">
+                    <div class="bg-cyber-dark border border-gray-800 rounded-sm overflow-hidden">
+                        <div class="bg-gray-800 px-4 py-3 flex items-center">
+                            <div class="flex space-x-2 mr-4"><div class="w-3 h-3 rounded-full bg-cyber-pink"></div><div class="w-3 h-3 rounded-full bg-yellow-500"></div><div class="w-3 h-3 rounded-full bg-cyber-green"></div></div>
+                            <span class="text-gray-400 text-sm">contact_terminal.exe</span>
+                        </div>
+                        
+                        <div class="p-6 font-terminal text-sm text-cyber-green">
+                            <p class="mb-2" data-lang-zh="> 連接到通信系統..." data-lang-en="> Connecting to communication system...">> 連接到通信系統...</p>
+                            <p class="mb-2" data-lang-zh="> 驗證身份成功" data-lang-en="> Identity verification successful">> 驗證身份成功</p>
+                            <p class="mb-4" data-lang-zh="> 請輸入消息參數" data-lang-en="> Please enter message parameters">> 請輸入消息參數</p>
+                            
+                            <form id="contact-form" class="space-y-6">
+                                <div>
+                                    <label for="name" class="block mb-2" data-lang-zh="名稱:" data-lang-en="Name:">名稱:</label>
+                                    <input type="text" id="name" name="name" class="w-full bg-cyber-black border border-gray-700 focus:border-cyber-blue outline-none px-3 py-2 text-gray-300 transition-colors" required>
+                                </div>
+                                <div>
+                                    <label for="email" class="block mb-2" data-lang-zh="電子郵件:" data-lang-en="Email:">電子郵件:</label>
+                                    <input type="email" id="email" name="email" class="w-full bg-cyber-black border border-gray-700 focus:border-cyber-blue outline-none px-3 py-2 text-gray-300 transition-colors" required>
+                                </div>
+                                <div>
+                                    <label for="message" class="block mb-2" data-lang-zh="消息:" data-lang-en="Message:">消息:</label>
+                                    <textarea id="message" name="message" rows="4" class="w-full bg-cyber-black border border-gray-700 focus:border-cyber-blue outline-none px-3 py-2 text-gray-300 transition-colors" required></textarea>
+                                </div>
+                                <button type="submit" class="w-full px-8 py-3 bg-cyber-blue/20 border border-cyber-blue text-cyber-blue hover:bg-cyber-blue hover:text-cyber-black transition-all duration-300 rounded-sm text-shadow-neon-blue border-glow-blue" data-lang-zh="發送消息" data-lang-en="Send Message">
+                                    發送消息
+                                </button>
+                            </form>
+                            <p id="form-status" class="mt-4 h-5"></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2">
+                    <h3 class="text-2xl font-bold mb-6 text-cyber-blue text-shadow-neon-blue" data-lang-zh="其他聯繫方式" data-lang-en="Other Contact Methods">其他聯繫方式</h3>
+                    <p class="text-gray-400 mb-8" data-lang-zh="你也可以通過以下渠道找到我，探索更多關於我的數字世界。" data-lang-en="You can also find me through the following channels to explore more about my digital world.">
+                        你也可以通過以下渠道找到我，探索更多關於我的數字世界。
+                    </p>
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <i class="fa fa-envelope text-cyber-pink text-2xl mr-4 mt-1"></i>
+                            <div>
+                                <h4 class="text-lg font-semibold text-white" data-lang-zh="電子郵件" data-lang-en="Email">電子郵件</h4>
+                                <a href="mailto:your-email@example.com" class="text-gray-400 hover:text-cyber-pink transition-colors">your-email@example.com</a>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fa fa-phone text-cyber-green text-2xl mr-4 mt-1"></i>
+                            <div>
+                                <h4 class="text-lg font-semibold text-white" data-lang-zh="電話" data-lang-en="Phone">電話</h4>
+                                <p class="text-gray-400">+886 123 456 789</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fa fa-map-marker text-cyber-blue text-2xl mr-4 mt-1"></i>
+                            <div>
+                                <h4 class="text-lg font-semibold text-white" data-lang-zh="地址" data-lang-en="Address">地址</h4>
+                                <p class="text-gray-400" data-lang-zh="台灣，桃園市" data-lang-en="Taoyuan, Taiwan">台灣，桃園市</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-12">
+                        <h4 class="text-lg font-semibold mb-4 text-white" data-lang-zh="關注我" data-lang-en="Follow Me">關注我</h4>
+                        <div class="flex space-x-6">
+                            <a href="#" class="text-gray-400 hover:text-cyber-blue text-2xl transition-colors"><i class="fa fa-github"></i></a>
+                            <a href="#" class="text-gray-400 hover:text-cyber-pink text-2xl transition-colors"><i class="fa fa-linkedin"></i></a>
+                            <a href="#" class="text-gray-400 hover:text-cyber-green text-2xl transition-colors"><i class="fa fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-cyber-dark py-8 border-t border-cyber-blue/20">
+        <div class="container mx-auto px-4 text-center text-gray-500">
+            <p>&copy; 2024 N30NC0DE. <span data-lang-zh="版權所有" data-lang-en="All Rights Reserved">版權所有</span>.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- 語言切換邏輯 ---
+            const langZhBtn = document.getElementById('lang-zh');
+            const langEnBtn = document.getElementById('lang-en');
+            const translatableElements = document.querySelectorAll('[data-lang-zh], [data-lang-en]');
+
+            const setLanguage = (lang) => {
+                // 更新所有元素的文字
+                translatableElements.forEach(el => {
+                    const text = el.getAttribute(`data-lang-${lang}`);
+                    if (text) {
+                        // 處理包含子元素的情況，只更新父元素的文字節點
+                        if (el.children.length > 0) {
+                            let firstNode = el.firstChild;
+                            while(firstNode && firstNode.nodeType !== Node.TEXT_NODE) {
+                                firstNode = firstNode.nextSibling;
+                            }
+                            if(firstNode) firstNode.nodeValue = text.split(' ')[0] + ' '; // 更新第一個文字節點
+                        } else {
+                           el.textContent = text;
+                        }
+
+                        // 特別處理 glitch 效果的 data-text
+                        if (el.classList.contains('glitch-effect')) {
+                            el.setAttribute('data-text', text);
+                        }
+                    }
+                });
+
+                // 更新頁面標題
+                const titleEl = document.querySelector('title');
+                const titleText = titleEl.getAttribute(`data-lang-${lang}`);
+                if(titleText) titleEl.textContent = titleText;
+
+
+                // 更新按鈕樣式
+                if (lang === 'zh') {
+                    langZhBtn.className = 'px-2 py-1 text-sm bg-cyber-blue/20 border border-cyber-blue text-cyber-blue transition-colors';
+                    langEnBtn.className = 'px-2 py-1 text-sm bg-transparent border border-gray-700 text-gray-400 hover:text-cyber-blue hover:border-cyber-blue transition-colors';
+                } else {
+                    langEnBtn.className = 'px-2 py-1 text-sm bg-cyber-blue/20 border border-cyber-blue text-cyber-blue transition-colors';
+                    langZhBtn.className = 'px-2 py-1 text-sm bg-transparent border border-gray-700 text-gray-400 hover:text-cyber-blue hover:border-cyber-blue transition-colors';
+                }
+
+                // 儲存語言偏好
+                localStorage.setItem('portfolio-lang', lang);
+                document.documentElement.lang = lang === 'zh' ? 'zh-Hant' : 'en';
+            };
+
+            langZhBtn.addEventListener('click', () => setLanguage('zh'));
+            langEnBtn.addEventListener('click', () => setLanguage('en'));
+
+            // 頁面加載時應用儲存的語言或預設為中文
+            const savedLang = localStorage.getItem('portfolio-lang') || 'zh';
+            setLanguage(savedLang);
+
+
+            // --- 其他既有功能 ---
+            // 粒子效果
+            particlesJS('particles-js', {
+                "particles": { "number": { "value": 60, "density": { "enable": true, "value_area": 800 } }, "color": { "value": "#00F0FF" }, "shape": { "type": "edge" }, "opacity": { "value": 0.5, "random": true, "anim": { "enable": false } }, "size": { "value": 2, "random": true }, "line_linked": { "enable": true, "distance": 150, "color": "#FF2A6D", "opacity": 0.3, "width": 1 }, "move": { "enable": true, "speed": 3, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false } },
+                "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" } }, "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 1 } }, "push": { "particles_nb": 4 } } }
+            });
+
+            // 主题切换
+            const themeToggle = document.getElementById('theme-toggle');
+            themeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark');
+                const icon = themeToggle.querySelector('i');
+                icon.classList.toggle('fa-moon-o');
+                icon.classList.toggle('fa-sun-o');
+            });
+
+            // 移动端菜单
+            const menuToggle = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            menuToggle.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // 导航栏滚动效果
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('shadow-lg', 'shadow-cyber-blue/10');
+                } else {
+                    navbar.classList.remove('shadow-lg', 'shadow-cyber-blue/10');
+                }
+            });
+
+            // 技能条动画
+            const skillBars = document.querySelectorAll('.skill-bar');
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.width = entry.target.dataset.width + '%';
+                        entry.target.style.transition = 'width 1.5s ease-out';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            skillBars.forEach(bar => observer.observe(bar));
+
+            // 作品过滤
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const portfolioItems = document.querySelectorAll('.portfolio-item');
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => b.classList.remove('active', 'bg-cyber-green/20', 'border-cyber-green', 'text-cyber-green'));
+                    btn.classList.add('active', 'bg-cyber-green/20', 'border-cyber-green', 'text-cyber-green');
+                    
+                    const filter = btn.dataset.filter;
+                    portfolioItems.forEach(item => {
+                        if (filter === 'all' || item.dataset.category === filter) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // 终端打字机效果
+            const terminalText = document.getElementById('terminal-text');
+            const terminalLines = [
+                { text: "> 加載身份信息中...", lang: "zh" },
+                { text: "> Loading identity information...", lang: "en" },
+                { text: "> 驗證賽博格植入物...", lang: "zh" },
+                { text: "> Verifying cyborg implants...", lang: "en" },
+                { text: "> 連接到矩陣...", lang: "zh" },
+                { text: "> Connecting to the Matrix...", lang: "en" },
+                { text: "> 歡迎, 操作員.", lang: "zh" },
+                { text: "> Welcome, Operator.", lang: "en" }
+            ];
+            let lineIndex = 0;
+            let charIndex = 0;
+            
+            function typeTerminal() {
+                const currentLang = localStorage.getItem('portfolio-lang') || 'zh';
+                const linesForLang = terminalLines.filter(line => line.lang === currentLang);
+                if (lineIndex >= linesForLang.length) return;
+
+                const currentLine = linesForLang[lineIndex].text;
+                if (charIndex < currentLine.length) {
+                    terminalText.innerHTML = currentLine.substring(0, charIndex + 1) + '<span class="terminal-cursor"></span>';
+                    charIndex++;
+                    setTimeout(typeTerminal, 100);
+                } else {
+                    charIndex = 0;
+                    lineIndex++;
+                    setTimeout(typeTerminal, 1000);
+                }
+            }
+            // typeTerminal(); // 初始调用
+
+            // 表单提交
+            const contactForm = document.getElementById('contact-form');
+            const formStatus = document.getElementById('form-status');
+            contactForm.addEventListener('submit', e => {
+                e.preventDefault();
+                formStatus.textContent = '發送中...';
+                formStatus.classList.add('text-cyber-blue');
+                
+                setTimeout(() => {
+                    formStatus.textContent = '消息發送成功！';
+                    formStatus.classList.remove('text-cyber-blue');
+                    formStatus.classList.add('text-cyber-green');
+                    contactForm.reset();
+                    setTimeout(() => formStatus.textContent = '', 3000);
+                }, 1500);
+            });
+        });
+    </script>
+</body>
+</html>
