@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>像素風作品集 | Pixel Art Portfolio</title>
+    <!-- 引入Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- 引入像素字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind配置 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pixelRed: '#FF3B30',
+                        pixelYellow: '#FFCC00',
+                        pixelGreen: '#4CD964',
+                        pixelBlue: '#007AFF',
+                        pixelPurple: '#AF52DE',
+                        pixelDark: '#1C1C1E',
+                        pixelLight: '#F5F5F7',
+                        pixelGray: '#8E8E93'
+                    },
+                    fontFamily: {
+                        'press': ['"Press Start 2P"', 'cursive'],
+                        'vt': ['VT323', 'monospace', 'sans-serif']
+                    },
+                    animation: {
+                        'blink': 'blink 1s step-end infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate'
+                    },
+                    keyframes: {
+                        blink: {
+                            '0%, 100%': { opacity: 1 },
+                            '50%': { opacity: 0 }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        },
+                        glow: {
+                            '0%': { boxShadow: '0 0 5px rgba(76, 217, 100, 0.7)' },
+                            '100%': { boxShadow: '0 0 20px rgba(76, 217, 100, 0.9)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .pixel-border {
+                box-shadow: 
+                    4px 0 0 0 theme('colors.pixelDark'),
+                    0 4px 0 0 theme('colors.pixelDark'),
+                    4px 4px 0 0 theme('colors.pixelDark'),
+                    4px 0 0 0 theme('colors.pixelDark') inset,
+                    0 4px 0 0 theme('colors.pixelDark') inset;
+            }
+            .pixel-button {
+                position: relative;
+                transition: all 0.1s ease;
+            }
+            .pixel-button::after {
+                content: '';
+                position: absolute;
+                bottom: -4px;
+                right: -4px;
+                width: 100%;
+                height: 100%;
+                background-color: theme('colors.pixelDark');
+                z-index: -1;
+            }
+            .pixel-button:hover {
+                transform: translate(2px, 2px);
+            }
+            .pixel-button:hover::after {
+                transform: translate(-2px, -2px);
+            }
+            .text-shadow {
+                text-shadow: 3px 3px 0 theme('colors.pixelDark');
+            }
+            .cursor-pixel {
+                cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2'%3E%3Cpath d='M12 2v20M2 12h20'/%3E%3C/svg%3E"), auto;
+            }
+            .pixel-bg {
+                background-image: 
+                    linear-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+                background-size: 20px 20px;
+            }
+            .skill-bar {
+                height: 16px;
+                background-color: #222;
+                position: relative;
+                overflow: hidden;
+            }
+            .skill-progress {
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                transition: width 1.5s ease-in-out;
+            }
+            .retro-cursor::after {
+                content: "|";
+                animation: blink 1s step-end infinite;
+            }
+        }
+    </style>
+</head>
+<body class="bg-pixelLight font-vt text-pixelDark cursor-pixel pixel-bg min-h-screen">
+    <!-- 像素星星背景 (固定定位) -->
+    <div id="stars" class="fixed top-0 left-0 w-full h-full pointer-events-none z-0"></div>
+
+    <!-- 导航栏 -->
+    <nav id="navbar" class="sticky top-0 z-50 bg-pixelLight/90 backdrop-blur-sm pixel-border py-4 px-6 md:px-12 transition-all duration-300">
+        <div class="container mx-auto flex justify-between items-center">
+            <!-- Logo -->
+            <div class="flex items-center">
+                <svg class="w-10 h-10 mr-2" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="4" y="4" width="24" height="24" fill="#FF3B30"/>
+                    <rect x="8" y="8" width="8" height="8" fill="#FFCC00"/>
+                    <rect x="16" y="8" width="8" height="8" fill="#4CD964"/>
+                    <rect x="8" y="16" width="8" height="8" fill="#007AFF"/>
+                    <rect x="16" y="16" width="8" height="8" fill="#AF52DE"/>
+                </svg>
+                <h1 class="font-press text-xl md:text-2xl text-pixelBlue text-shadow hidden md:block">
+                    <span class="lang-zh">像素藝術家</span>
+                    <span class="lang-en hidden">Pixel Artist</span>
+                </h1>
+            </div>
+            
+            <!-- 桌面导航菜单 -->
+            <ul class="hidden md:flex space-x-6 font-press text-sm">
+                <li><a href="#hero" class="lang-zh hover:text-pixelRed transition-colors">首頁</a><a href="#hero" class="lang-en hidden hover:text-pixelRed transition-colors">Home</a></li>
+                <li><a href="#about" class="lang-zh hover:text-pixelRed transition-colors">關於我</a><a href="#about" class="lang-en hidden hover:text-pixelRed transition-colors">About</a></li>
+                <li><a href="#works" class="lang-zh hover:text-pixelRed transition-colors">作品集</a><a href="#works" class="lang-en hidden hover:text-pixelRed transition-colors">Works</a></li>
+                <li><a href="#services" class="lang-zh hover:text-pixelRed transition-colors">服務</a><a href="#services" class="lang-en hidden hover:text-pixelRed transition-colors">Services</a></li>
+                <li><a href="#contact" class="lang-zh hover:text-pixelRed transition-colors">聯絡</a><a href="#contact" class="lang-en hidden hover:text-pixelRed transition-colors">Contact</a></li>
+            </ul>
+            
+            <!-- 语言切换按钮 -->
+            <button id="langToggle" class="font-press text-xs bg-pixelYellow px-3 py-1 pixel-button hover:bg-pixelRed transition-colors">
+                <span class="lang-zh">EN</span>
+                <span class="lang-en hidden">中文</span>
+            </button>
+            
+            <!-- 移动端汉堡菜单按钮 -->
+            <button id="menuToggle" class="md:hidden text-2xl">
+                <i class="fa fa-bars"></i>
+            </button>
+        </div>
+        
+        <!-- 移动端菜单 -->
+        <div id="mobileMenu" class="md:hidden hidden mt-4 pixel-border bg-pixelLight p-4">
+            <ul class="space-y-3 font-press text-sm">
+                <li><a href="#hero" class="lang-zh block hover:text-pixelRed transition-colors">首頁</a><a href="#hero" class="lang-en hidden block hover:text-pixelRed transition-colors">Home</a></li>
+                <li><a href="#about" class="lang-zh block hover:text-pixelRed transition-colors">關於我</a><a href="#about" class="lang-en hidden block hover:text-pixelRed transition-colors">About</a></li>
+                <li><a href="#works" class="lang-zh block hover:text-pixelRed transition-colors">作品集</a><a href="#works" class="lang-en hidden block hover:text-pixelRed transition-colors">Works</a></li>
+                <li><a href="#services" class="lang-zh block hover:text-pixelRed transition-colors">服務</a><a href="#services" class="lang-en hidden block hover:text-pixelRed transition-colors">Services</a></li>
+                <li><a href="#contact" class="lang-zh block hover:text-pixelRed transition-colors">聯絡</a><a href="#contact" class="lang-en hidden block hover:text-pixelRed transition-colors">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="relative z-10">
+        <!-- Hero区块 -->
+        <section id="hero" class="min-h-[80vh] flex items-center justify-center px-6 py-20 relative overflow-hidden">
+            <!-- 像素风景背景 -->
+            <div class="absolute bottom-0 left-0 w-full h-1/2 z-0">
+                <svg viewBox="0 0 1000 300" preserveAspectRatio="none" class="w-full h-full">
+                    <!-- 远山 -->
+                    <path d="M0,200 L200,150 L400,180 L600,140 L800,170 L1000,130 L1000,300 L0,300 Z" fill="#AF52DE" />
+                    <!-- 近山 -->
+                    <path d="M0,250 L250,200 L500,230 L750,190 L1000,220 L1000,300 L0,300 Z" fill="#007AFF" />
+                    <!-- 地面 -->
+                    <path d="M0,280 L1000,280 L1000,300 L0,300 Z" fill="#4CD964" />
+                    <!-- 太阳 -->
+                    <circle cx="850" cy="80" r="50" fill="#FFCC00" />
+                </svg>
+            </div>
+            
+            <div class="container mx-auto text-center relative z-10">
+                <div class="max-w-2xl mx-auto">
+                    <h1 class="font-press text-4xl md:text-6xl mb-6 text-shadow">
+                        <span class="text-pixelRed block md:inline">「</span>
+                        <span id="typingText" class="retro-cursor">
+                            <span class="lang-zh">你好，我是像素藝術家</span>
+                            <span class="lang-en hidden">Hello, I'm Pixel Artist</span>
+                        </span>
+                        <span class="text-pixelRed block md:inline">」</span>
+                    </h1>
+                    <p class="text-lg md:text-xl mb-8 font-vt max-w-lg mx-auto">
+                        <span class="lang-zh">熱愛復古遊戲美學，創作充滿懷舊感的像素藝術作品</span>
+                        <span class="lang-en hidden">Passionate about retro game aesthetics, creating nostalgic pixel art works</span>
+                    </p>
+                    <a href="#works" class="inline-block font-press bg-pixelRed text-white px-6 py-3 pixel-button hover:bg-pixelPurple transition-colors">
+                        <span class="lang-zh">查看作品</span>
+                        <span class="lang-en hidden">View Works</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 关于我 -->
+        <section id="about" class="py-20 px-6 bg-white">
+            <div class="container mx-auto">
+                <h2 class="font-press text-3xl md:text-4xl text-center mb-16 text-pixelBlue text-shadow">
+                    <span class="lang-zh">關於我</span>
+                    <span class="lang-en hidden">About Me</span>
+                </h2>
+                
+                <div class="flex flex-col md:flex-row items-center gap-10">
+                    <!-- 像素头像 -->
+                    <div class="w-64 h-64 md:w-80 md:h-80 relative mx-auto">
+                        <div class="absolute inset-0 bg-pixelDark animate-pulse-slow"></div>
+                        <div class="absolute inset-2 bg-pixelLight pixel-border">
+                            <!-- 像素头像SVG -->
+                            <svg viewBox="0 0 100 100" class="w-full h-full">
+                                <!-- 头部 -->
+                                <rect x="20" y="15" width="60" height="60" fill="#FFD7B5" />
+                                <!-- 头发 -->
+                                <rect x="20" y="15" width="60" height="15" fill="#3A2E39" />
+                                <rect x="20" y="30" width="10" height="20" fill="#3A2E39" />
+                                <rect x="70" y="30" width="10" height="20" fill="#3A2E39" />
+                                <!-- 眼睛 -->
+                                <rect x="35" y="40" width="10" height="10" fill="#000" />
+                                <rect x="55" y="40" width="10" height="10" fill="#000" />
+                                <rect x="38" y="43" width="4" height="4" fill="#FFF" />
+                                <rect x="58" y="43" width="4" height="4" fill="#FFF" />
+                                <!-- 嘴巴 -->
+                                <rect x="45" y="60" width="10" height="5" fill="#E63946" />
+                                <!-- 代码帽 -->
+                                <rect x="15" y="5" width="70" height="10" fill="#007AFF" />
+                                <rect x="30" y="0" width="40" height="5" fill="#007AFF" />
+                                <!-- 帽子上的代码图案 -->
+                                <rect x="35" y="2" width="3" height="3" fill="#FFF" />
+                                <rect x="42" y="2" width="3" height="3" fill="#FFF" />
+                                <rect x="49" y="2" width="3" height="3" fill="#FFF" />
+                                <rect x="56" y="2" width="3" height="3" fill="#FFF" />
+                                <rect x="63" y="2" width="3" height="3" fill="#FFF" />
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <!-- 个人介绍和技能 -->
+                    <div class="flex-1 max-w-2xl">
+                        <p class="text-lg mb-6">
+                            <span class="lang-zh">我是一位熱愛像素藝術的創作者，有超過5年的像素繪圖經驗。曾參與多個獨立遊戲項目的美術設計，擅長復古8-bit和16-bit風格的角色與場景設計。</span>
+                            <span class="lang-en hidden">I'm a pixel art enthusiast with over 5 years of experience in pixel drawing. I've participated in the art design of several indie game projects, specializing in retro 8-bit and 16-bit style character and scene design.</span>
+                        </p>
+                        <p class="text-lg mb-8">
+                            <span class="lang-zh">除了像素藝術，我也精通網頁設計與開發，能夠將像素美學完美融入現代網站中，創造出獨特的視覺體驗。</span>
+                            <span class="lang-en hidden">In addition to pixel art, I'm also proficient in web design and development, able to perfectly integrate pixel aesthetics into modern websites to create a unique visual experience.</span>
+                        </p>
+                        
+                        <!-- 技能条 (HP/MP风格) -->
+                        <h3 class="font-press text-xl mb-4 text-pixelRed">
+                            <span class="lang-zh">技能值</span>
+                            <span class="lang-en hidden">Skills</span>
+                        </h3>
+                        
+                        <div class="space-y-6">
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="font-press text-sm lang-zh">像素繪圖</span>
+                                    <span class="font-press text-sm lang-en hidden">Pixel Art</span>
+                                    <span class="font-press text-sm">95%</span>
+                                </div>
+                                <div class="skill-bar pixel-border">
+                                    <div class="skill-progress bg-pixelGreen" data-width="95%"></div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="font-press text-sm lang-zh">網頁開發</span>
+                                    <span class="font-press text-sm lang-en hidden">Web Development</span>
+                                    <span class="font-press text-sm">85%</span>
+                                </div>
+                                <div class="skill-bar pixel-border">
+                                    <div class="skill-progress bg-pixelBlue" data-width="85%"></div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="font-press text-sm lang-zh">UI/UX設計</span>
+                                    <span class="font-press text-sm lang-en hidden">UI/UX Design</span>
+                                    <span class="font-press text-sm">80%</span>
+                                </div>
+                                <div class="skill-bar pixel-border">
+                                    <div class="skill-progress bg-pixelPurple" data-width="80%"></div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="font-press text-sm lang-zh">遊戲設計</span>
+                                    <span class="font-press text-sm lang-en hidden">Game Design</span>
+                                    <span class="font-press text-sm">75%</span>
+                                </div>
+                                <div class="skill-bar pixel-border">
+                                    <div class="skill-progress bg-pixelYellow" data-width="75%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 作品集 -->
+        <section id="works" class="py-20 px-6 bg-pixelLight">
+            <div class="container mx-auto">
+                <h2 class="font-press text-3xl md:text-4xl text-center mb-4 text-pixelRed text-shadow">
+                    <span class="lang-zh">作品集</span>
+                    <span class="lang-en hidden">My Works</span>
+                </h2>
+                <p class="text-center mb-12 max-w-2xl mx-auto">
+                    <span class="lang-zh">探索我的像素藝術創作，包括遊戲美術、插圖和互動作品</span>
+                    <span class="lang-en hidden">Explore my pixel art creations, including game art, illustrations and interactive works</span>
+                </p>
+                
+                <!-- 作品筛选器 (游戏菜单风格) -->
+                <div class="flex flex-wrap justify-center gap-3 mb-10">
+                    <button class="filter-btn active font-press text-xs bg-pixelBlue text-white px-4 py-2 pixel-button hover:bg-pixelRed transition-colors" data-filter="all">
+                        <span class="lang-zh">全部</span>
+                        <span class="lang-en hidden">All</span>
+                    </button>
+                    <button class="filter-btn font-press text-xs bg-pixelYellow text-pixelDark px-4 py-2 pixel-button hover:bg-pixelRed transition-colors" data-filter="game">
+                        <span class="lang-zh">遊戲美術</span>
+                        <span class="lang-en hidden">Game Art</span>
+                    </button>
+                    <button class="filter-btn font-press text-xs bg-pixelYellow text-pixelDark px-4 py-2 pixel-button hover:bg-pixelRed transition-colors" data-filter="illustration">
+                        <span class="lang-zh">插圖</span>
+                        <span class="lang-en hidden">Illustrations</span>
+                    </button>
+                    <button class="filter-btn font-press text-xs bg-pixelYellow text-pixelDark px-4 py-2 pixel-button hover:bg-pixelRed transition-colors" data-filter="web">
+                        <span class="lang-zh">網頁設計</span>
+                        <span class="lang-en hidden">Web Design</span>
+                    </button>
+                </div>
+                
+                <!-- 作品网格 -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- 作品1 -->
+                    <div class="work-item pixel-border bg-white overflow-hidden transform transition-transform hover:-translate-y-2" data-category="game">
+                        <div class="h-60 overflow-hidden bg-pixelDark">
+                            <!-- 像素游戏角色 -->
+                            <svg viewBox="0 0 120 120" class="w-full h-full">
+                                <rect x="20" y="20" width="80" height="80" fill="#007AFF" /> <!-- 身体 -->
+                                <rect x="40" y="10" width="40" height="10" fill="#FF3B30" /> <!-- 头发 -->
+                                <rect x="30" y="30" width="10" height="30" fill="#007AFF" /> <!-- 左臂 -->
+                                <rect x="80" y="30" width="10" height="30" fill="#007AFF" /> <!-- 右臂 -->
+                                <rect x="40" y="100" width="15" height="10" fill="#007AFF" /> <!-- 左腿 -->
+                                <rect x="65" y="100" width="15" height="10" fill="#007AFF" /> <!-- 右腿 -->
+                                <rect x="50" y="50" width="20" height="10" fill="#FFD7B5" /> <!-- 脸 -->
+                                <rect x="55" y="52" width="5" height="5" fill="#000" /> <!-- 左眼 -->
+                                <rect x="65" y="52" width="5" height="5" fill="#000" /> <!-- 右眼 -->
+                                <rect x="55" y="65" width="10" height="3" fill="#E63946" /> <!-- 嘴 -->
+                            </svg>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="font-press text-lg mb-2 text-pixelBlue">
+                                <span class="lang-zh">冒險者角色設計</span>
+                                <span class="lang-en hidden">Adventurer Character</span>
+                            </h3>
+                            <p class="text-sm mb-4">
+                                <span class="lang-zh">16-bit風格的角色扮演遊戲主角設計</span>
+                                <span class="lang-en hidden">16-bit style RPG protagonist design</span>
+                            </p>
+                            <a href="#" class="inline-block font-press text-xs bg-pixelGreen text-white px-3 py-1 pixel-button hover:bg-pixelBlue transition-colors">
+                                <span class="lang-zh">查看詳情</span>
+                                <span class="lang-en hidden">View Details</span>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- 作品2 -->
+                    <div class="work-item pixel-border bg-white overflow-hidden transform transition-transform hover:-translate-y-2" data-category="illustration">
+                        <div class="h-60 overflow-hidden bg-pixelDark">
+                            <!-- 像素城市风景 -->
+                            <svg viewBox="0 0 120 120" class="w-full h-full">
+                                <rect x="0" y="80" width="120" height="40" fill="#4CD964" /> <!-- 地面 -->
+                                <rect x="10" y="60" width="20" height="20" fill="#8E8E93" /> <!-- 建筑1 -->
+                                <rect x="15" y="50" width="10" height="10" fill="#8E8E93" />
+                                <rect x="40" y="40" width="25" height="40" fill="#8E8E93" /> <!-- 建筑2 -->
+                                <rect x="45" y="30" width="15" height="10" fill="#8E8E93" />
+                                <rect x="80" y="50" width="20" height="30" fill="#8E8E93" /> <!-- 建筑3 -->
+                                <rect x="20" y="80" width="5" height="5" fill="#000" /> <!-- 窗户 -->
+                                <rect x="30" y="80" width="5" height="5" fill="#000" />
+                                <rect x="45" y="60" width="5" height="5" fill="#000" />
+                                <rect x="55" y="60" width="5" height="5" fill="#000" />
+                                <rect x="45" y="70" width="5" height="5" fill="#000" />
+                                <rect x="55" y="70" width="5" height="5" fill="#000" />
+                                <rect x="85" y="60" width="5" height="5" fill="#000" />
+                                <rect x="95" y="60" width="5" height="5" fill="#000" />
+                                <rect x="85" y="70" width="5" height="5" fill="#000" />
+                                <rect x="95" y="70" width="5" height="5" fill="#000" />
+                                <circle cx="100" cy="20" r="10" fill="#FFCC00" /> <!-- 太阳 -->
+                            </svg>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="font-press text-lg mb-2 text-pixelBlue">
+                                <span class="lang-zh">像素城市風景</span>
+                                <span class="lang-en hidden">Pixel Cityscape</span>
+                            </h3>
+                            <p class="text-sm mb-4">
+                                <span class="lang-zh">復古遊戲風格的城市場景插圖</span>
+                                <span class="lang-en hidden">Retro game style city scene illustration</span>
+                            </p>
+                            <a href="#" class="inline-block font-press text-xs bg-pixelGreen text-white px-3 py-1 pixel-button hover:bg-pixelBlue transition-colors">
+                                <span class="lang-zh">查看詳情</span>
+                                <span class="lang-en hidden">View Details</span>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- 作品3 -->
+                    <div class="work-item pixel-border bg-white overflow-hidden transform transition-transform hover:-translate-y-2" data-category="web">
+                        <div class="h-60 overflow-hidden bg-pixelDark">
+                            <!-- 像素网页设计 -->
+                            <svg viewBox="0 0 120 120" class="w-full h-full">
+                                <rect x="10" y="10" width="100" height="80" fill="#FFF" stroke="#000" stroke-width="2" /> <!-- 屏幕 -->
+                                <rect x="30" y="30" width="60" height="10" fill="#007AFF" /> <!-- 导航栏 -->
+                                <rect x="20" y="50" width="25" height="25" fill="#FF3B30" /> <!-- 图片1 -->
+                                <rect x="55" y="50" width="25" height="25" fill="#4CD964" /> <!-- 图片2 -->
+                                <rect x="90" y="50" width="10" height="10" fill="#FFCC00" /> <!-- 按钮 -->
+                                <rect x="40" y="100" width="40" height="5" fill="#8E8E93" /> <!-- 底座 -->
+                                <!-- 像素文字表示内容 -->
+                                <rect x="20" y="80" width="3" height="3" fill="#000" />
+                                <rect x="25" y="80" width="3" height="3" fill="#000" />
+                                <rect x="30" y="80" width="3" height="3" fill="#000" />
+                                <rect x="40" y="80" width="3" height="3" fill="#000" />
+                                <rect x="45" y="80" width="3" height="3" fill="#000" />
+                                <rect x="50" y="80" width="3" height="3" fill="#000" />
+                            </svg>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="font-press text-lg mb-2 text-pixelBlue">
+                                <span class="lang-zh">像素風網站設計</span>
+                                <span class="lang-en hidden">Pixel Style Website</span>
+                            </h3>
+                            <p class="text-sm mb-4">
+                                <span class="lang-zh">融合復古像素美學的現代網站界面</span>
+                                <span class="lang-en hidden">Modern website interface with retro pixel aesthetics</span>
+                            </p>
+                            <a href="#" class="inline-block font-press text-xs bg-pixelGreen text-white px-3 py-1 pixel-button hover:bg-pixelBlue transition-colors">
+                                <span class="lang-zh">查看詳情</span>
+                                <span class="lang-en hidden">View Details</span>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- 作品4 -->
+                    <div class="work-item pixel-border bg-white overflow-hidden transform transition-transform hover:-translate-y-2" data-category="game">
+                        <div class="h-60 overflow-hidden bg-pixelDark">
+                            <!-- 像素游戏场景 -->
+                            <svg viewBox="0 0 120 120" class="w-full h-full">
+                                <rect x="0" y="80" width="120" height="40" fill="#8B4513" /> <!-- 地面 -->
+                                <rect x="0" y="0" width="120" height="80" fill="#87CEEB" /> <!-- 天空 -->
+                                <path d="M0,60 Q30,40 60,60 Q90,80 120,60 L120,80 L0,80 Z" fill="#228B22" /> <!-- 山丘 -->
+                                <rect x="20" y="60" width="10" height="20" fill="#A0522D" /> <!-- 树干 -->
+                                <circle cx="25" cy="55" r="10" fill="#228B22" /> <!-- 树冠 -->
+                                <rect x="80" y="70" width="5" height="10" fill="#A0522D" /> <!-- 小树干 -->
+                                <circle cx="82" cy="65" r="5" fill="#228B22" /> <!-- 小树冠 -->
+                                <rect x="50" y="75" width="20" height="5" fill="#D2691E" /> <!-- 小屋底部 -->
+                                <rect x="55" y="60" width="10" height="15" fill="#CD853F" /> <!-- 小屋上部 -->
+                                <rect x="58" y="65" width="4" height="4" fill="#000" /> <!-- 窗户 -->
+                            </svg>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="font-press text-lg mb-2 text-pixelBlue">
+                                <span class="lang-zh">森林場景設計</span>
+                                <span class="lang-en hidden">Forest Scene</span>
+                            </h3>
+                            <p class="text-sm mb-4">
+                                <span class="lang-zh">冒險遊戲中的森林場景與建築</span>
+                                <span class="lang-en hidden">Forest scene and architecture in adventure game</span>
+                            </p>
+                            <a href="#" class="inline-block font-press text-xs bg-pixelGreen text-white px-3 py-1 pixel-button hover:bg-pixelBlue transition-colors">
+                                <span class="lang-zh">查看詳情</span>
+                                <span class="lang-en hidden">View Details</span>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- 作品5 -->
+                    <div class="work-item pixel-border bg-white overflow-hidden transform transition-transform hover:-translate-y-2" data-category="illustration">
+                        <div class="h-60 overflow-hidden bg-pixelDark">
+                            <!-- 像素机器人 -->
+                            <svg viewBox="0 0 120 120" class="w-full h-full">
+                                <rect x="40" y="30" width="40" height="40" fill="#8E8E93" /> <!-- 身体 -->
+                                <rect x="50" y="10" width="20" height="20" fill="#8E8E93" /> <!-- 头部 -->
+                                <rect x="30" y="40" width="10" height="20" fill="#8E8E93" /> <!-- 左臂 -->
+                                <rect x="80" y="40" width="10" height="20" fill="#8E8E93" /> <!-- 右臂 -->
+                                <rect x="45" y="70" width="15" height="20" fill="#8E8E93" /> <!-- 左腿 -->
+                                <rect x="60" y="70" width="15" height="20" fill="#8E8E93" /> <!-- 右腿 -->
+                                <rect x="53" y="18" width="5" height="5" fill="#007AFF" /> <!-- 左眼 -->
+                                <rect x="62" y="18" width="5" height="5" fill="#007AFF" /> <!-- 右眼 -->
+                                <rect x="50" y="80" width="5" height="5" fill="#000" /> <!-- 左脚 -->
+                                <rect x="65" y="80" width="5" height="5" fill="#000" /> <!-- 右脚 -->
+                                <rect x="30" y="50" width="5" height="5" fill="#000" /> <!-- 左手 -->
+                                <rect x="85" y="50" width="5" height="5" fill="#000" /> <!-- 右手 -->
+                            </svg>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="font-press text-lg mb-2 text-pixelBlue">
+                                <span class="lang-zh">機器人插圖</span>
+                                <span class="lang-en hidden">Robot Illustration</span>
+                            </h3>
+                            <p class="text-sm mb-4">
+                                <span class="lang-zh">8-bit風格的未來機器人設計</span>
+                                <span class="lang-en hidden">8-bit style future robot design</span>
+                            </p>
+                            <a href="#" class="inline-block font-press text-xs bg-pixelGreen text-white px-3 py-1 pixel-button hover:bg-pixelBlue transition-colors">
+                                <span class="lang-zh">查看詳情</span>
+                                <span class="lang-en hidden">View Details</span>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- 作品6 -->
+                    <div class="work-item pixel-border bg-white overflow-hidden transform transition-transform hover:-translate-y-2" data-category="web">
+                        <div class="h-60 overflow-hidden bg-pixelDark">
+                            <!-- 像素应用界面 -->
+                            <svg viewBox="0 0 120 120" class="w-full h-full">
+                                <rect x="20" y="10" width="80" height="100" fill="#FFF" stroke="#000" stroke-width="2" rx="5" /> <!-- 手机边框 -->
+                                <rect x="25" y="20" width="70" height="10" fill="#AF52DE" /> <!-- 顶部栏 -->
+                                <rect x="30" y="40" width="60" height="60" fill="#E0E0E0" /> <!-- 内容区 -->
+                                <rect x="35" y="45" width="50" height="15" fill="#FFF" pixel-border /> <!-- 内容块1 -->
+                                <rect x="35" y="65" width="50" height="15" fill="#FFF" pixel-border /> <!-- 内容块2 -->
+                                <rect x="35" y="85" width="50" height="15" fill="#FFF" pixel-border /> <!-- 内容块3 -->
+                                <rect x="40" y="110" width="40" height="5" fill="#FF3B30" pixel-border /> <!-- 底部按钮 -->
+                            </svg>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="font-press text-lg mb-2 text-pixelBlue">
+                                <span class="lang-zh">移動應用界面</span>
+                                <span class="lang-en hidden">Mobile App UI</span>
+                            </h3>
+                            <p class="text-sm mb-4">
+                                <span class="lang-zh">像素風格的移動應用界面設計</span>
+                                <span class="lang-en hidden">Pixel style mobile application interface design</span>
+                            </p>
+                            <a href="#" class="inline-block font-press text-xs bg-pixelGreen text-white px-3 py-1 pixel-button hover:bg-pixelBlue transition-colors">
+                                <span class="lang-zh">查看詳情</span>
+                                <span class="lang-en hidden">View Details</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 服务区块 -->
+        <section id="services" class="py-20 px-6 bg-white">
+            <div class="container mx-auto">
+                <h2 class="font-press text-3xl md:text-4xl text-center mb-4 text-pixelPurple text-shadow">
+                    <span class="lang-zh">我的服務</span>
+                    <span class="lang-en hidden">My Services</span>
+                </h2>
+                <p class="text-center mb-16 max-w-2xl mx-auto">
+                    <span class="lang-zh">提供各種像素藝術相關服務，為您的項目增添復古遊戲風格</span>
+                    <span class="lang-en hidden">Providing various pixel art related services to add retro game style to your project</span>
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- 服务1 -->
+                    <div class="pixel-border bg-pixelLight p-6 transform transition-transform hover:-translate-y-2">
+                        <div class="w-20 h-20 mx-auto mb-6">
+                            <!-- 像素电脑图标 -->
+                            <svg viewBox="0 0 64 64" class="w-full h-full">
+                                <rect x="10" y="10" width="44" height="30" fill="#007AFF" /> <!-- 屏幕 -->
+                                <rect x="20" y="45" width="24" height="3" fill="#8E8E93" /> <!-- 底座 -->
+                                <rect x="15" y="15" width="34" height="20" fill="#000" /> <!-- 屏幕内容 -->
+                                <rect x="20" y="20" width="5" height="5" fill="#4CD964" /> <!-- 像素 -->
+                                <rect x="30" y="20" width="5" height="5" fill="#4CD964" />
+                                <rect x="40" y="20" width="5" height="5" fill="#4CD964" />
+                                <rect x="20" y="30" width="5" height="5" fill="#4CD964" />
+                                <rect x="30" y="30" width="5" height="5" fill="#4CD964" />
+                                <rect x="40" y="30" width="5" height="5" fill="#4CD964" />
+                            </svg>
+                        </div>
+                        <h3 class="font-press text-xl text-center mb-4 text-pixelBlue">
+                            <span class="lang-zh">網頁開發</span>
+                            <span class="lang-en hidden">Web Development</span>
+                        </h3>
+                        <p class="text-center">
+                            <span class="lang-zh">創建融合像素藝術風格的現代網站，兼具視覺吸引力和功能性</span>
+                            <span class="lang-en hidden">Create modern websites with pixel art style, combining visual appeal and functionality</span>
+                        </p>
+                    </div>
+                    
+                    <!-- 服务2 -->
+                    <div class="pixel-border bg-pixelLight p-6 transform transition-transform hover:-translate-y-2">
+                        <div class="w-20 h-20 mx-auto mb-6">
+                            <!-- 像素设计工具图标 -->
+                            <svg viewBox="0 0 64 64" class="w-full h-full">
+                                <rect x="15" y="15" width="34" height="34" fill="#FF3B30" /> <!-- 画板 -->
+                                <rect x="20" y="20" width="10" height="10" fill="#FFCC00" /> <!-- 黄色方块 -->
+                                <rect x="34" y="20" width="10" height="10" fill="#007AFF" /> <!-- 蓝色方块 -->
+                                <rect x="20" y="34" width="10" height="10" fill="#4CD964" /> <!-- 绿色方块 -->
+                                <rect x="34" y="34" width="10" height="10" fill="#AF52DE" /> <!-- 紫色方块 -->
+                                <rect x="48" y="48" width="8" height="2" fill="#000" /> <!-- 画笔 -->
+                                <rect x="50" y="40" width="2" height="8" fill="#000" />
+                            </svg>
+                        </div>
+                        <h3 class="font-press text-xl text-center mb-4 text-pixelBlue">
+                            <span class="lang-zh">UI/UX設計</span>
+                            <span class="lang-en hidden">UI/UX Design</span>
+                        </h3>
+                        <p class="text-center">
+                            <span class="lang-zh">設計獨特的像素風格用戶界面，提供直觀且有趣的用戶體驗</span>
+                            <span class="lang-en hidden">Design unique pixel style user interfaces that provide intuitive and fun user experiences</span>
+                        </p>
+                    </div>
+                    
+                    <!-- 服务3 -->
+                    <div class="pixel-border bg-pixelLight p-6 transform transition-transform hover:-translate-y-2">
+                        <div class="w-20 h-20 mx-auto mb-6">
+                            <!-- 像素营销图标 -->
+                            <svg viewBox="0 0 64 64" class="w-full h-full">
+                                <circle cx="32" cy="32" r="20" fill="#000" stroke="#FFCC00" stroke-width="2" /> <!-- 雷达 -->
+                                <line x1="32" y1="12" x2="32" y2="52" stroke="#FFCC00" stroke-width="2" /> <!-- 十字线 -->
+                                <line x1="12" y1="32" x2="52" y2="32" stroke="#FFCC00" stroke-width="2" />
+                                <path d="M20,40 L32,32 L40,20" stroke="#FF3B30" stroke-width="2" fill="none" /> <!-- 上升箭头 -->
+                                <polygon points="40,20 44,24 38,24" fill="#FF3B30" /> <!-- 箭头尖 -->
+                            </svg>
+                        </div>
+                        <h3 class="font-press text-xl text-center mb-4 text-pixelBlue">
+                            <span class="lang-zh">數位行銷</span>
+                            <span class="lang-en hidden">Digital Marketing</span>
+                        </h3>
+                        <p class="text-center">
+                            <span class="lang-zh">創建像素風格的行銷素材，幫助您的品牌在數位平台脫穎而出</span>
+                            <span class="lang-en hidden">Create pixel-style marketing materials to help your brand stand out on digital platforms</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 联络表单 -->
+        <section id="contact" class="py-20 px-6 bg-pixelDark text-pixelGreen">
+            <div class="container mx-auto">
+                <h2 class="font-press text-3xl md:text-4xl text-center mb-4 text-pixelGreen text-shadow">
+                    <span class="lang-zh">聯絡我</span>
+                    <span class="lang-en hidden">Contact Me</span>
+                </h2>
+                <p class="text-center mb-16 max-w-2xl mx-auto">
+                    <span class="lang-zh">有任何項目想合作嗎？請填寫以下表單，我會盡快回覆您</span>
+                    <span class="lang-en hidden">Got a project to collaborate on? Please fill out the form below and I'll get back to you as soon as possible</span>
+                </p>
+                
+                <div class="max-w-2xl mx-auto">
+                    <!-- 终端机风格表单 -->
+                    <div class="pixel-border bg-pixelDark p-6 md:p-8 font-vt text-lg">
+                        <form id="contactForm" class="space-y-6">
+                            <div>
+                                <label for="name" class="block mb-2">
+                                    <span class="lang-zh">姓名:</span>
+                                    <span class="lang-en hidden">Name:</span>
+                                </label>
+                                <input type="text" id="name" name="name" class="w-full bg-black border border-pixelGreen px-3 py-2 text-pixelGreen focus:outline-none focus:ring-2 focus:ring-pixelGreen" required>
+                            </div>
+                            
+                            <div>
+                                <label for="email" class="block mb-2">
+                                    <span class="lang-zh">信箱:</span>
+                                    <span class="lang-en hidden">Email:</span>
+                                </label>
+                                <input type="email" id="email" name="email" class="w-full bg-black border border-pixelGreen px-3 py-2 text-pixelGreen focus:outline-none focus:ring-2 focus:ring-pixelGreen" required>
+                            </div>
+                            
+                            <div>
+                                <label for="message" class="block mb-2">
+                                    <span class="lang-zh">訊息:</span>
+                                    <span class="lang-en hidden">Message:</span>
+                                </label>
+                                <textarea id="message" name="message" rows="5" class="w-full bg-black border border-pixelGreen px-3 py-2 text-pixelGreen focus:outline-none focus:ring-2 focus:ring-pixelGreen" required></textarea>
+                            </div>
+                            
+                            <div class="text-center">
+                                <button type="submit" class="font-press bg-pixelGreen text-pixelDark px-6 py-2 pixel-button hover:bg-pixelYellow transition-colors">
+                                    <span class="lang-zh">發送訊息</span>
+                                    <span class="lang-en hidden">Send Message</span>
+                                </button>
+                            </div>
+                        </form>
+                        
+                        <!-- 表单反馈信息 -->
+                        <div id="formFeedback" class="mt-6 hidden">
+                            <p id="successMessage" class="text-pixelGreen hidden">
+                                <span class="lang-zh">訊息已成功發送！我會盡快回覆您。</span>
+                                <span class="lang-en hidden">Message sent successfully! I'll get back to you soon.</span>
+                            </p>
+                            <p id="errorMessage" class="text-pixelRed hidden animate-blink">
+                                <span class="lang-zh">錯誤！請檢查您輸入的資訊。</span>
+                                <span class="lang-en hidden">Error! Please check your input information.</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-pixelDark py-10 px-6 border-t-4 border-pixelBlue">
+        <div class="container mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <div class="flex items-center">
+                        <svg class="w-8 h-8 mr-2" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="4" y="4" width="24" height="24" fill="#FF3B30"/>
+                            <rect x="8" y="8" width="8" height="8" fill="#FFCC00"/>
+                            <rect x="16" y="8" width="8" height="8" fill="#4CD964"/>
+                            <rect x="8" y="16" width="8" height="8" fill="#007AFF"/>
+                            <rect x="16" y="16" width="8" height="8" fill="#AF52DE"/>
+                        </svg>
+                        <h2 class="font-press text-lg text-white">
+                            <span class="lang-zh">像素藝術家</span>
+                            <span class="lang-en hidden">Pixel Artist</span>
+                        </h2>
+                    </div>
+                    <p class="text-pixelGray mt-2 text-sm max-w-xs">
+                        <span class="lang-zh">熱愛復古遊戲美學的創作者</span>
+                        <span class="lang-en hidden">Creator passionate about retro game aesthetics</span>
+                    </p>
+                </div>
+                
+                <!-- 社交媒体图标 -->
+                <div class="flex space-x-4">
+                    <a href="#" class="w-10 h-10 flex items-center justify-center pixel-border bg-pixelBlue text-white hover:bg-pixelRed transition-colors">
+                        <i class="fa fa-facebook"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 flex items-center justify-center pixel-border bg-pixelPurple text-white hover:bg-pixelRed transition-colors">
+                        <i class="fa fa-instagram"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 flex items-center justify-center pixel-border bg-pixelDark text-white hover:bg-pixelRed transition-colors">
+                        <i class="fa fa-github"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 flex items-center justify-center pixel-border bg-pixelGreen text-white hover:bg-pixelRed transition-colors">
+                        <i class="fa fa-twitter"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="border-t border-pixelGray mt-8 pt-8 text-center text-pixelGray text-sm">
+                <p>
+                    <span class="lang-zh">&copy; 2023 像素藝術家作品集。保留所有權利。</span>
+                    <span class="lang-en hidden">&copy; 2023 Pixel Artist Portfolio. All rights reserved.</span>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // 语言切换功能
+        document.getElementById('langToggle').addEventListener('click', function() {
+            const zhElements = document.querySelectorAll('.lang-zh');
+            const enElements = document.querySelectorAll('.lang-en');
+            
+            zhElements.forEach(el => el.classList.toggle('hidden'));
+            enElements.forEach(el => el.classList.toggle('hidden'));
+        });
+        
+        // 移动端菜单切换
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                // 关闭移动菜单（如果打开）
+                document.getElementById('mobileMenu').classList.add('hidden');
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('py-2');
+                navbar.classList.remove('py-4');
+            } else {
+                navbar.classList.add('py-4');
+                navbar.classList.remove('py-2');
+            }
+        });
+        
+        // 作品筛选功能
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const workItems = document.querySelectorAll('.work-item');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // 移除所有按钮的active类
+                filterButtons.forEach(btn => {
+                    btn.classList.remove('bg-pixelBlue', 'text-white');
+                    btn.classList.add('bg-pixelYellow', 'text-pixelDark');
+                });
+                
+                // 给当前点击的按钮添加active类
+                this.classList.remove('bg-pixelYellow', 'text-pixelDark');
+                this.classList.add('bg-pixelBlue', 'text-white');
+                
+                const filter = this.getAttribute('data-filter');
+                
+                workItems.forEach(item => {
+                    if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // 技能条动画
+        function animateSkillBars() {
+            const skillBars = document.querySelectorAll('.skill-progress');
+            
+            skillBars.forEach(bar => {
+                const width = bar.getAttribute('data-width');
+                bar.style.width = '0';
+                
+                // 当元素进入视口时动画
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            bar.style.width = width;
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.5 });
+                
+                observer.observe(bar);
+            });
+        }
+        
+        // 打字动画效果
+        function typeWriterEffect() {
+            const typingText = document.getElementById('typingText');
+            const zhText = "你好，我是像素藝術家";
+            const enText = "Hello, I'm Pixel Artist";
+            let isZH = true;
+            let charIndex = 0;
+            let isDeleting = false;
+            let typingDelay = 150;
+            
+            function type() {
+                const currentText = isZH ? zhText : enText;
+                
+                if (isDeleting) {
+                    typingText.querySelector('.lang-zh:not(.hidden), .lang-en:not(.hidden)').textContent = currentText.substring(0, charIndex - 1);
+                    charIndex--;
+                    typingDelay = 50;
+                } else {
+                    typingText.querySelector('.lang-zh:not(.hidden), .lang-en:not(.hidden)').textContent = currentText.substring(0, charIndex + 1);
+                    charIndex++;
+                    typingDelay = 150;
+                }
+                
+                if (!isDeleting && charIndex === currentText.length) {
+                    isDeleting = true;
+                    typingDelay = 1500; // 停留时间
+                } else if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    isZH = !isZH; // 切换语言
+                    typingDelay = 500; // 切换语言前的停留时间
+                    
+                    // 显示对应语言的文本，隐藏另一种
+                    typingText.querySelector('.lang-zh').classList.toggle('hidden', !isZH);
+                    typingText.querySelector('.lang-en').classList.toggle('hidden', isZH);
+                }
+                
+                setTimeout(type, typingDelay);
+            }
+            
+            type();
+        }
+        
+        // 创建像素星星背景
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starCount = 100;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                const size = Math.random() * 3 + 1;
+                
+                star.style.position = 'absolute';
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.backgroundColor = i % 5 === 0 ? '#FFCC00' : '#FFF'; // 有些星星是黄色的
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.opacity = Math.random() * 0.8 + 0.2;
+                star.style.animation = `blink ${Math.random() * 3 + 1}s step-end infinite`;
+                star.style.animationDelay = `${Math.random() * 2}s`;
+                
+                starsContainer.appendChild(star);
+            }
+        }
+        
+        // 表单提交处理
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formFeedback = document.getElementById('formFeedback');
+            const successMessage = document.getElementById('successMessage');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            // 简单验证
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            formFeedback.classList.remove('hidden');
+            successMessage.classList.add('hidden');
+            errorMessage.classList.add('hidden');
+            
+            if (name && email && message && email.includes('@')) {
+                // 模拟成功提交
+                successMessage.classList.remove('hidden');
+                
+                // 重置表单
+                this.reset();
+                
+                // 5秒后隐藏成功消息
+                setTimeout(() => {
+                    formFeedback.classList.add('hidden');
+                }, 5000);
+            } else {
+                // 显示错误消息
+                errorMessage.classList.remove('hidden');
+            }
+        });
+        
+        // 页面加载完成后初始化
+        window.addEventListener('DOMContentLoaded', function() {
+            animateSkillBars();
+            typeWriterEffect();
+            createStars();
+        });
+    </script>
+</body>
+</html>

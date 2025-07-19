@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>笔墨入神 - 中国风作品集</title>
+    <!-- 引入Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- 引入Google Fonts - 中国风字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+KuaiLe&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind配置 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'chinese-red': '#9E2A2B',
+                        'chinese-gold': '#D4AF37',
+                        'ink-black': '#2D2E2E',
+                        'ivory-white': '#FFFFF0',
+                        'bamboo-green': '#708C38',
+                        'scroll-yellow': '#F5E8C7',
+                        'ink-wash': '#6B7280'
+                    },
+                    fontFamily: {
+                        'ma-shan': ['"Ma Shan Zheng"', 'cursive'],
+                        'kuai-le': ['"ZCOOL KuaiLe"', 'cursive'],
+                        'xiao-wei': ['"ZCOOL XiaoWei"', 'serif']
+                    },
+                    backgroundImage: {
+                        'paper-texture': "url('https://picsum.photos/id/106/1200/800')",
+                        'ink-wash-bg': "linear-gradient(to bottom, rgba(107, 114, 128, 0.1), rgba(107, 114, 128, 0.3))"
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .ink-splash {
+                animation: inkSplash 2s ease-out forwards;
+            }
+            .brush-stroke {
+                position: relative;
+                display: inline-block;
+            }
+            .brush-stroke::after {
+                content: '';
+                position: absolute;
+                bottom: -2px;
+                left: 0;
+                width: 100%;
+                height: 4px;
+                background-color: theme('colors.chinese-red');
+                transform: scaleX(0);
+                transform-origin: bottom right;
+                transition: transform 0.3s ease-out;
+            }
+            .brush-stroke:hover::after {
+                transform: scaleX(1);
+                transform-origin: bottom left;
+            }
+            .scroll-appear {
+                animation: scrollUnfurl 1.5s ease-out forwards;
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            .seal-stamp {
+                position: relative;
+                display: inline-block;
+            }
+            .seal-stamp::after {
+                content: '印';
+                font-family: 'Ma Shan Zheng', cursive;
+                position: absolute;
+                width: 40px;
+                height: 40px;
+                background-color: theme('colors.chinese-red');
+                color: white;
+                border-radius: 5px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 24px;
+                transform: rotate(-15deg) scale(0);
+                transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+                top: -10px;
+                right: -10px;
+                z-index: 10;
+            }
+            .seal-stamp:hover::after {
+                transform: rotate(-15deg) scale(1);
+            }
+            .chinese-cursor {
+                cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%239E2A2B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 20V10M12 20V4M6 20v-6'/%3E%3C/svg%3E"), auto;
+            }
+            .ink-transition {
+                transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            }
+            .calligraphy-animation {
+                overflow: hidden;
+                position: relative;
+                display: inline-block;
+            }
+            .calligraphy-animation::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 2px;
+                height: 100%;
+                background-color: theme('colors.ink-black');
+                animation: brushCursor 1s infinite;
+            }
+            @keyframes brushCursor {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0; }
+            }
+            @keyframes inkSplash {
+                0% { opacity: 0; transform: scale(0.8); }
+                70% { opacity: 1; transform: scale(1.05); }
+                100% { opacity: 1; transform: scale(1); }
+            }
+            @keyframes scrollUnfurl {
+                0% { opacity: 0; transform: translateY(20px) scale(0.95); }
+                100% { opacity: 1; transform: translateY(0) scale(1); }
+            }
+            .cloud-float {
+                animation: cloudFloat 30s linear infinite;
+            }
+            @keyframes cloudFloat {
+                0% { transform: translateX(-100px); }
+                100% { transform: translateX(100vw); }
+            }
+            .bamboo-sway {
+                animation: bambooSway 8s ease-in-out infinite alternate;
+                transform-origin: bottom center;
+            }
+            @keyframes bambooSway {
+                0% { transform: rotate(-2deg); }
+                100% { transform: rotate(2deg); }
+            }
+            .scroll-hover {
+                transition: transform 0.5s ease, box-shadow 0.5s ease;
+            }
+            .scroll-hover:hover {
+                transform: translateY(-10px) rotate(1deg);
+                box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+            .seal-appear {
+                animation: sealAppear 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+                transform: scale(0) rotate(-15deg);
+            }
+            @keyframes sealAppear {
+                0% { transform: scale(0) rotate(-15deg); }
+                70% { transform: scale(1.1) rotate(-15deg); }
+                100% { transform: scale(1) rotate(-15deg); }
+            }
+        }
+    </style>
+</head>
+<body class="bg-ivory-white font-xiao-wei text-ink-black overflow-x-hidden chinese-cursor">
+    <!-- 导航栏 -->
+    <header id="navbar" class="fixed w-full z-50 transition-all duration-500 bg-ivory-white/90 backdrop-blur-sm shadow-md">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <!-- 网站Logo -->
+            <a href="#" class="flex items-center space-x-2">
+                <svg class="w-8 h-8 text-chinese-red" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M4 19.5C4 18.84 4.29 18.21 4.83 17.77L12.7 9.9C13.5 9.1 14.5 9.1 15.3 9.9L23.17 17.77C23.71 18.21 24 18.84 24 19.5C24 20.33 23.33 21 22.5 21H5C4.17 21 3.5 20.33 3.5 19.5C3.5 18.84 3.79 18.21 4.33 17.77L4 19.5Z"/>
+                    <path d="M12 11L3 20H21L12 11Z"/>
+                </svg>
+                <span class="font-ma-shan text-2xl text-chinese-red">笔墨入神</span>
+            </a>
+            
+            <!-- 桌面端导航菜单 -->
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="#hero" class="text-ink-black hover:text-chinese-red ink-transition brush-stroke">首頁</a>
+                <a href="#about" class="text-ink-black hover:text-chinese-red ink-transition brush-stroke">關於我</a>
+                <a href="#portfolio" class="text-ink-black hover:text-chinese-red ink-transition brush-stroke">作品集</a>
+                <a href="#services" class="text-ink-black hover:text-chinese-red ink-transition brush-stroke">服務</a>
+                <a href="#contact" class="text-ink-black hover:text-chinese-red ink-transition brush-stroke">聯絡</a>
+                <button id="langToggle" class="bg-chinese-red text-ivory-white px-3 py-1 rounded-md border-2 border-chinese-gold hover:bg-chinese-red/90 ink-transition seal-stamp">
+                    繁 / EN
+                </button>
+            </nav>
+            
+            <!-- 移动端汉堡菜单 -->
+            <button id="menuToggle" class="md:hidden text-ink-black focus:outline-none">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+        
+        <!-- 移动端菜单 -->
+        <div id="mobileMenu" class="md:hidden hidden bg-ivory-white border-t border-ink-black/10 shadow-lg">
+            <div class="container mx-auto px-4 py-3 flex flex-col space-y-4">
+                <a href="#hero" class="text-ink-black hover:text-chinese-red py-2 border-b border-ink-black/10 ink-transition">首頁</a>
+                <a href="#about" class="text-ink-black hover:text-chinese-red py-2 border-b border-ink-black/10 ink-transition">關於我</a>
+                <a href="#portfolio" class="text-ink-black hover:text-chinese-red py-2 border-b border-ink-black/10 ink-transition">作品集</a>
+                <a href="#services" class="text-ink-black hover:text-chinese-red py-2 border-b border-ink-black/10 ink-transition">服務</a>
+                <a href="#contact" class="text-ink-black hover:text-chinese-red py-2 ink-transition">聯絡</a>
+                <button id="mobileLangToggle" class="bg-chinese-red text-ivory-white px-3 py-1 rounded-md border-2 border-chinese-gold hover:bg-chinese-red/90 ink-transition w-fit seal-stamp">
+                    繁 / EN
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- 英雄区 -->
+        <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden bg-ink-wash-bg pt-16">
+            <!-- 背景山水SVG -->
+            <div class="absolute inset-0 z-0 opacity-60">
+                <svg width="100%" height="100%" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+                    <!-- 远山 -->
+                    <path d="M0,600 Q300,500 600,600 T1200,600 L1200,800 L0,800 Z" fill="#6B7280" opacity="0.5"/>
+                    <!-- 近山 -->
+                    <path d="M0,650 Q200,550 400,650 T800,650 T1200,600 L1200,800 L0,800 Z" fill="#4B5563" opacity="0.7"/>
+                    <!-- 水面 -->
+                    <rect x="0" y="600" width="1200" height="200" fill="#374151" opacity="0.3"/>
+                </svg>
+                
+                <!-- 竹林 -->
+                <div class="absolute bottom-0 left-10 w-32 h-64 bamboo-sway opacity-70">
+                    <svg width="100%" height="100%" viewBox="0 0 40 100">
+                        <rect x="18" y="0" width="4" height="100" fill="#708C38" rx="2"/>
+                        <path d="M20,20 Q30,30 25,50" stroke="#708C38" stroke-width="2" fill="none"/>
+                        <path d="M20,30 Q10,40 15,60" stroke="#708C38" stroke-width="2" fill="none"/>
+                    </svg>
+                </div>
+                <div class="absolute bottom-0 left-40 w-28 h-72 bamboo-sway opacity-70" style="animation-delay: 1s;">
+                    <svg width="100%" height="100%" viewBox="0 0 40 100">
+                        <rect x="18" y="0" width="4" height="100" fill="#708C38" rx="2"/>
+                        <path d="M20,25 Q30,35 25,55" stroke="#708C38" stroke-width="2" fill="none"/>
+                        <path d="M20,35 Q10,45 15,70" stroke="#708C38" stroke-width="2" fill="none"/>
+                    </svg>
+                </div>
+                <div class="absolute bottom-0 right-40 w-36 h-60 bamboo-sway opacity-70" style="animation-delay: 0.5s;">
+                    <svg width="100%" height="100%" viewBox="0 0 40 100">
+                        <rect x="18" y="0" width="4" height="100" fill="#708C38" rx="2"/>
+                        <path d="M20,20 Q30,30 25,50" stroke="#708C38" stroke-width="2" fill="none"/>
+                        <path d="M20,30 Q10,40 15,60" stroke="#708C38" stroke-width="2" fill="none"/>
+                    </svg>
+                </div>
+                
+                <!-- 云朵 -->
+                <div class="absolute top-20 left-[-100px] w-40 h-20 cloud-float opacity-60">
+                    <svg width="100%" height="100%" viewBox="0 0 100 50">
+                        <path d="M50,10 Q70,0 90,10 Q100,30 90,40 Q70,50 50,40 Q30,50 10,40 Q0,30 10,10 Q30,0 50,10 Z" fill="white"/>
+                    </svg>
+                </div>
+                <div class="absolute top-40 left-[-100px] w-60 h-25 cloud-float opacity-50" style="animation-delay: 10s;">
+                    <svg width="100%" height="100%" viewBox="0 0 100 50">
+                        <path d="M50,10 Q70,0 90,10 Q100,30 90,40 Q70,50 50,40 Q30,50 10,40 Q0,30 10,10 Q30,0 50,10 Z" fill="white"/>
+                    </svg>
+                </div>
+            </div>
+            
+            <!-- 英雄区内容 -->
+            <div class="container mx-auto px-4 z-10 text-center">
+                <div class="mb-8 seal-stamp inline-block">
+                    <img src="https://picsum.photos/id/64/200/200" alt="古风人像" class="w-48 h-48 md:w-64 md:h-64 rounded-full border-4 border-chinese-gold shadow-xl mx-auto ink-splash">
+                    <!-- 印章效果 -->
+                    <div class="absolute -bottom-4 -right-4 w-20 h-20 bg-chinese-red rounded-md transform rotate-12 flex items-center justify-center text-white font-ma-shan text-2xl opacity-80 seal-appear">
+                        印
+                    </div>
+                </div>
+                
+                <h1 class="font-ma-shan text-[clamp(2.5rem,6vw,5rem)] text-chinese-red mb-4 calligraphy-animation" id="heroTitle">
+                    笔墨入神
+                </h1>
+                
+                <p class="font-xiao-wei text-[clamp(1rem,2vw,1.5rem)] text-ink-black max-w-2xl mx-auto mb-8 ink-splash" style="animation-delay: 0.5s;">
+                    探索傳統與現代之間的藝術交融，感受中國風格的獨特魅力
+                </p>
+                
+                <a href="#portfolio" class="inline-block bg-chinese-red text-ivory-white px-8 py-3 rounded-md border-2 border-chinese-gold text-lg font-kuai-le hover:bg-chinese-red/90 transform hover:-translate-y-1 transition-all duration-300 shadow-lg ink-splash" style="animation-delay: 1s;">
+                    欣賞作品
+                </a>
+            </div>
+            
+            <!-- 向下滚动指示 -->
+            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+                <svg class="w-8 h-8 text-chinese-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                </svg>
+            </div>
+        </section>
+
+        <!-- 关于我 -->
+        <section id="about" class="py-20 bg-paper-texture bg-cover bg-center relative">
+            <div class="absolute inset-0 bg-ivory-white/80 backdrop-blur-[2px]"></div>
+            <div class="container mx-auto px-4 relative z-10">
+                <div class="text-center mb-16 scroll-appear">
+                    <h2 class="font-ma-shan text-[clamp(2rem,4vw,3rem)] text-chinese-red mb-4">關於我</h2>
+                    <div class="w-24 h-1 bg-chinese-gold mx-auto"></div>
+                </div>
+                
+                <div class="flex flex-col md:flex-row items-center gap-12">
+                    <div class="md:w-1/2 scroll-appear" style="animation-delay: 0.2s;">
+                        <div class="bg-scroll-yellow p-8 rounded-lg shadow-xl border border-chinese-gold/30 relative overflow-hidden">
+                            <!-- 装饰性云纹 -->
+                            <div class="absolute top-4 right-4 w-16 h-16 opacity-20">
+                                <svg viewBox="0 0 100 100" fill="currentColor" color="#9E2A2B">
+                                    <path d="M30,50 Q50,30 70,50 Q90,70 70,90 Q50,110 30,90 Q10,70 30,50 Z" />
+                                </svg>
+                            </div>
+                            
+                            <h3 class="font-kuai-le text-2xl text-chinese-red mb-6 border-b border-chinese-gold/50 pb-2">藝術之路</h3>
+                            
+                            <p class="mb-4 leading-relaxed">
+                                自幼習書法繪畫，沉浸於中國傳統藝術數十載。師承名家，融會古今，在傳統技法基礎上不斷創新，形成獨具一格的藝術風格。
+                            </p>
+                            
+                            <p class="mb-4 leading-relaxed">
+                                作品曾多次參加海內外展覽並獲獎，被多處文化機構及私人收藏家收藏。近年來，致力於將傳統中國風元素與現代設計理念相結合，開拓藝術表達的新領域。
+                            </p>
+                            
+                            <p class="leading-relaxed">
+                                相信藝術是跨越時空的語言，希望通過我的作品，讓更多人感受中國傳統文化的深厚底蘊與獨特魅力。
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="md:w-1/2 scroll-appear" style="animation-delay: 0.4s;">
+                        <div class="bg-scroll-yellow p-8 rounded-lg shadow-xl border border-chinese-gold/30">
+                            <h3 class="font-kuai-le text-2xl text-chinese-red mb-6 border-b border-chinese-gold/50 pb-2">技藝修為</h3>
+                            
+                            <!-- 技能条 - 书卷展开效果 -->
+                            <div class="space-y-6">
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="font-kuai-le text-lg">書法</span>
+                                        <span class="font-kuai-le text-lg">LV.8</span>
+                                    </div>
+                                    <div class="h-4 bg-ink-black/10 rounded-full overflow-hidden">
+                                        <div class="h-full bg-chinese-red rounded-full" style="width: 80%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="font-kuai-le text-lg">國畫</span>
+                                        <span class="font-kuai-le text-lg">LV.6</span>
+                                    </div>
+                                    <div class="h-4 bg-ink-black/10 rounded-full overflow-hidden">
+                                        <div class="h-full bg-chinese-red rounded-full" style="width: 60%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="font-kuai-le text-lg">篆刻</span>
+                                        <span class="font-kuai-le text-lg">LV.7</span>
+                                    </div>
+                                    <div class="h-4 bg-ink-black/10 rounded-full overflow-hidden">
+                                        <div class="h-full bg-chinese-red rounded-full" style="width: 70%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="font-kuai-le text-lg">設計</span>
+                                        <span class="font-kuai-le text-lg">LV.9</span>
+                                    </div>
+                                    <div class="h-4 bg-ink-black/10 rounded-full overflow-hidden">
+                                        <div class="h-full bg-chinese-red rounded-full" style="width: 90%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="font-kuai-le text-lg">詩詞</span>
+                                        <span class="font-kuai-le text-lg">LV.5</span>
+                                    </div>
+                                    <div class="h-4 bg-ink-black/10 rounded-full overflow-hidden">
+                                        <div class="h-full bg-chinese-red rounded-full" style="width: 50%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 作品集 -->
+        <section id="portfolio" class="py-20 bg-ink-wash-bg relative">
+            <!-- 装饰性仙鹤 -->
+            <div class="absolute top-20 left-10 w-32 h-32 opacity-20 hidden md:block">
+                <svg viewBox="0 0 100 100" fill="none" stroke="#2D2E2E" stroke-width="1">
+                    <path d="M30,60 Q50,30 70,50 L60,70 Q40,80 30,60 Z" fill="#2D2E2E"/>
+                    <path d="M20,50 L30,60" stroke="#2D2E2E" stroke-width="2"/>
+                    <path d="M70,50 L80,40" stroke="#2D2E2E" stroke-width="2"/>
+                    <circle cx="25" cy="45" r="3" fill="#2D2E2E"/>
+                </svg>
+            </div>
+            <div class="absolute bottom-20 right-10 w-32 h-32 opacity-20 hidden md:block">
+                <svg viewBox="0 0 100 100" fill="none" stroke="#2D2E2E" stroke-width="1">
+                    <path d="M70,60 Q50,30 30,50 L40,70 Q60,80 70,60 Z" fill="#2D2E2E"/>
+                    <path d="M80,50 L70,60" stroke="#2D2E2E" stroke-width="2"/>
+                    <path d="M30,50 L20,40" stroke="#2D2E2E" stroke-width="2"/>
+                    <circle cx="75" cy="45" r="3" fill="#2D2E2E"/>
+                </svg>
+            </div>
+            
+            <div class="container mx-auto px-4 relative z-10">
+                <div class="text-center mb-16 scroll-appear">
+                    <h2 class="font-ma-shan text-[clamp(2rem,4vw,3rem)] text-chinese-red mb-4">作品集</h2>
+                    <div class="w-24 h-1 bg-chinese-gold mx-auto mb-6"></div>
+                    <p class="max-w-2xl mx-auto text-lg">精選近年作品，涵蓋書法、繪畫、設計等多個領域，展現傳統與現代的交融之美</p>
+                </div>
+                
+                <!-- 作品分类 -->
+                <div class="flex flex-wrap justify-center gap-4 mb-12 scroll-appear" style="animation-delay: 0.2s;">
+                    <button class="portfolio-filter active bg-chinese-red text-ivory-white px-6 py-2 rounded-md border-2 border-chinese-gold hover:bg-chinese-red/90 transition-all seal-stamp" data-filter="all">
+                        全部
+                    </button>
+                    <button class="portfolio-filter bg-scroll-yellow text-ink-black px-6 py-2 rounded-md border-2 border-chinese-gold/50 hover:bg-chinese-red hover:text-ivory-white transition-all seal-stamp" data-filter="calligraphy">
+                        書法
+                    </button>
+                    <button class="portfolio-filter bg-scroll-yellow text-ink-black px-6 py-2 rounded-md border-2 border-chinese-gold/50 hover:bg-chinese-red hover:text-ivory-white transition-all seal-stamp" data-filter="painting">
+                        繪畫
+                    </button>
+                    <button class="portfolio-filter bg-scroll-yellow text-ink-black px-6 py-2 rounded-md border-2 border-chinese-gold/50 hover:bg-chinese-red hover:text-ivory-white transition-all seal-stamp" data-filter="design">
+                        設計
+                    </button>
+                    <button class="portfolio-filter bg-scroll-yellow text-ink-black px-6 py-2 rounded-md border-2 border-chinese-gold/50 hover:bg-chinese-red hover:text-ivory-white transition-all seal-stamp" data-filter="seal">
+                        篆刻
+                    </button>
+                </div>
+                
+                <!-- 作品网格 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- 作品1 -->
+                    <div class="portfolio-item scroll-appear" style="animation-delay: 0.3s;" data-category="calligraphy">
+                        <div class="bg-scroll-yellow rounded-lg overflow-hidden shadow-lg border-2 border-chinese-gold/30 scroll-hover group">
+                            <div class="relative overflow-hidden">
+                                <img src="https://picsum.photos/id/106/600/400" alt="書法作品：行書詩句" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                                <!-- 挂轴装饰 -->
+                                <div class="absolute top-0 left-0 w-full h-6 bg-chinese-red"></div>
+                                <div class="absolute bottom-0 left-0 w-full h-6 bg-chinese-red"></div>
+                                <div class="absolute top-0 left-0 w-4 h-full bg-chinese-red"></div>
+                                <div class="absolute top-0 right-0 w-4 h-full bg-chinese-red"></div>
+                                <!-- 梅花装饰角落 -->
+                                <div class="absolute top-6 left-6 w-12 h-12 opacity-70">
+                                    <svg viewBox="0 0 100 100" fill="none">
+                                        <path d="M50,10 Q60,30 80,40 Q60,50 70,70 Q50,80 30,70 Q40,50 20,40 Q40,30 50,10 Z" fill="#9E2A2B"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="font-kuai-le text-xl text-chinese-red mb-2">行書詩句</h3>
+                                <p class="text-ink-black/80 mb-4">李白《將進酒》選段，灑脫豪放，筆力遒勁</p>
+                                <a href="#" class="inline-block text-chinese-red hover:text-chinese-gold brush-stroke">
+                                    詳細欣賞 <i class="fa fa-arrow-right ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 作品2 -->
+                    <div class="portfolio-item scroll-appear" style="animation-delay: 0.4s;" data-category="painting">
+                        <div class="bg-scroll-yellow rounded-lg overflow-hidden shadow-lg border-2 border-chinese-gold/30 scroll-hover group">
+                            <div class="relative overflow-hidden">
+                                <img src="https://picsum.photos/id/131/600/400" alt="國畫：山水圖" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                                <!-- 挂轴装饰 -->
+                                <div class="absolute top-0 left-0 w-full h-6 bg-chinese-red"></div>
+                                <div class="absolute bottom-0 left-0 w-full h-6 bg-chinese-red"></div>
+                                <div class="absolute top-0 left-0 w-4 h-full bg-chinese-red"></div>
+                                <div class="absolute top-0 right-0 w-4 h-full bg-chinese-red"></div>
+                                <!-- 梅花装饰角落 -->
+                                <div class="absolute top-6 left-6 w-12 h-12 opacity-70">
+                                    <svg viewBox="0 0 100 100" fill="none">
+                                        <path d="M50,10 Q60,30 80,40 Q60,50 70,70 Q50,80 30,70 Q40,50 20,40 Q40,30 50,10 Z" fill="#9E2A2B"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="font-kuai-le text-xl text-chinese-red mb-2">山水圖</h3>
+                                <p class="text-ink-black/80 mb-4">水墨山水，層巒疊嶂，意境深遠，體現傳統審美</p>
+                                <a href="#" class="inline-block text-chinese-red hover:text-chinese-gold brush-stroke">
+                                    詳細欣賞 <i class="fa fa-arrow-right ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 作品3 -->
+                    <div class="portfolio-item scroll-appear" style="animation-delay: 0.5s;" data-category="design">
+                        <div class="bg-scroll-yellow rounded-lg overflow-hidden shadow-lg border-2 border-chinese-gold/30 scroll-hover group">
+                            <div class="relative overflow-hidden">
+                                <img src="https://picsum.photos/id/24/600/400" alt="設計：中國風海報" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                                <!-- 挂轴装饰 -->
+                                <div class="absolute top-0 left-0 w-full h-6 bg-chinese-red"></div>
+                                <div class="absolute bottom-0 left-0 w-full h-6 bg-chinese-red"></div>
+                                <div class="absolute top-0 left-0 w-4 h-full bg-chinese-red"></div>
+                                <div class="absolute top-0 right-0 w-4 h-full bg-chinese-red"></div>
+                                <!-- 梅花装饰角落 -->
+                                <div class="absolute top-6 left-6 w-12 h-12 opacity-70">
+                                    <svg viewBox="0 0 100 100" fill="none">
+                                        <path d="M50,10 Q60,30 80,40 Q60,50 70,70 Q50,80 30,70 Q40,50 20,40 Q40,30 50,10 Z" fill="#9E2A2B"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="font-kuai-le text-xl text-chinese-red mb-2">中國風海報</h3>
+                                <p class="text-ink-black/80 mb-4">融合傳統元素與現代設計語言的文化活動宣傳海報</p>
+                                <a href="#" class="inline-block text-chinese-red hover:text-chinese-gold brush-stroke">
+                                    詳細欣賞 <i class="fa fa-arrow-right ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 作品4 -->
+                    <div class="portfolio-item scroll-appear" style="animation-delay: 0.6s;" data-category="seal">
+                        <div class="bg-scroll-yellow rounded-lg overflow-hidden shadow-lg border-2 border-chinese-gold/30 scroll-hover group">
+                            <div class="relative overflow-hidden">
+                                <img src="https://picsum.photos/id/96/600/400" alt="篆刻：閒章" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                                <!-- 挂轴装饰 -->
+                                <div class="absolute top-0 left-0 w-full h-6 bg-chinese-red"></div>
+                                <div class="absolute bottom-0 left-0 w-full h-6 bg-chinese-red"></div>
+                                <div class="absolute top-0 left-0 w-4 h-full bg-chinese-red"></div>
+                                <div class="absolute top-0 right-0 w-4 h-full bg-chinese-red"></div>
+                                <!-- 梅花装饰角落 -->
+                                <div class="absolute top-6 left-6 w-12 h-12 opacity-70">
+                                    <svg viewBox="0 0 100 100" fill="none">
+                                        <path d="M50,10 Q60,30 80,40 Q60,50 70,70 Q50,80 30,70 Q40,50 20,40 Q40,30 50,10 Z" fill="#9E2A2B"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="font-kuai-le text-xl text-chinese-red mb-2">閒章篆刻</h3>
+                                <p class="text-ink-black/80 mb-4">「清風明月」閒章，青田石質，刀法精細，布局巧妙</p>
+                                <a href="#" class="inline-block text-chinese-red hover:text-chinese-gold brush-stroke">
+                                    詳細欣賞 <i class="fa fa-arrow-right ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 作品5 -->
+                    <div class="portfolio-item scroll-appear" style="animation-delay: 0.7s;" data-category="calligraphy">
+                        <div class="bg-scroll-yellow rounded-lg overflow-hidden shadow-lg border-2 border-chinese-gold/30 scroll-hover group">
+                            <div class="relative overflow-hidden">
+                                <img src="https://picsum.photos/id/20/600/400" alt="書法：隸書對聯" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                                <!-- 挂轴装饰 -->
+                                <div class="absolute top-0 left-0 w-full h-6 bg-chinese-red"></div>
+                                <div class="absolute bottom-0 left-0 w-full h-6 bg-chinese-red"></div>
+                                <div class="absolute top-0 left-0 w-4 h-full bg-chinese-red"></div>
+                                <div class="absolute top-0 right-0 w-4 h-full bg-chinese-red"></div>
+                                <!-- 梅花装饰角落 -->
+                                <div class="absolute top-6 left-6 w-12 h-12 opacity-70">
+                                    <svg viewBox="0 0 100 100" fill="none">
+                                        <path d="M50,10 Q60,30 80,40 Q60,50 70,70 Q50,80 30,70 Q40,50 20,40 Q40,30 50,10 Z" fill="#9E2A2B"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="font-kuai-le text-xl text-chinese-red mb-2">隸書對聯</h3>
+                                <p class="text-ink-black/80 mb-4">經典對聯作品，字體端莊厚重，氣韻生動</p>
+                                <a href="#" class="inline-block text-chinese-red hover:text-chinese-gold brush-stroke">
+                                    詳細欣賞 <i class="fa fa-arrow-right ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 作品6 -->
+                    <div class="portfolio-item scroll-appear" style="animation-delay: 0.8s;" data-category="painting">
+                        <div class="bg-scroll-yellow rounded-lg overflow-hidden shadow-lg border-2 border-chinese-gold/30 scroll-hover group">
+                            <div class="relative overflow-hidden">
+                                <img src="https://picsum.photos/id/145/600/400" alt="繪畫：花鳥圖" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                                <!-- 挂轴装饰 -->
+                                <div class="absolute top-0 left-0 w-full h-6 bg-chinese-red"></div>
+                                <div class="absolute bottom-0 left-0 w-full h-6 bg-chinese-red"></div>
+                                <div class="absolute top-0 left-0 w-4 h-full bg-chinese-red"></div>
+                                <div class="absolute top-0 right-0 w-4 h-full bg-chinese-red"></div>
+                                <!-- 梅花装饰角落 -->
+                                <div class="absolute top-6 left-6 w-12 h-12 opacity-70">
+                                    <svg viewBox="0 0 100 100" fill="none">
+                                        <path d="M50,10 Q60,30 80,40 Q60,50 70,70 Q50,80 30,70 Q40,50 20,40 Q40,30 50,10 Z" fill="#9E2A2B"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="font-kuai-le text-xl text-chinese-red mb-2">花鳥圖</h3>
+                                <p class="text-ink-black/80 mb-4">工筆花鳥，設色淡雅，筆法細膩，栩栩如生</p>
+                                <a href="#" class="inline-block text-chinese-red hover:text-chinese-gold brush-stroke">
+                                    詳細欣賞 <i class="fa fa-arrow-right ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 查看更多按钮 -->
+                <div class="text-center mt-12 scroll-appear" style="animation-delay: 0.9s;">
+                    <a href="#" class="inline-block bg-chinese-red text-ivory-white px-8 py-3 rounded-md border-2 border-chinese-gold text-lg font-kuai-le hover:bg-chinese-red/90 transform hover:-translate-y-1 transition-all duration-300 shadow-lg seal-stamp">
+                        查看更多作品
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 服务区 -->
+        <section id="services" class="py-20 bg-paper-texture bg-cover bg-center relative">
+            <div class="absolute inset-0 bg-ivory-white/90 backdrop-blur-[2px]"></div>
+            <div class="container mx-auto px-4 relative z-10">
+                <div class="text-center mb-16 scroll-appear">
+                    <h2 class="font-ma-shan text-[clamp(2rem,4vw,3rem)] text-chinese-red mb-4">我的服務</h2>
+                    <div class="w-24 h-1 bg-chinese-gold mx-auto mb-6"></div>
+                    <p class="max-w-2xl mx-auto text-lg">以傳統技藝為基礎，提供多元化的藝術服務，傳承文化，創新表達</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- 服务1 - 毛笔：设计服务 -->
+                    <div class="bg-scroll-yellow rounded-lg p-6 shadow-lg border border-chinese-gold/30 scroll-appear" style="animation-delay: 0.2s;">
+                        <div class="w-20 h-20 mx-auto mb-6 flex items-center justify-center">
+                            <svg viewBox="0 0 100 100" fill="none" stroke="#9E2A2B" stroke-width="2">
+                                <!-- 毛笔 -->
+                                <rect x="45" y="10" width="10" height="60" fill="#9E2A2B"/>
+                                <path d="M40,70 Q50,90 60,70" fill="#2D2E2E"/>
+                                <path d="M35,75 Q50,100 65,75" fill="none" stroke="#2D2E2E"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-kuai-le text-xl text-center text-chinese-red mb-4">筆下生花</h3>
+                        <h4 class="font-xiao-wei text-center text-lg mb-4">設計服務</h4>
+                        <p class="text-center text-ink-black/80">
+                            融合中國傳統元素的視覺設計，包括海報、書籍裝幀、品牌識別等，為您的項目注入文化底蘊。
+                        </p>
+                    </div>
+                    
+                    <!-- 服务2 - 墨条：品牌视觉 -->
+                    <div class="bg-scroll-yellow rounded-lg p-6 shadow-lg border border-chinese-gold/30 scroll-appear" style="animation-delay: 0.3s;">
+                        <div class="w-20 h-20 mx-auto mb-6 flex items-center justify-center">
+                            <svg viewBox="0 0 100 100" fill="none" stroke="#9E2A2B" stroke-width="2">
+                                <!-- 墨条 -->
+                                <rect x="30" y="20" width="40" height="60" fill="#2D2E2E" rx="2"/>
+                                <line x1="35" y1="30" x2="65" y2="30" stroke="#6B7280"/>
+                                <line x1="35" y1="45" x2="65" y2="45" stroke="#6B7280"/>
+                                <line x1="35" y1="60" x2="65" y2="60" stroke="#6B7280"/>
+                                <line x1="35" y1="75" x2="65" y2="75" stroke="#6B7280"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-kuai-le text-xl text-center text-chinese-red mb-4">墨韻傳承</h3>
+                        <h4 class="font-xiao-wei text-center text-lg mb-4">品牌視覺</h4>
+                        <p class="text-center text-ink-black/80">
+                            打造獨具中國風格的品牌形象，從標誌設計到整體視覺，展現品牌注入深厚的文化內涵。
+                        </p>
+                    </div>
+                    
+                    <!-- 服务3 - 宣纸：网页架构 -->
+                    <div class="bg-scroll-yellow rounded rounded-lg p-6 shadow-lg border border-chinese-gold/30 scroll-appear" style="animation-delay: 0.4s;">
+                        <div class="w-20 h-20 mx-auto mb-6 flex items-center justify-center">
+                            <svg viewBox="0 0 100 100" fill="none" stroke="#9E2A2B" stroke-width="2">
+                                <!-- 宣纸卷轴 -->
+                                <rect x="20" y="20" width="60" height="60" fill="#F5E8C7" stroke="#9E2A2B"/>
+                                <rect x="20" y="20" width="10" height="60" fill="#D4AF37"/>
+                                <rect x="70" y="20" width="10" height="60" fill="#D4AF37"/>
+                                <line x1="30" y1="30" x2="70" y2="30" stroke="#2D2E2E" stroke-width="1"/>
+                                <line x1="30" y1="45" x2="70" y2="45" stroke="#2D2E2E" stroke-width="1"/>
+                                <line x1="30" y1="60" x2="70" y2="60" stroke="#2D2E2E" stroke-width="1"/>
+                                <line x1="30" y1="75" x2="70" y2="75" stroke="#2D2E2E" stroke-width="1"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-kuai-le text-xl text-center text-chinese-red mb-4">紙上乾坤</h3>
+                        <h4 class="font-xiao-wei text-center text-lg mb-4">網頁架構</h4>
+                        <p class="text-center text-ink-black/80">
+                            設計具有中國美學特色的網站，將傳統元素與現代網頁技術相結合，呈現獨特的瀏覽體驗。
+                        </p>
+                    </div>
+                    
+                    <!-- 服务4 - 砚台：前端开发 -->
+                    <div class="bg-scroll-yellow rounded-lg p-6 shadow-lg border border-chinese-gold/30 scroll-appear" style="animation-delay: 0.5s;">
+                        <div class="w-20 h-20 mx-auto mb-6 flex items-center justify-center">
+                            <svg viewBox="0 0 100 100" fill="none" stroke="#9E2A2B" stroke-width="2">
+                                <!-- 砚台 -->
+                                <rect x="25" y="25" width="50" height="50" rx="5" fill="#6B7280"/>
+                                <rect x="30" y="30" width="40" height="40" rx="3" fill="#2D2E2E"/>
+                                <circle cx="50" cy="50" r="10" fill="#4B5563"/>
+                                <path d="M30,50 Q50,30 70,50" stroke="#9E2A2B" stroke-width="1" fill="none"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-kuai-le text-xl text-center text-chinese-red mb-4">硯池生輝</h3>
+                        <h4 class="font-xiao-wei text-center text-lg mb-4">前端開發</h4>
+                        <p class="text-center text-ink-black/80">
+                            將設計理念轉化為精美網頁，注重細節與體驗，確保每個交互都展現中國風格的精緻與優雅。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 古诗词随机浮现区 -->
+        <section class="py-12 bg-chinese-red/10 relative overflow-hidden">
+            <div class="container mx-auto px-4 relative z-10">
+                <div class="max-w-3xl mx-auto bg-ivory-white/80 backdrop-blur-sm p-6 rounded-lg border border-chinese-red/20 shadow-md scroll-appear">
+                    <h3 class="font-ma-shan text-2xl text-chinese-red text-center mb-4">每日詩詞</h3>
+                    <div class="text-center">
+                        <p class="font-xiao-wei text-lg italic mb-2" id="poemContent">
+                            明月出天山，蒼茫雲海間。
+                        </p>
+                        <p class="font-kuai-le text-chinese-red/80" id="poemAuthor">
+                            —— 李白《關山月》
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- 装饰性竹叶 -->
+            <div class="absolute top-0 left-0 w-20 h-20 opacity-10">
+                <svg viewBox="0 0 100 100" fill="none" stroke="#708C38" stroke-width="1">
+                    <path d="M10,90 Q30,50 50,90" stroke="#708C38" stroke-width="2" fill="none"/>
+                    <path d="M30,90 Q50,30 70,70" stroke="#708C38" stroke-width="2" fill="none"/>
+                    <path d="M50,90 Q70,40 90,80" stroke="#708C38" stroke-width="2" fill="none"/>
+                </svg>
+            </div>
+            <div class="absolute bottom-0 right-0 w-20 h-20 opacity-10">
+                <svg viewBox="0 0 100 100" fill="none" stroke="#708C38" stroke-width="1">
+                    <path d="M90,10 Q70,50 50,10" stroke="#708C38" stroke-width="2" fill="none"/>
+                    <path d="M70,10 Q50,70 30,30" stroke="#708C38" stroke-width="2" fill="none"/>
+                    <path d="M50,10 Q30,60 10,20" stroke="#708C38" stroke-width="2" fill="none"/>
+                </svg>
+            </div>
+        </section>
+
+        <!-- 联络表单 -->
+        <section id="contact" class="py-20 bg-ink-wash-bg relative">
+            <div class="container mx-auto px-4 relative z-10">
+                <div class="text-center mb-16 scroll-appear">
+                    <h2 class="font-ma-shan text-[clamp(2rem,4vw,3rem)] text-chinese-red mb-4">聯絡我</h2>
+                    <div class="w-24 h-1 bg-chinese-gold mx-auto mb-6"></div>
+                    <p class="max-w-2xl mx-auto text-lg">歡迎諮詢合作事宜，我將盡快回復您的訊息</p>
+                </div>
+                
+                <div class="max-w-2xl mx-auto">
+                    <form id="contactForm" class="bg-scroll-yellow p-8 rounded-lg shadow-xl border border-chinese-gold/30 scroll-appear" style="animation-delay: 0.2s;">
+                        <div class="mb-6">
+                            <label for="name" class="block text-ink-black font-kuai-le mb-2">姓名</label>
+                            <input type="text" id="name" name="name" class="w-full px-4 py-3 bg-ivory-white/70 border border-chinese-gold/50 rounded-md focus:outline-none focus:ring-2 focus:ring-chinese-red transition-all" placeholder="請輸入您的姓名" required>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="email" class="block text-ink-black font-kuai-le mb-2">郵箱</label>
+                            <input type="email" id="email" name="email" class="w-full px-4 py-3 bg-ivory-white/70 border border-chinese-gold/50 rounded-md focus:outline-none focus:ring-2 focus:ring-chinese-red transition-all" placeholder="請輸入您的郵箱" required>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="subject" class="block text-ink-black font-kuai-le mb-2">主題</label>
+                            <select id="subject" name="subject" class="w-full px-4 py-3 bg-ivory-white/70 border border-chinese-gold/50 rounded-md focus:outline-none focus:ring-2 focus:ring-chinese-red transition-all" required>
+                                <option value="" disabled selected>請選擇諮詢主題</option>
+                                <option value="cooperation">合作洽談</option>
+                                <option value="commission">作品訂製</option>
+                                <option value="inquiry">藝術諮詢</option>
+                                <option value="other">其他事宜</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-8">
+                            <label for="message" class="block text-ink-black font-kuai-le mb-2">訊息</label>
+                            <textarea id="message" name="message" rows="5" class="w-full px-4 py-3 bg-ivory-white/70 border border-chinese-gold/50 rounded-md focus:outline-none focus:ring-2 focus:ring-chinese-red transition-all" placeholder="請輸入您的訊息內容" required></textarea>
+                        </div>
+                        
+                        <div class="text-center">
+                            <button type="submit" id="submitBtn" class="bg-chinese-red text-ivory-white px-8 py-3 rounded-md border-2 border-chinese-gold text-lg font-kuai-le hover:bg-chinese-red/90 transform hover:-translate-y-1 transition-all duration-300 shadow-lg relative overflow-hidden">
+                                傳送訊息
+                                <!-- 印章动画元素 -->
+                                <div id="stamp" class="absolute -right-10 -bottom-10 w-20 h-20 bg-chinese-red/0 text-white font-ma-shan text-2xl opacity-0 flex items-center justify-center transform rotate-12 border-2 border-chinese-gold">
+                                    印
+                                </div>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-[#374957] text-ivory-white py-12 relative overflow-hidden">
+        <!-- 背景装饰 - 云纹 -->
+        <div class="absolute inset-0 opacity-10">
+            <svg width="100%" height="100%" viewBox="0 0 1200 300" preserveAspectRatio="none">
+                <path d="M0,150 Q300,50 600,150 T1200,150 L1200,300 L0,300 Z" fill="white"/>
+                <path d="M0,200 Q300,100 600,200 T1200,200 L1200,300 L0,300 Z" fill="white"/>
+            </svg>
+        </div>
+        
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+                <div class="mb-6 md:mb-0">
+                    <div class="flex items-center space-x-2">
+                        <svg class="w-8 h-8 text-chinese-gold" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M4 19.5C4 18.84 4.29 18.21 4.83 17.77L12.7 9.9C13.5 9.1 14.5 9.1 15.3 9.9L23.17 17.77C23.71 18.21 24 18.84 24 19.5C24 20.33 23.33 21 22.5 21H5C4.17 21 3.5 20.33 3.5 19.5C3.5 18.84 3.79 18.21 4.33 17.77L4 19.5Z"/>
+                            <path d="M12 11L3 20H21L12 11Z"/>
+                        </svg>
+                        <span class="font-ma-shan text-2xl text-chinese-gold">笔墨入神</span>
+                    </div>
+                    <p class="mt-2 text-ivory-white/70 max-w-md">
+                        傳承中國傳統藝術，融合現代設計理念，創造獨具一格的藝術作品
+                    </p>
+                </div>
+                
+                <!-- 社交媒体链接 - 中式图腾图标 -->
+                <div class="flex space-x-6">
+                    <a href="#" class="w-12 h-12 rounded-full bg-chinese-red/20 flex items-center justify-center text-ivory-white hover:bg-chinese-red hover:text-chinese-gold transition-all duration-300">
+                        <svg class="w-6 h-6" viewBox="0 0 100 100" fill="currentColor">
+                            <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" stroke-width="2"/>
+                            <path d="M30,50 L70,50" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M50,30 L50,70" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="w-12 h-12 rounded-full bg-chinese-red/20 flex items-center justify-center text-ivory-white hover:bg-chinese-red hover:text-chinese-gold transition-all duration-300">
+                        <svg class="w-6 h-6" viewBox="0 0 100 100" fill="currentColor">
+                            <rect x="30" y="20" width="40" height="60" rx="5" fill="none" stroke="currentColor" stroke-width="2"/>
+                            <circle cx="50" cy="40" r="5" fill="currentColor"/>
+                            <path d="M40,60 Q50,80 60,60" fill="none" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="w-12 h-12 rounded-full bg-chinese-red/20 flex items-center justify-center text-ivory-white hover:bg-chinese-red hover:text-chinese-gold transition-all duration-300">
+                        <svg class="w-6 h-6" viewBox="0 0 100 100" fill="currentColor">
+                            <path d="M30,20 Q70,20 90,40 L90,80 Q70,100 30,100 L30,20 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+                            <circle cx="45" cy="40" r="5" fill="currentColor"/>
+                            <path d="M45,50 L70,70" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="w-12 h-12 rounded-full bg-chinese-red/20 flex items-center justify-center text-ivory-white hover:bg-chinese-red hover:text-chinese-gold transition-all duration-300">
+                        <svg class="w-6 h-6" viewBox="0 0 100 100" fill="currentColor">
+                            <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" stroke-width="2"/>
+                            <path d="M30,50 Q50,30 70,50 Q50,70 30,50 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="border-t border-ivory-white/20 pt-8 text-center text-ivory-white/70">
+                <p>© 2023 笔墨入神 版權所有 | 中國風作品集網站</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 音效开关 -->
+    <div class="fixed bottom-6 right-6 z-40">
+        <button id="soundToggle" class="w-12 h-12 rounded-full bg-chinese-red text-ivory-white flex items-center justify-center shadow-lg border-2 border-chinese-gold hover:bg-chinese-red/90 transition-all">
+            <i class="fa fa-volume-up"></i>
+        </button>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('py-2', 'shadow-lg');
+                navbar.classList.remove('py-3', 'shadow-md');
+            } else {
+                navbar.classList.add('py-3', 'shadow-md');
+                navbar.classList.remove('py-2', 'shadow-lg');
+            }
+        });
+        
+        // 移动端菜单切换
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                // 关闭移动端菜单（如果打开）
+                document.getElementById('mobileMenu').classList.add('hidden');
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // 毛笔书法打字动画
+        function typeWriter(element, text, speed = 150, i = 0) {
+            if (i < text.length) {
+                element.textContent += text.charAt(i);
+                i++;
+                setTimeout(() => typeWriter(element, text, speed, i), speed);
+            }
+        }
+        
+        // 页面加载完成后执行
+        window.addEventListener('load', function() {
+            // 执行标题打字动画
+            const heroTitle = document.getElementById('heroTitle');
+            heroTitle.textContent = ''; // 清空初始内容
+            typeWriter(heroTitle, '笔墨入神', 200);
+            
+            // 初始化滚动动画
+            initScrollAnimations();
+            
+            // 初始化作品过滤
+            initPortfolioFilter();
+            
+            // 初始化表单提交动画
+            initFormSubmission();
+            
+            // 初始化古诗词随机显示
+            initPoemRotation();
+            
+            // 初始化音效开关
+            initSoundToggle();
+        });
+        
+        // 滚动动画
+        function initScrollAnimations() {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+            
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            
+            document.querySelectorAll('.scroll-appear').forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(20px)';
+                element.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                observer.observe(element);
+            });
+        }
+        
+        // 作品过滤功能
+        function initPortfolioFilter() {
+            const filters = document.querySelectorAll('.portfolio-filter');
+            const items = document.querySelectorAll('.portfolio-item');
+            
+            filters.forEach(filter => {
+                filter.addEventListener('click', function() {
+                    // 更新活跃状态
+                    filters.forEach(f => f.classList.remove('active', 'bg-chinese-red', 'text-ivory-white'));
+                    filters.forEach(f => f.classList.add('bg-scroll-yellow', 'text-ink-black'));
+                    this.classList.add('active', 'bg-chinese-red', 'text-ivory-white');
+                    this.classList.remove('bg-scroll-yellow', 'text-ink-black');
+                    
+                    const category = this.getAttribute('data-filter');
+                    
+                    // 过滤作品
+                    items.forEach(item => {
+                        if (category === 'all' || item.getAttribute('data-category') === category) {
+                            item.style.display = 'block';
+                            // 添加淡入动画
+                            setTimeout(() => {
+                                item.style.opacity = '1';
+                                item.style.transform = 'scale(1)';
+                            }, 50);
+                        } else {
+                            // 添加淡出动画
+                            item.style.opacity = '0';
+                            item.style.transform = 'scale(0.8)';
+                            setTimeout(() => {
+                                item.style.display = 'none';
+                            }, 300);
+                        }
+                    });
+                });
+            });
+        }
+        
+        // 表单提交动画
+        function initFormSubmission() {
+            const form = document.getElementById('contactForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const stamp = document.getElementById('stamp');
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // 显示印章动画
+                stamp.style.opacity = '1';
+                stamp.style.backgroundColor = 'rgba(158, 42, 43, 0.8)';
+                stamp.style.transform = 'rotate(12deg) scale(1)';
+                stamp.style.transition = 'all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                
+                // 禁用按钮
+                submitBtn.disabled = true;
+                submitBtn.textContent = '訊息已發送';
+                
+                // 重置表单
+                setTimeout(() => {
+                    form.reset();
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = '傳送訊息';
+                    stamp.style.opacity = '0';
+                    stamp.style.backgroundColor = 'rgba(158, 42, 43, 0)';
+                    stamp.style.transform = 'rotate(12deg) scale(0)';
+                }, 2000);
+            });
+        }
+        
+        // 古诗词随机显示
+        function initPoemRotation() {
+            const poems = [
+                { content: "明月出天山，蒼茫雲海間。", author: "—— 李白《關山月》" },
+                { content: "舉頭望明月，低頭思故鄉。", author: "—— 李白《靜夜思》" },
+                { content: "大漠孤煙直，長河落日圓。", author: "—— 王維《使至塞上》" },
+                { content: "春眠不覺曉，處處聞啼鳥。", author: "—— 孟浩然《春曉》" },
+                { content: "白日依山盡，黃河入海流。", author: "—— 王之渙《登鸛雀樓》" }
+            ];
+            
+            const poemContent = document.getElementById('poemContent');
+            const poemAuthor = document.getElementById('poemAuthor');
+            
+            // 随机显示一首诗
+            function showRandomPoem() {
+                const randomIndex = Math.floor(Math.random() * poems.length);
+                const randomPoem = poems[randomIndex];
+                
+                // 添加淡入淡出动画
+                poemContent.style.opacity = '0';
+                poemAuthor.style.opacity = '0';
+                
+                setTimeout(() => {
+                    poemContent.textContent = randomPoem.content;
+                    poemAuthor.textContent = randomPoem.author;
+                    
+                    poemContent.style.opacity = '1';
+                    poemAuthor.style.opacity = '1';
+                }, 500);
+            }
+            
+            // 初始显示
+            showRandomPoem();
+            
+            // 每30秒切换一次
+            setInterval(showRandomPoem, 30000);
+        }
+        
+        // 音效开关
+        function initSoundToggle() {
+            const soundToggle = document.getElementById('soundToggle');
+            let soundEnabled = false;
+            
+            // 这里只是模拟音效功能
+            soundToggle.addEventListener('click', function() {
+                soundEnabled = !soundEnabled;
+                const icon = this.querySelector('i');
+                
+                if (soundEnabled) {
+                    icon.classList.remove('fa-volume-up');
+                    icon.classList.add('fa-volume-off');
+                    // 实际应用中这里会启用音效
+                } else {
+                    icon.classList.remove('fa-volume-off');
+                    icon.classList.add('fa-volume-up');
+                    // 实际应用中这里会禁用音效
+                }
+            });
+        }
+        
+        // 中英文切换功能
+        const langToggle = document.getElementById('langToggle');
+        const mobileLangToggle = document.getElementById('mobileLangToggle');
+        let isChinese = true;
+        
+        function toggleLanguage() {
+            isChinese = !isChinese;
+            
+            // 这里只是模拟语言切换功能
+            if (isChinese) {
+                langToggle.textContent = '繁 / EN';
+                mobileLangToggle.textContent = '繁 / EN';
+                // 实际应用中这里会切换为中文内容
+            } else {
+                langToggle.textContent = 'Zh / EN';
+                mobileLangToggle.textContent = 'Zh / EN';
+                // 实际应用中这里会切换为英文内容
+            }
+        }
+        
+        langToggle.addEventListener('click', toggleLanguage);
+        mobileLangToggle.addEventListener('click', toggleLanguage);
+    </script>
+</body>
+</html>

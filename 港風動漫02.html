@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>港風動漫作品集｜Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#D4AF37',
+            secondary: '#FF3A3A',
+            accent: '#00BFFF',
+            dark: '#2D2926',
+            light: '#F5F5DC',
+            neonBlue: '#00F0FF',
+            neonPink: '#FF00FF',
+            neonYellow: '#FFFF00',
+            film: '#3A3A3A'
+          },
+          fontFamily: {
+            sans: ['Noto Sans TC', 'sans-serif'],
+            display: ['"Brush Script MT"', 'cursive']
+          },
+          animation: {
+            'film-roll': 'filmRoll 15s linear infinite',
+            'glow-slow': 'glow 3s ease-in-out infinite alternate',
+            'text-slide': 'textSlide 10s linear infinite',
+            'jitter': 'jitter 0.5s ease-in-out'
+          },
+          keyframes: {
+            filmRoll: {
+              '0%': { transform: 'translateY(0)' },
+              '100%': { transform: 'translateY(-100%)' }
+            },
+            glow: {
+              '0%': { textShadow: '0 0 5px #fff, 0 0 10px #fff, 0 0 15px #00F0FF, 0 0 20px #00F0FF' },
+              '100%': { textShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #FF00FF, 0 0 40px #FF00FF' }
+            },
+            textSlide: {
+              '0%': { transform: 'translateX(100%)' },
+              '100%': { transform: 'translateX(-100%)' }
+            },
+            jitter: {
+              '0%, 100%': { transform: 'translate(0)' },
+              '20%': { transform: 'translate(-2px, 2px)' },
+              '40%': { transform: 'translate(-2px, -2px)' },
+              '60%': { transform: 'translate(2px, 2px)' },
+              '80%': { transform: 'translate(2px, -2px)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .noise-bg {
+        position: relative;
+      }
+      .noise-bg::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.05;
+        pointer-events: none;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      }
+      .film-border {
+        position: relative;
+        padding: 2rem;
+      }
+      .film-border::before,
+      .film-border::after {
+        content: "";
+        position: absolute;
+        height: 100%;
+        width: 2rem;
+        top: 0;
+        background-size: 2rem 4rem;
+        background-repeat: repeat-y;
+      }
+      .film-border::before {
+        left: 0;
+        background-image: radial-gradient(circle, #2D2926 0.3rem, transparent 0.3rem);
+      }
+      .film-border::after {
+        right: 0;
+        background-image: radial-gradient(circle, #2D2926 0.3rem, transparent 0.3rem);
+      }
+      .neon-text {
+        color: #fff;
+        text-shadow: 
+          0 0 5px #fff, 
+          0 0 10px #fff, 
+          0 0 15px #00F0FF, 
+          0 0 20px #00F0FF, 
+          0 0 25px #00F0FF;
+      }
+      .comic-panel {
+        position: relative;
+        overflow: hidden;
+      }
+      .comic-panel::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+        pointer-events: none;
+      }
+    }
+  </style>
+</head>
+<body class="bg-light dark:bg-dark text-dark dark:text-light transition-colors duration-300 noise-bg">
+  <!-- 導航欄 -->
+  <header class="fixed w-full z-50 bg-light/80 dark:bg-dark/80 backdrop-blur-md transition-all duration-300">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      <a href="#" class="flex items-center space-x-2">
+        <span class="text-secondary text-2xl">🎞️</span>
+        <h1 class="text-xl md:text-2xl font-bold tracking-wider">
+          <span class="lang-zh">港風動漫作品集</span>
+          <span class="lang-en hidden">Hong Kong Style Anime Portfolio</span>
+        </h1>
+      </a>
+      
+      <!-- 桌面導航 -->
+      <nav class="hidden md:flex items-center space-x-8">
+        <a href="#about" class="nav-link hover:text-secondary transition-colors duration-300">
+          <span class="lang-zh">關於我</span>
+          <span class="lang-en hidden">About</span>
+        </a>
+        <a href="#portfolio" class="nav-link hover:text-secondary transition-colors duration-300">
+          <span class="lang-zh">作品集</span>
+          <span class="lang-en hidden">Portfolio</span>
+        </a>
+        <a href="#services" class="nav-link hover:text-secondary transition-colors duration-300">
+          <span class="lang-zh">服務</span>
+          <span class="lang-en hidden">Services</span>
+        </a>
+        <a href="#contact" class="nav-link hover:text-secondary transition-colors duration-300">
+          <span class="lang-zh">聯絡</span>
+          <span class="lang-en hidden">Contact</span>
+        </a>
+        <div class="flex items-center space-x-4">
+          <button id="themeToggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+            <i class="fa fa-moon-o dark:hidden"></i>
+            <i class="fa fa-sun-o hidden dark:inline-block"></i>
+          </button>
+          <button id="langToggle" class="px-3 py-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+            <span class="lang-zh">EN</span>
+            <span class="lang-en hidden">繁</span>
+          </button>
+        </div>
+      </nav>
+      
+      <!-- 手機導航按鈕 -->
+      <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+        <i class="fa fa-bars"></i>
+      </button>
+    </div>
+    
+    <!-- 手機導航菜單 -->
+    <div id="mobileMenu" class="hidden md:hidden bg-light dark:bg-dark shadow-lg absolute w-full">
+      <div class="container mx-auto px-4 py-3 flex flex-col space-y-4">
+        <a href="#about" class="py-2 hover:text-secondary transition-colors duration-300">
+          <span class="lang-zh">關於我</span>
+          <span class="lang-en hidden">About</span>
+        </a>
+        <a href="#portfolio" class="py-2 hover:text-secondary transition-colors duration-300">
+          <span class="lang-zh">作品集</span>
+          <span class="lang-en hidden">Portfolio</span>
+        </a>
+        <a href="#services" class="py-2 hover:text-secondary transition-colors duration-300">
+          <span class="lang-zh">服務</span>
+          <span class="lang-en hidden">Services</span>
+        </a>
+        <a href="#contact" class="py-2 hover:text-secondary transition-colors duration-300">
+          <span class="lang-zh">聯絡</span>
+          <span class="lang-en hidden">Contact</span>
+        </a>
+        <div class="flex items-center justify-end space-x-4">
+          <button id="mobileThemeToggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+            <i class="fa fa-moon-o dark:hidden"></i>
+            <i class="fa fa-sun-o hidden dark:inline-block"></i>
+          </button>
+          <button id="mobileLangToggle" class="px-3 py-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+            <span class="lang-zh">EN</span>
+            <span class="lang-en hidden">繁</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero 區域 -->
+  <section id="hero" class="relative h-screen flex items-center justify-center overflow-hidden">
+    <!-- 背景影片效果 -->
+    <div class="absolute inset-0 z-0">
+      <div class="absolute inset-0 bg-gradient-to-b from-dark/70 to-dark/90 z-10"></div>
+      <div class="absolute inset-0 bg-[url('https://picsum.photos/id/1071/1920/1080')] bg-cover bg-center opacity-60 z-0"></div>
+      <div class="absolute inset-0 noise-bg z-10"></div>
+    </div>
+    
+    <!-- Hero 內容 -->
+    <div class="container mx-auto px-4 z-20 text-center">
+      <div class="comic-panel p-6 md:p-10 rounded-lg bg-white/10 dark:bg-black/30 backdrop-blur-md border border-white/20 dark:border-gray-700 animate-glow-slow">
+        <h2 class="text-[clamp(2.5rem,8vw,5rem)] font-bold mb-4 neon-text animate-glow-slow">
+          <span class="lang-zh">透過鏡頭說故事</span>
+          <span class="lang-en hidden">Cinematic Storytelling</span>
+        </h2>
+        <p class="text-[clamp(1rem,3vw,1.5rem)] text-white/90 mb-8">
+          <span class="lang-zh">融合港片氛圍與動漫敘事的視覺藝術</span>
+          <span class="lang-en hidden">Visual art blending Hong Kong cinema atmosphere with anime narrative</span>
+        </p>
+        <a href="#portfolio" class="inline-block px-8 py-3 bg-secondary hover:bg-secondary/80 text-white rounded-md transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
+          <span class="lang-zh">探索作品</span>
+          <span class="lang-en hidden">Explore Works</span>
+        </a>
+      </div>
+    </div>
+    
+    <!-- 向下捲動指示 -->
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 animate-bounce">
+      <a href="#about" class="text-white/70 hover:text-white transition-colors">
+        <i class="fa fa-chevron-down text-2xl"></i>
+      </a>
+    </div>
+  </section>
+
+  <!-- 關於我區域 -->
+  <section id="about" class="py-20 bg-light dark:bg-dark transition-colors duration-300">
+    <div class="container mx-auto px-4">
+      <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold text-center mb-16 relative">
+        <span class="inline-block relative">
+          <span class="lang-zh">關於我</span>
+          <span class="lang-en hidden">About Me</span>
+          <span class="absolute -bottom-3 left-0 w-full h-1 bg-gradient-to-r from-secondary to-accent"></span>
+        </span>
+      </h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <!-- 頭像 -->
+        <div class="relative flex justify-center">
+          <div class="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-primary/70 shadow-xl">
+            <img src="https://picsum.photos/id/1012/400/400" alt="攝影師頭像" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-tr from-secondary/20 to-accent/20"></div>
+          </div>
+          <!-- 動漫風格圖示 -->
+          <div class="absolute -top-5 -right-5 w-16 h-16 bg-primary rounded-full flex items-center justify-center shadow-lg">
+            <i class="fa fa-camera-retro text-white text-2xl"></i>
+          </div>
+        </div>
+        
+        <!-- 簡介 -->
+        <div class="space-y-6">
+          <div class="comic-panel p-6 rounded-lg bg-white/5 dark:bg-gray-800/50 border border-white/10 dark:border-gray-700">
+            <h3 class="text-xl md:text-2xl font-bold mb-4">
+              <span class="lang-zh">👨🎨 一位融合傳統與現代的視覺創作者</span>
+              <span class="lang-en hidden">👨🎨 A visual creator blending tradition and modernity</span>
+            </h3>
+            <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+              <span class="lang-zh">我是一位擅長捕捉角色情緒與光影交錯的攝影創作者，熱衷於融合港片氛圍與動漫敘事，創造出獨特的視覺體驗。</span>
+              <span class="lang-en hidden">I'm a photography creator who excels at capturing the emotions of characters and the interplay of light and shadow. I'm passionate about blending the atmosphere of Hong Kong cinema with anime storytelling to create unique visual experiences.</span>
+            </p>
+          </div>
+          
+          <!-- 技能條 -->
+          <div class="space-y-4">
+            <div>
+              <div class="flex justify-between mb-2">
+                <span class="font-medium">
+                  <span class="lang-zh">動漫攝影</span>
+                  <span class="lang-en hidden">Anime Photography</span>
+                </span>
+                <span>95%</span>
+              </div>
+              <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                <div class="h-full bg-gradient-to-r from-secondary to-accent w-[95%] relative">
+                  <div class="absolute right-0 top-1/2 transform -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow-md"></div>
+                </div>
+              </div>
+            </div>
+            
+            <div>
+              <div class="flex justify-between mb-2">
+                <span class="font-medium">
+                  <span class="lang-zh">港風美術指導</span>
+                  <span class="lang-en hidden">Hong Kong Style Art Direction</span>
+                </span>
+                <span>90%</span>
+              </div>
+              <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                <div class="h-full bg-gradient-to-r from-secondary to-accent w-[90%] relative">
+                  <div class="absolute right-0 top-1/2 transform -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow-md"></div>
+                </div>
+              </div>
+            </div>
+            
+            <div>
+              <div class="flex justify-between mb-2">
+                <span class="font-medium">
+                  <span class="lang-zh">數位後製</span>
+                  <span class="lang-en hidden">Digital Post-production</span>
+                </span>
+                <span>85%</span>
+              </div>
+              <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                <div class="h-full bg-gradient-to-r from-secondary to-accent w-[85%] relative">
+                  <div class="absolute right-0 top-1/2 transform -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow-md"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 作品集區域 -->
+  <section id="portfolio" class="py-20 bg-gray-100 dark:bg-gray-900 transition-colors duration-300">
+    <div class="container mx-auto px-4">
+      <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold text-center mb-6 relative">
+        <span class="inline-block relative">
+          <span class="lang-zh">作品集</span>
+          <span class="lang-en hidden">Portfolio</span>
+          <span class="absolute -bottom-3 left-0 w-full h-1 bg-gradient-to-r from-secondary to-accent"></span>
+        </span>
+      </h2>
+      
+      <p class="text-center text-gray-600 dark:text-gray-400 mb-12 max-w-2xl mx-auto">
+        <span class="lang-zh">探索我的最新作品，融合港風與動漫元素，創造出獨特的視覺敘事</span>
+        <span class="lang-en hidden">Explore my latest works that blend Hong Kong style and anime elements to create unique visual narratives</span>
+      </p>
+      
+      <!-- 過濾按鈕 -->
+      <div class="flex flex-wrap justify-center gap-4 mb-12">
+        <button data-filter="all" class="filter-btn px-6 py-2 rounded-full bg-primary text-white hover:bg-primary/80 transition-all duration-300">
+          <span class="lang-zh">全部</span>
+          <span class="lang-en hidden">All</span>
+        </button>
+        <button data-filter="portrait" class="filter-btn px-6 py-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+          <span class="lang-zh">寫真</span>
+          <span class="lang-en hidden">Portrait</span>
+        </button>
+        <button data-filter="anime" class="filter-btn px-6 py-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+          <span class="lang-zh">動漫角色</span>
+          <span class="lang-en hidden">Anime Character</span>
+        </button>
+        <button data-filter="street" class="filter-btn px-6 py-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+          <span class="lang-zh">街拍</span>
+          <span class="lang-en hidden">Street</span>
+        </button>
+        <button data-filter="collab" class="filter-btn px-6 py-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-primary hover:text-white transition-all duration-300">
+          <span class="lang-zh">合作企劃</span>
+          <span class="lang-en hidden">Collaboration</span>
+        </button>
+      </div>
+      
+      <!-- 作品網格 -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- 作品 1 -->
+        <div class="portfolio-item group" data-category="portrait">
+          <div class="film-border bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-all duration-500 hover:shadow-xl hover:-translate-y-2">
+            <div class="relative overflow-hidden">
+              <img src="https://picsum.photos/id/1027/600/800" alt="港風動漫寫真作品" class="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                <div class="p-6">
+                  <h3 class="text-xl font-bold text-white mb-2">
+                    <span class="lang-zh">霓虹下的夢境</span>
+                    <span class="lang-en hidden">Neon Dreams</span>
+                  </h3>
+                  <p class="text-gray-200 text-sm">
+                    <span class="lang-zh">融合港風霓虹與動漫美學的寫真作品</span>
+                    <span class="lang-en hidden">Portrait work blending Hong Kong neon with anime aesthetics</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 作品 2 -->
+        <div class="portfolio-item group" data-category="anime">
+          <div class="film-border bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-all duration-500 hover:shadow-xl hover:-translate-y-2">
+            <div class="relative overflow-hidden">
+              <img src="https://picsum.photos/id/1074/600/800" alt="動漫角色創作" class="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                <div class="p-6">
+                  <h3 class="text-xl font-bold text-white mb-2">
+                    <span class="lang-zh">夜間守護者</span>
+                    <span class="lang-en hidden">Night Guardian</span>
+                  </h3>
+                  <p class="text-gray-200 text-sm">
+                    <span class="lang-zh">原創動漫角色概念設計與拍攝</span>
+                    <span class="lang-en hidden">Original anime character concept design and photography</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 作品 3 -->
+        <div class="portfolio-item group" data-category="street">
+          <div class="film-border bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-all duration-500 hover:shadow-xl hover:-translate-y-2">
+            <div class="relative overflow-hidden">
+              <img src="https://picsum.photos/id/1073/600/800" alt="港風街拍" class="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                <div class="p-6">
+                  <h3 class="text-xl font-bold text-white mb-2">
+                    <span class="lang-zh">街道迷霧</span>
+                    <span class="lang-en hidden">Street Mist</span>
+                  </h3>
+                  <p class="text-gray-200 text-sm">
+                    <span class="lang-zh">以動漫視角捕捉的香港街頭</span>
+                    <span class="lang-en hidden">Hong Kong streets captured from an anime perspective</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 作品 4 -->
+        <div class="portfolio-item group" data-category="collab">
+          <div class="film-border bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-all duration-500 hover:shadow-xl hover:-translate-y-2">
+            <div class="relative overflow-hidden">
+              <img src="https://picsum.photos/id/1082/600/800" alt="合作企劃" class="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                <div class="p-6">
+                  <h3 class="text-xl font-bold text-white mb-2">
+                    <span class="lang-zh">未來都市</span>
+                    <span class="lang-en hidden">Future City</span>
+                  </h3>
+                  <p class="text-gray-200 text-sm">
+                    <span class="lang-zh">與本地動漫工作室的合作專案</span>
+                    <span class="lang-en hidden">Collaboration project with a local anime studio</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 作品 5 -->
+        <div class="portfolio-item group" data-category="portrait">
+          <div class="film-border bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-all duration-500 hover:shadow-xl hover:-translate-y-2">
+            <div class="relative overflow-hidden">
+              <img src="https://picsum.photos/id/1083/600/800" alt="港風動漫寫真" class="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                <div class="p-6">
+                  <h3 class="text-xl font-bold text-white mb-2">
+                    <span class="lang-zh">記憶碎片</span>
+                    <span class="lang-en hidden">Memory Fragments</span>
+                  </h3>
+                  <p class="text-gray-200 text-sm">
+                    <span class="lang-zh">用港風美學重現的動漫角色寫真</span>
+                    <span class="lang-en hidden">Anime character portraits reimagined with Hong Kong aesthetics</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 作品 6 -->
+        <div class="portfolio-item group" data-category="anime">
+          <div class="film-border bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-all duration-500 hover:shadow-xl hover:-translate-y-2">
+            <div class="relative overflow-hidden">
+              <img src="https://picsum.photos/id/1084/600/800" alt="動漫場景創作" class="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                <div class="p-6">
+                  <h3 class="text-xl font-bold text-white mb-2">
+                    <span class="lang-zh">月光下的約定</span>
+                    <span class="lang-en hidden">Promise Under the Moon</span>
+                  </h3>
+                  <p class="text-gray-200 text-sm">
+                    <span class="lang-zh">原創動漫場景與角色的融合創作</span>
+                    <span class="lang-en hidden">Creative fusion of original anime scenes and characters</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 查看更多按鈕 -->
+      <div class="text-center mt-12">
+        <button class="px-8 py-3 bg-primary hover:bg-primary/80 text-white rounded-md transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
+          <span class="lang-zh">查看更多作品</span>
+          <span class="lang-en hidden">View More Works</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 服務區域 -->
+  <section id="services" class="py-20 bg-light dark:bg-dark transition-colors duration-300">
+    <div class="container mx-auto px-4">
+      <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold text-center mb-6 relative">
+        <span class="inline-block relative">
+          <span class="lang-zh">服務項目</span>
+          <span class="lang-en hidden">Services</span>
+          <span class="absolute -bottom-3 left-0 w-full h-1 bg-gradient-to-r from-secondary to-accent"></span>
+        </span>
+      </h2>
+      
+      <p class="text-center text-gray-600 dark:text-gray-400 mb-12 max-w-2xl mx-auto">
+        <span class="lang-zh">提供專業的港風動漫攝影與設計服務，為你的專案注入獨特的視覺魅力</span>
+        <span class="lang-en hidden">Professional Hong Kong style anime photography and design services to inject unique visual charm into your projects</span>
+      </p>
+      
+      <!-- 服務卡片 -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- 服務 1 -->
+        <div class="service-card bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-all duration-500 hover:shadow-xl hover:-translate-y-2 group">
+          <div class="h-48 relative overflow-hidden">
+            <img src="https://picsum.photos/id/1080/600/400" alt="攝影指導服務" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+              <div class="p-6">
+                <h3 class="text-xl font-bold text-white">
+                  <span class="lang-zh">攝影指導</span>
+                  <span class="lang-en hidden">Photography Direction</span>
+                </h3>
+                <div class="w-16 h-1 bg-primary mt-2"></div>
+              </div>
+            </div>
+          </div>
+          <div class="p-6">
+            <p class="text-gray-700 dark:text-gray-300 mb-4">
+              <span class="lang-zh">提供專業的港風動漫攝影指導，包括場景設計、燈光配置和角色擺姿，創造出富有敘事性的影像作品。</span>
+              <span class="lang-en hidden">Professional Hong Kong style anime photography direction, including scene design, lighting setup, and character posing to create narrative images.</span>
+            </p>
+            <ul class="space-y-2 mb-6">
+              <li class="flex items-center text-gray-600 dark:text-gray-400">
+                <i class="fa fa-check text-primary mr-2"></i>
+                <span class="lang-zh">港風場景設計</span>
+                <span class="lang-en hidden">Hong Kong style scene design</span>
+              </li>
+              <li class="flex items-center text-gray-600 dark:text-gray-400">
+                <i class="fa fa-check text-primary mr-2"></i>
+                <span class="lang-zh">動漫角色造型指導</span>
+                <span class="lang-en hidden">Anime character styling guidance</span>
+              </li>
+              <li class="flex items-center text-gray-600 dark:text-gray-400">
+                <i class="fa fa-check text-primary mr-2"></i>
+                <span class="lang-zh">專業燈光配置</span>
+                <span class="lang-en hidden">Professional lighting setup</span>
+              </li>
+            </ul>
+            <a href="#contact" class="inline-block text-primary hover:text-primary/80 font-medium transition-colors">
+              <span class="lang-zh">了解更多</span>
+              <span class="lang-en hidden">Learn More</span>
+              <i class="fa fa-arrow-right ml-2"></i>
+            </a>
+          </div>
+        </div>
+        
+        <!-- 服務 2 -->
+        <div class="service-card bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-all duration-500 hover:shadow-xl hover:-translate-y-2 group">
+          <div class="h-48 relative overflow-hidden">
+            <img src="https://picsum.photos/id/1081/600/400" alt="動漫分鏡服務" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+              <div class="p-6">
+                <h3 class="text-xl font-bold text-white">
+                  <span class="lang-zh">動漫分鏡構圖</span>
+                  <span class="lang-en hidden">Anime Storyboarding</span>
+                </h3>
+                <div class="w-16 h-1 bg-primary mt-2"></div>
+              </div>
+            </div>
+          </div>
+          <div class="p-6">
+            <p class="text-gray-700 dark:text-gray-300 mb-4">
+              <span class="lang-zh">結合港片美學與動漫敘事，創作富有敘事性的分鏡構圖，為你的故事提供視覺化的敘事框架。</span>
+              <span class="lang-en hidden">Combining Hong Kong cinema aesthetics with anime storytelling to create narrative storyboards that provide a visual framework for your story.</span>
+            </p>
+            <ul class="space-y-2 mb-6">
+              <li class="flex items-center text-gray-600 dark:text-gray-400">
+                <i class="fa fa-check text-primary mr-2"></i>
+                <span class="lang-zh">港片風格分鏡設計</span>
+                <span class="lang-en hidden">Hong Kong cinema style storyboard design</span>
+              </li>
+              <li class="flex items-center text-gray-600 dark:text-gray-400">
+                <i class="fa fa-check text-primary mr-2"></i>
+                <span class="lang-zh">動漫敘事節奏把控</span>
+                <span class="lang-en hidden">Anime narrative rhythm control</span>
+              </li>
+              <li class="flex items-center text-gray-600 dark:text-gray-400">
+                <i class="fa fa-check text-primary mr-2"></i>
+                <span class="lang-zh">場景視覺化規劃</span>
+                <span class="lang-en hidden">Scene visualization planning</span>
+              </li>
+            </ul>
+            <a href="#contact" class="inline-block text-primary hover:text-primary/80 font-medium transition-colors">
+              <span class="lang-zh">了解更多</span>
+              <span class="lang-en hidden">Learn More</span>
+              <i class="fa fa-arrow-right ml-2"></i>
+            </a>
+          </div>
+        </div>
+        
+        <!-- 服務 3 -->
+        <div class="service-card bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-all duration-500 hover:shadow-xl hover:-translate-y-2 group">
+          <div class="h-48 relative overflow-hidden">
+            <img src="https://picsum.photos/id/1079/600/400" alt="後製調色服務" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+              <div class="p-6">
+                <h3 class="text-xl font-bold text-white">
+                  <span class="lang-zh">後製調色</span>
+                  <span class="lang-en hidden">Post-production Color Grading</span>
+                </h3>
+                <div class="w-16 h-1 bg-primary mt-2"></div>
+              </div>
+            </div>
+          </div>
+          <div class="p-6">
+            <p class="text-gray-700 dark:text-gray-300 mb-4">
+              <span class="lang-zh">運用專業的後製技術，為你的影像作品添加港風動漫的獨特色彩風格，增強視覺敘事力。</span>
+              <span class="lang-en hidden">Using professional post-production techniques to add the unique color style of Hong Kong anime to your image works, enhancing visual storytelling.</span>
+            </p>
+            <ul class="space-y-2 mb-6">
+              <li class="flex items-center text-gray-600 dark:text-gray-400">
+                <i class="fa fa-check text-primary mr-2"></i>
+                <span class="lang-zh">港風霓虹色彩處理</span>
+                <span class="lang-en hidden">Hong Kong neon color processing</span>
+              </li>
+              <li class="flex items-center text-gray-600 dark:text-gray-400">
+                <i class="fa fa-check text-primary mr-2"></i>
+                <span class="lang-zh">動漫風格特效合成</span>
+                <span class="lang-en hidden">Anime style effect compositing</span>
+              </li>
+              <li class="flex items-center text-gray-600 dark:text-gray-400">
+                <i class="fa fa-check text-primary mr-2"></i>
+                <span class="lang-zh">膠片顆粒與雜訊效果</span>
+                <span class="lang-en hidden">Film grain and noise effects</span>
+              </li>
+            </ul>
+            <a href="#contact" class="inline-block text-primary hover:text-primary/80 font-medium transition-colors">
+              <span class="lang-zh">了解更多</span>
+              <span class="lang-en hidden">Learn More</span>
+              <i class="fa fa-arrow-right ml-2"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 聯絡區域 -->
+  <section id="contact" class="py-20 bg-gray-100 dark:bg-gray-900 transition-colors duration-300 relative overflow-hidden">
+    <!-- 背景元素 -->
+    <div class="absolute inset-0 z-0">
+      <div class="absolute inset-0 bg-[url('https://picsum.photos/id/1071/1920/1080')] bg-cover bg-center opacity-10 z-0"></div>
+      <div class="absolute inset-0 noise-bg z-10"></div>
+    </div>
+    
+    <div class="container mx-auto px-4 relative z-20">
+      <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold text-center mb-6 relative">
+        <span class="inline-block relative">
+          <span class="lang-zh">聯絡我</span>
+          <span class="lang-en hidden">Contact Me</span>
+          <span class="absolute -bottom-3 left-0 w-full h-1 bg-gradient-to-r from-secondary to-accent"></span>
+        </span>
+      </h2>
+      
+      <p class="text-center text-gray-600 dark:text-gray-400 mb-12 max-w-2xl mx-auto">
+        <span class="lang-zh">有任何合作想法或問題？請填寫下方表單與我聯繫，我將儘快回覆你</span>
+        <span class="lang-en hidden">Have any cooperation ideas or questions? Please fill out the form below to contact me, and I will reply to you as soon as possible</span>
+      </p>
+      
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <!-- 聯絡表單 -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8">
+          <form id="contactForm" class="space-y-6">
+            <div>
+              <label for="name" class="block text-gray-700 dark:text-gray-300 mb-2 font-medium">
+                <span class="lang-zh">姓名</span>
+                <span class="lang-en hidden">Name</span>
+              </label>
+              <input type="text" id="name" name="name" required
+                class="w-full px-4 py-3 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary dark:text-white transition-all"
+                placeholder="輸入你的姓名">
+            </div>
+            
+            <div>
+              <label for="email" class="block text-gray-700 dark:text-gray-300 mb-2 font-medium">
+                <span class="lang-zh">電子郵件</span>
+                <span class="lang-en hidden">Email</span>
+              </label>
+              <input type="email" id="email" name="email" required
+                class="w-full px-4 py-3 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary dark:text-white transition-all"
+                placeholder="輸入你的電子郵件">
+            </div>
+            
+            <div>
+              <label for="subject" class="block text-gray-700 dark:text-gray-300 mb-2 font-medium">
+                <span class="lang-zh">主題</span>
+                <span class="lang-en hidden">Subject</span>
+              </label>
+              <input type="text" id="subject" name="subject"
+                class="w-full px-4 py-3 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary dark:text-white transition-all"
+                placeholder="輸入訊息主題">
+            </div>
+            
+            <div>
+              <label for="message" class="block text-gray-700 dark:text-gray-300 mb-2 font-medium">
+                <span class="lang-zh">訊息</span>
+                <span class="lang-en hidden">Message</span>
+              </label>
+              <textarea id="message" name="message" rows="5" required
+                class="w-full px-4 py-3 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary dark:text-white transition-all"
+                placeholder="輸入你的訊息"></textarea>
+            </div>
+            
+            <button type="submit"
+              class="w-full bg-primary hover:bg-primary/80 text-white font-medium py-3 px-4 rounded-md transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg flex items-center justify-center">
+              <span class="lang-zh">送出訊息</span>
+              <span class="lang-en hidden">Send Message</span>
+              <i class="fa fa-paper-plane ml-2"></i>
+            </button>
+          </form>
+        </div>
+        
+        <!-- 聯絡資訊 -->
+        <div class="flex flex-col justify-between">
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 mb-8">
+            <h3 class="text-xl font-bold mb-6 relative">
+              <span class="inline-block relative">
+                <span class="lang-zh">聯絡資訊</span>
+                <span class="lang-en hidden">Contact Information</span>
+                <span class="absolute -bottom-2 left-0 w-16 h-1 bg-primary"></span>
+              </span>
+            </h3>
+            
+            <div class="space-y-6">
+              <div class="flex items-start">
+                <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mr-4">
+                  <i class="fa fa-map-marker text-primary text-xl"></i>
+                </div>
+                <div>
+                  <h4 class="font-medium text-gray-900 dark:text-white mb-1">
+                    <span class="lang-zh">地址</span>
+                    <span class="lang-en hidden">Address</span>
+                  </h4>
+                  <p class="text-gray-600 dark:text-gray-400">
+                    <span class="lang-zh">香港九龍油麻地</span>
+                    <span class="lang-en hidden">Yau Ma Tei, Kowloon, Hong Kong</span>
+                  </p>
+                </div>
+              </div>
+              
+              <div class="flex items-start">
+                <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mr-4">
+                  <i class="fa fa-envelope text-primary text-xl"></i>
+                </div>
+                <div>
+                  <h4 class="font-medium text-gray-900 dark:text-white mb-1">
+                    <span class="lang-zh">電子郵件</span>
+                    <span class="lang-en hidden">Email</span>
+                  </h4>
+                  <p class="text-gray-600 dark:text-gray-400">contact@hongkonganime.com</p>
+                </div>
+              </div>
+              
+              <div class="flex items-start">
+                <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mr-4">
+                  <i class="fa fa-phone text-primary text-xl"></i>
+                </div>
+                <div>
+                  <h4 class="font-medium text-gray-900 dark:text-white mb-1">
+                    <span class="lang-zh">電話</span>
+                    <span class="lang-en hidden">Phone</span>
+                  </h4>
+                  <p class="text-gray-600 dark:text-gray-400">+852 1234 5678</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 社交媒體 -->
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8">
+            <h3 class="text-xl font-bold mb-6 relative">
+              <span class="inline-block relative">
+                <span class="lang-zh">追蹤我</span>
+                <span class="lang-en hidden">Follow Me</span>
+                <span class="absolute -bottom-2 left-0 w-16 h-1 bg-primary"></span>
+              </span>
+            </h3>
+            
+            <div class="flex space-x-4">
+              <a href="#" class="w-12 h-12 rounded-full bg-[#1DA1F2]/10 flex items-center justify-center text-[#1DA1F2] hover:bg-[#1DA1F2]/20 transition-colors">
+                <i class="fa fa-twitter"></i>
+              </a>
+              <a href="#" class="w-12 h-12 rounded-full bg-[#E1306C]/10 flex items-center justify-center text-[#E1306C] hover:bg-[#E1306C]/20 transition-colors">
+                <i class="fa fa-instagram"></i>
+              </a>
+              <a href="#" class="w-12 h-12 rounded-full bg-[#FF0000]/10 flex items-center justify-center text-[#FF0000] hover:bg-[#FF0000]/20 transition-colors">
+                <i class="fa fa-youtube-play"></i>
+              </a>
+              <a href="#" class="w-12 h-12 rounded-full bg-[#0077B5]/10 flex items-center justify-center text-[#0077B5] hover:bg-[#0077B5]/20 transition-colors">
+                <i class="fa fa-linkedin"></i>
+              </a>
+              <a href="#" class="w-12 h-12 rounded-full bg-[#171515]/10 flex items-center justify-center text-[#171515] hover:bg-[#171515]/20 transition-colors">
+                <i class="fa fa-behance"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 頁腳 -->
+  <footer class="bg-dark text-white py-12">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div>
+          <div class="flex items-center space-x-2 mb-6">
+            <span class="text-secondary text-2xl">🎞️</span>
+            <h3 class="text-xl font-bold">
+              <span class="lang-zh">港風動漫作品集</span>
+              <span class="lang-en hidden">Hong Kong Style Anime Portfolio</span>
+            </h3>
+          </div>
+          <p class="text-gray-400 mb-6">
+            <span class="lang-zh">融合港片氛圍與動漫敘事的視覺藝術創作平台</span>
+            <span class="lang-en hidden">A visual art creation platform that blends the atmosphere of Hong Kong cinema with anime storytelling</span>
+          </p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-white transition-colors">
+              <i class="fa fa-instagram"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors">
+              <i class="fa fa-behance"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors">
+              <i class="fa fa-youtube-play"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </div>
+        </div>
+        
+        <div>
+          <h4 class="text-lg font-medium mb-6">
+            <span class="lang-zh">快速連結</span>
+            <span class="lang-en hidden">Quick Links</span>
+          </h4>
+          <ul class="space-y-3">
+            <li><a href="#about" class="text-gray-400 hover:text-white transition-colors">
+              <span class="lang-zh">關於我</span>
+              <span class="lang-en hidden">About</span>
+            </a></li>
+            <li><a href="#portfolio" class="text-gray-400 hover:text-white transition-colors">
+              <span class="lang-zh">作品集</span>
+              <span class="lang-en hidden">Portfolio</span>
+            </a></li>
+            <li><a href="#services" class="text-gray-400 hover:text-white transition-colors">
+              <span class="lang-zh">服務</span>
+              <span class="lang-en hidden">Services</span>
+            </a></li>
+            <li><a href="#contact" class="text-gray-400 hover:text-white transition-colors">
+              <span class="lang-zh">聯絡</span>
+              <span class="lang-en hidden">Contact</span>
+            </a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-lg font-medium mb-6">
+            <span class="lang-zh">服務</span>
+            <span class="lang-en hidden">Services</span>
+          </h4>
+          <ul class="space-y-3">
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">
+              <span class="lang-zh">攝影指導</span>
+              <span class="lang-en hidden">Photography Direction</span>
+            </a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">
+              <span class="lang-zh">動漫分鏡構圖</span>
+              <span class="lang-en hidden">Anime Storyboarding</span>
+            </a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">
+              <span class="lang-zh">後製調色</span>
+              <span class="lang-en hidden">Post-production Color Grading</span>
+            </a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">
+              <span class="lang-zh">動漫角色設計</span>
+              <span class="lang-en hidden">Anime Character Design</span>
+            </a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-lg font-medium mb-6">
+            <span class="lang-zh">聯絡我</span>
+            <span class="lang-en hidden">Contact Me</span>
+          </h4>
+          <ul class="space-y-3">
+            <li class="flex items-center text-gray-400">
+              <i class="fa fa-map-marker w-5 mr-3"></i>
+              <span>
+                <span class="lang-zh">香港九龍油麻地</span>
+                <span class="lang-en hidden">Yau Ma Tei, Kowloon, Hong Kong</span>
+              </span>
+            </li>
+            <li class="flex items-center text-gray-400">
+              <i class="fa fa-envelope w-5 mr-3"></i>
+              <span>contact@hongkonganime.com</span>
+            </li>
+            <li class="flex items-center text-gray-400">
+              <i class="fa fa-phone w-5 mr-3"></i>
+              <span>+852 1234 5678</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-500">
+        <p>
+          <span class="lang-zh">© 2025 港風動漫作品集. 保留所有權利.</span>
+          <span class="lang-en hidden">© 2025 Hong Kong Style Anime Portfolio. All rights reserved.</span>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 返回頂部按鈕 -->
+  <button id="backToTop" class="fixed bottom-8 right-8 bg-primary hover:bg-primary/80 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 opacity-0 invisible">
+    <i class="fa fa-chevron-up"></i>
+  </button>
+
+  <script>
+    // 語言切換功能
+    const langToggle = document.getElementById('langToggle');
+    const mobileLangToggle = document.getElementById('mobileLangToggle');
+    const langElements = document.querySelectorAll('.lang-zh, .lang-en');
+    
+    function toggleLanguage() {
+      const isChineseActive = document.querySelector('.lang-zh').style.display !== 'none';
+      
+      langElements.forEach(el => {
+        if (el.classList.contains('lang-zh')) {
+          el.style.display = isChineseActive ? 'none' : 'inline';
+        } else {
+          el.style.display = isChineseActive ? 'inline' : 'none';
+        }
+      });
+      
+      // 切換HTML lang屬性
+      document.documentElement.lang = isChineseActive ? 'en' : 'zh-Hant';
+    }
+    
+    langToggle.addEventListener('click', toggleLanguage);
+    mobileLangToggle.addEventListener('click', toggleLanguage);
+    
+    // 主題切換功能
+    const themeToggle = document.getElementById('themeToggle');
+    const mobileThemeToggle = document.getElementById('mobileThemeToggle');
+    
+    // 檢查用戶偏好的主題
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    
+    function toggleTheme() {
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.theme = 'light';
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.theme = 'dark';
+      }
+    }
+    
+    themeToggle.addEventListener('click', toggleTheme);
+    mobileThemeToggle.addEventListener('click', toggleTheme);
+    
+    // 手機菜單切換
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    
+    function toggleMobileMenu() {
+      mobileMenu.classList.toggle('hidden');
+    }
+    
+    mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+    
+    // 作品集過濾功能
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const portfolioItems = document.querySelectorAll('.portfolio-item');
+    
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // 移除所有按鈕的active狀態
+        filterBtns.forEach(b => {
+          b.classList.remove('bg-primary', 'text-white');
+          b.classList.add('bg-gray-200', 'dark:bg-gray-700');
+        });
+        
+        // 設置當前按鈕為active
+        btn.classList.remove('bg-gray-200', 'dark:bg-gray-700');
+        btn.classList.add('bg-primary', 'text-white');
+        
+        const filterValue = btn.getAttribute('data-filter');
+        
+        portfolioItems.forEach(item => {
+          if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+            item.style.display = 'block';
+            // 添加動畫效果
+            setTimeout(() => {
+              item.style.opacity = '1';
+              item.style.transform = 'translateY(0)';
+            }, 50);
+          } else {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+              item.style.display = 'none';
+            }, 300);
+          }
+        });
+      });
+    });
+    
+    // 表單提交
+    const contactForm = document.getElementById('contactForm');
+    
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      // 表單驗證
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const message = document.getElementById('message').value;
+      
+      if (!name || !email || !message) {
+        // 顯示錯誤訊息
+        alert('請填寫所有必填欄位');
+        return;
+      }
+      
+      // 模擬表單提交
+      const submitBtn = contactForm.querySelector('button[type="submit"]');
+      const originalText = submitBtn.innerHTML;
+      
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fa fa-spinner fa-spin mr-2"></i> 提交中...';
+      
+      setTimeout(() => {
+        // 顯示成功訊息
+        alert('訊息已成功提交！我將盡快回覆你。');
+        
+        // 重置表單
+        contactForm.reset();
+        
+        // 恢復按鈕
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+      }, 1500);
+    });
+    
+    // 滾動效果
+    const navbar = document.querySelector('header');
+    const backToTopBtn = document.getElementById('backToTop');
+    
+    window.addEventListener('scroll', () => {
+      // 導航欄效果
+      if (window.scrollY > 50) {
+        navbar.classList.add('py-2', 'shadow-md');
+        navbar.classList.remove('py-3');
+      } else {
+        navbar.classList.add('py-3');
+        navbar.classList.remove('py-2', 'shadow-md');
+      }
+      
+      // 返回頂部按鈕
+      if (window.scrollY > 300) {
+        backToTopBtn.classList.remove('opacity-0', 'invisible');
+        backToTopBtn.classList.add('opacity-100', 'visible');
+      } else {
+        backToTopBtn.classList.add('opacity-0', 'invisible');
+        backToTopBtn.classList.remove('opacity-100', 'visible');
+      }
+    });
+    
+    // 返回頂部功能
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+    
+    // 平滑滾動
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        
+        // 關閉手機菜單
+        if (!mobileMenu.classList.contains('hidden')) {
+          mobileMenu.classList.add('hidden');
+        }
+        
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          targetElement.scrollIntoView({
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+    
+    // 初始化
+    window.addEventListener('DOMContentLoaded', () => {
+      // 設置初始主題
+      if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+      
+      // 初始化作品集過濾
+      portfolioItems.forEach(item => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateY(20px)';
+      });
+      
+      setTimeout(() => {
+        portfolioItems.forEach(item => {
+          item.style.opacity = '1';
+          item.style.transform = 'translateY(0)';
+          item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        });
+      }, 300);
+    });
+  </script>
+</body>
+</html>
+    

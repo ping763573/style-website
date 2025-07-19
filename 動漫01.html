@@ -1,0 +1,1628 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>櫻花動漫作品集</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700&family=Barlow:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ffb6c1; /* 櫻花粉 */
+            --secondary-color: #87cefa; /* 天藍 */
+            --accent-color: #98fb98; /* 水綠 */
+            --text-color: #333;
+            --bg-color: #fff5f5;
+            --card-bg: #fff;
+            --dark-bg: #1a1a2e;
+            --dark-text: #e6e6e6;
+            --dark-card: #16213e;
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #d8a0a6;
+            --secondary-color: #6a8faf;
+            --accent-color: #7dbb7d;
+            --text-color: #e6e6e6;
+            --bg-color: #1a1a2e;
+            --card-bg: #16213e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23ffb6c1" d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M7.4,15.5C7.4,15.5 6.9,16.1 7.1,16.3C7.5,16.8 12,21.5 12,21.5C12,21.5 16.5,16.8 16.9,16.3C17.1,16 16.6,15.5 16.6,15.5C16.6,15.5 15.5,15.6 15.5,14.9C15.5,14.5 15.7,14.1 16,13.8C16.7,13.1 17.4,12.3 17.6,11.4C17.8,10.5 17.5,9.5 17.1,8.7C16.5,7.5 15.5,6.6 14.2,6.1C13.4,5.8 12.5,5.6 11.6,5.7C9.8,5.9 8.2,6.9 7.2,8.4C6.5,9.5 6.3,10.8 6.5,12C6.7,13.2 7.3,14.2 8.1,15C8.4,15.3 8.6,15.6 8.6,16C8.5,16.6 7.4,15.5 7.4,15.5Z"/></svg>'), auto;
+        }
+
+        body {
+            font-family: 'Zen Maru Gothic', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            overflow-x: hidden;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 1440 800" preserveAspectRatio="none"><path fill="%23ffb6c122" d="M0,0L48,16C96,32,192,64,288,101.3C384,139,480,181,576,170.7C672,160,768,96,864,96C960,96,1056,160,1152,181.3C1248,203,1344,181,1392,170.7L1440,160L1440,800L1392,800C1344,800,1248,800,1152,800C1056,800,960,800,864,800C768,800,672,800,576,800C480,800,384,800,288,800C192,800,96,800,48,800L0,800Z"></path></svg>');
+            background-repeat: no-repeat;
+            background-position: bottom;
+            background-size: contain;
+        }
+
+        [data-theme="dark"] body {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 1440 800" preserveAspectRatio="none"><path fill="%2316213e" d="M0,0L48,16C96,32,192,64,288,101.3C384,139,480,181,576,170.7C672,160,768,96,864,96C960,96,1056,160,1152,181.3C1248,203,1344,181,1392,170.7L1440,160L1440,800L1392,800C1344,800,1248,800,1152,800C1056,800,960,800,864,800C768,800,672,800,576,800C480,800,384,800,288,800C192,800,96,800,48,800L0,800Z"></path></svg>'), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 1440 800"><circle cx="200" cy="100" r="2" fill="white" opacity="0.8"/><circle cx="400" cy="50" r="1" fill="white" opacity="0.8"/><circle cx="800" cy="150" r="1.5" fill="white" opacity="0.8"/><circle cx="1200" cy="80" r="2" fill="white" opacity="0.8"/><circle cx="100" cy="200" r="1" fill="white" opacity="0.8"/><circle cx="500" cy="250" r="1.5" fill="white" opacity="0.8"/><circle cx="900" cy="180" r="2" fill="white" opacity="0.8"/><circle cx="1300" cy="220" r="1" fill="white" opacity="0.8"/></svg>');
+        }
+
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            color: var(--primary-color);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--secondary-color);
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--accent-color);
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%2387cefa" d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M10,7L8,17H16L14,7H10Z"/></svg>'), auto;
+        }
+
+        button {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%2398fb98" d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M10,10.5C10,10.5 9.3,10.6 9.1,10.8C8.9,11 9,11.7 9,11.7C9,11.7 10,11.9 10.3,11.6C10.6,11.3 10,10.5 10,10.5M14,10.5C14,10.5 14.7,10.6 14.9,10.8C15.1,11 15,11.7 15,11.7C15,11.7 14,11.9 13.7,11.6C13.4,11.3 14,10.5 14,10.5M7.9,14.7C7.9,14.7 7.5,15.2 7.8,15.5C8.1,15.8 8.6,15.4 8.6,15.4C8.6,15.4 9.5,15.6 9.5,16.2C9.5,16.8 8.9,16.8 8.9,16.8C8.9,16.8 7.8,16.6 7.5,16.1C7.2,15.6 7.9,14.7 7.9,14.7M16,14.7C16,14.7 16.4,15.2 16.1,15.5C15.8,15.8 15.3,15.4 15.3,15.4C15.3,15.4 14.4,15.6 14.4,16.2C14.4,16.8 15,16.8 15,16.8C15,16.8 16.1,16.6 16.4,16.1C16.7,15.6 16,14.7 16,14.7Z"/></svg>'), auto;
+        }
+
+        /* 導航欄 */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        [data-theme="dark"] header {
+            background-color: rgba(26, 26, 46, 0.9);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 2rem;
+            position: relative;
+        }
+
+        .nav-links a {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .language-switcher {
+            display: flex;
+            align-items: center;
+            margin-left: 2rem;
+        }
+
+        .language-switcher button {
+            background: none;
+            border: none;
+            font-family: 'Zen Maru Gothic', sans-serif;
+            font-size: 0.9rem;
+            color: var(--text-color);
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .language-switcher button.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: var(--text-color);
+            margin-left: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            color: var(--primary-color);
+            transform: rotate(30deg);
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-color);
+            cursor: pointer;
+        }
+
+        /* Hero 區塊 */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 2rem;
+            position: relative;
+            overflow: hidden;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 1440 800"><path fill="%2387cefa22" d="M0,0L48,16C96,32,192,64,288,101.3C384,139,480,181,576,170.7C672,160,768,96,864,96C960,96,1056,160,1152,181.3C1248,203,1344,181,1392,170.7L1440,160L1440,800L1392,800C1344,800,1248,800,1152,800C1056,800,960,800,864,800C768,800,672,800,576,800C480,800,384,800,288,800C192,800,96,800,48,800L0,800Z"></path><circle cx="200" cy="100" r="50" fill="%23ffffff44"/><circle cx="400" cy="50" r="30" fill="%23ffffff44"/><circle cx="800" cy="150" r="40" fill="%23ffffff44"/><circle cx="1200" cy="80" r="50" fill="%23ffffff44"/></svg>');
+            background-repeat: no-repeat;
+            background-position: bottom;
+            background-size: cover;
+        }
+
+        [data-theme="dark"] .hero {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 1440 800"><path fill="%2316213e" d="M0,0L48,16C96,32,192,64,288,101.3C384,139,480,181,576,170.7C672,160,768,96,864,96C960,96,1056,160,1152,181.3C1248,203,1344,181,1392,170.7L1440,160L1440,800L1392,800C1344,800,1248,800,1152,800C1056,800,960,800,864,800C768,800,672,800,576,800C480,800,384,800,288,800C192,800,96,800,48,800L0,800Z"></path><circle cx="100" cy="100" r="5" fill="white" opacity="0.8"/><circle cx="300" cy="50" r="3" fill="white" opacity="0.8"/><circle cx="700" cy="150" r="4" fill="white" opacity="0.8"/><circle cx="1100" cy="80" r="5" fill="white" opacity="0.8"/></svg>');
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-text {
+            flex: 1;
+            padding-right: 2rem;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            color: var(--primary-color);
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            color: var(--text-color);
+        }
+
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .typing-text {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+            min-height: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            font-family: 'Zen Maru Gothic', sans-serif;
+            box-shadow: 0 4px 15px rgba(255, 182, 193, 0.4);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 182, 193, 0.6);
+            background-color: #ff9aae;
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            box-shadow: 0 4px 15px rgba(135, 206, 250, 0.4);
+            margin-left: 1rem;
+        }
+
+        .btn-secondary:hover {
+            box-shadow: 0 6px 20px rgba(135, 206, 250, 0.6);
+            background-color: #6bb8e0;
+        }
+
+        /* 關於我 */
+        .about {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .about-image {
+            flex: 1;
+            text-align: center;
+        }
+
+        .about-image img {
+            max-width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary-color);
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .skills {
+            margin-top: 2rem;
+        }
+
+        .skill-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-name {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .skill-bar {
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        [data-theme="dark"] .skill-bar {
+            background-color: #2a2a4a;
+        }
+
+        .skill-level {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            border-radius: 5px;
+            position: relative;
+            animation: fillBar 1.5s ease-out forwards;
+        }
+
+        @keyframes fillBar {
+            from { width: 0; }
+            to { width: attr(data-level); }
+        }
+
+        /* 作品集 */
+        .portfolio {
+            padding: 5rem 2rem;
+            background-color: rgba(255, 182, 193, 0.05);
+        }
+
+        [data-theme="dark"] .portfolio {
+            background-color: rgba(26, 26, 46, 0.8);
+        }
+
+        .portfolio-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1.5rem;
+            background-color: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            border-radius: 30px;
+            font-family: 'Zen Maru Gothic', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .portfolio-item {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .portfolio-img {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .portfolio-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .portfolio-item:hover .portfolio-img img {
+            transform: scale(1.1);
+        }
+
+        .portfolio-info {
+            padding: 1.5rem;
+        }
+
+        .portfolio-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .portfolio-info p {
+            color: var(--text-color);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .portfolio-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            padding: 0.3rem 0.8rem;
+            background-color: var(--secondary-color);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        /* 服務 */
+        .services {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255, 182, 193, 0.1);
+            border-radius: 50%;
+        }
+
+        .service-icon svg {
+            width: 40px;
+            height: 40px;
+            fill: var(--primary-color);
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
+
+        .service-card p {
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* 聯絡表單 */
+        .contact {
+            padding: 5rem 2rem;
+            background-color: rgba(152, 251, 152, 0.05);
+        }
+
+        [data-theme="dark"] .contact {
+            background-color: rgba(26, 26, 46, 0.8);
+        }
+
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 3rem;
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary-color);
+        }
+
+        .contact-info p {
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .info-icon {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(255, 182, 193, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+        }
+
+        .info-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--primary-color);
+        }
+
+        .info-text h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+            color: var(--primary-color);
+        }
+
+        .info-text p {
+            margin: 0;
+            color: var(--text-color);
+        }
+
+        .contact-form {
+            flex: 1;
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-form::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Zen Maru Gothic', sans-serif;
+            transition: all 0.3s ease;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+        }
+
+        [data-theme="dark"] .form-control {
+            border-color: #2a2a4a;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(255, 182, 193, 0.3);
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Zen Maru Gothic', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: #ff9aae;
+        }
+
+        .error {
+            border-color: #ff4d4d !important;
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-5px); }
+            40%, 80% { transform: translateX(5px); }
+        }
+
+        .error-message {
+            color: #ff4d4d;
+            font-size: 0.8rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+
+        /* 頁腳 */
+        footer {
+            background-color: var(--card-bg);
+            padding: 3rem 2rem 1rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 182, 193, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+
+        .social-link svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--primary-color);
+        }
+
+        .social-link:hover svg {
+            fill: white;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links a {
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .copyright {
+            color: var(--text-color);
+            font-size: 0.9rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="dark"] .copyright {
+            border-top-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* 粒子效果 */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.6;
+            animation: float-particle linear infinite;
+        }
+
+        .sakura {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23ffb6c1" d="M12,2C13.1,2 14,2.9 14,4C14,5.1 13.1,6 12,6C10.9,6 10,5.1 10,4C10,2.9 10.9,2 12,2M15.5,8C16.3,8 17,8.7 17,9.5C17,10.3 16.3,11 15.5,11C14.7,11 14,10.3 14,9.5C14,8.7 14.7,8 15.5,8M8.5,8C9.3,8 10,8.7 10,9.5C10,10.3 9.3,11 8.5,11C7.7,11 7,10.3 7,9.5C7,8.7 7.7,8 8.5,8M12,11C13.1,11 14,11.9 14,13C14,14.1 13.1,15 12,15C10.9,15 10,14.1 10,13C10,11.9 10.9,11 12,11M19,17V19H5V17C5,14.8 8.1,13 12,13C15.9,13 19,14.8 19,17Z"/></svg>');
+            width: 15px;
+            height: 15px;
+        }
+
+        .star {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23ffd700" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"/></svg>');
+            width: 10px;
+            height: 10px;
+        }
+
+        .bubble {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%2387cefa" d="M12,2C6.47,2 2,6.5 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/></svg>');
+            width: 12px;
+            height: 12px;
+        }
+
+        @keyframes float-particle {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* 響應式設計 */
+        @media (max-width: 992px) {
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-text {
+                padding-right: 0;
+                margin-bottom: 3rem;
+            }
+
+            .about-content {
+                flex-direction: column;
+            }
+
+            .contact-container {
+                flex-direction: column;
+            }
+
+            .contact-info {
+                margin-bottom: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .typing-text {
+                font-size: 1.2rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+
+            .btn {
+                display: block;
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+
+            .btn-secondary {
+                margin-left: 0;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-text h1 {
+                font-size: 2rem;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 粒子效果 -->
+    <div class="particles" id="particles"></div>
+
+    <!-- 導航欄 -->
+    <header>
+        <nav>
+            <a href="#" class="logo">
+                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%23ffb6c1' d='M12,2L4.5,20.29L5.21,21L12,18L18.79,21L19.5,20.29L12,2Z'/></svg>" alt="Logo">
+                <span class="lang-zh">櫻花動漫</span>
+                <span class="lang-en" style="display:none;">Sakura Anime</span>
+            </a>
+            
+            <ul class="nav-links">
+                <li><a href="#home" class="lang-zh">首頁</a><a href="#home" class="lang-en" style="display:none;">Home</a></li>
+                <li><a href="#about" class="lang-zh">關於我</a><a href="#about" class="lang-en" style="display:none;">About</a></li>
+                <li><a href="#portfolio" class="lang-zh">作品集</a><a href="#portfolio" class="lang-en" style="display:none;">Portfolio</a></li>
+                <li><a href="#services" class="lang-zh">服務</a><a href="#services" class="lang-en" style="display:none;">Services</a></li>
+                <li><a href="#contact" class="lang-zh">聯絡</a><a href="#contact" class="lang-en" style="display:none;">Contact</a></li>
+            </ul>
+            
+            <div class="language-switcher">
+                <button class="active lang-btn" data-lang="zh">中文</button>
+                <button class="lang-btn" data-lang="en">EN</button>
+            </div>
+            
+            <button class="theme-toggle" id="themeToggle">
+                <span class="lang-zh">🌙</span>
+                <span class="lang-en" style="display:none;">🌙</span>
+            </button>
+            
+            <button class="hamburger" id="hamburger">
+                <span class="lang-zh">☰</span>
+                <span class="lang-en" style="display:none;">☰</span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hero 區塊 -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="lang-zh">嗨，我是<span class="typed-text"></span></h1>
+                <h1 class="lang-en" style="display:none;">Hi, I'm <span class="typed-text"></span></h1>
+                <div class="typing-text lang-zh">動漫風格插畫師 & 角色設計師</div>
+                <div class="typing-text lang-en" style="display:none;">Anime-style Illustrator & Character Designer</div>
+                <p class="lang-zh">創造充滿情感與故事的動漫角色，將你的想像化為視覺藝術。</p>
+                <p class="lang-en" style="display:none;">Creating anime characters full of emotion and story, turning your imagination into visual art.</p>
+                <div>
+                    <a href="#contact" class="btn lang-zh">聯絡我</a>
+                    <a href="#contact" class="btn lang-en" style="display:none;">Contact Me</a>
+                    <a href="#portfolio" class="btn btn-secondary lang-zh">查看作品</a>
+                    <a href="#portfolio" class="btn btn-secondary lang-en" style="display:none;">View Work</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 500'><style>.skin{fill:%23f9d5bb;}.hair{fill:%23663b2d;}.eyes{fill:%23333;}.outfit{fill:%23ffb6c1;}.accent{fill:%2387cefa;}</style><path class='hair' d='M200,50c-50,0-90,40-90,90v160c0,50,40,90,90,90s90-40,90-90V140C290,90,250,50,200,50z'/><path class='skin' d='M200,150c-30,0-60,20-60,50v100c0,30,30,50,60,50s60-20,60-50V200C260,170,230,150,200,150z'/><path class='outfit' d='M200,300c-20,0-40,10-40,30v70c0,20,20,30,40,30s40-10,40-30v-70C240,310,220,300,200,300z'/><circle class='eyes' cx='160' cy='200' r='10'/><circle class='eyes' cx='240' cy='200' r='10'/><path class='accent' d='M200,250c-10,0-20,5-20,15v10c0,10,10,15,20,15s20-5,20-15v-10C220,255,210,250,200,250z'/></svg>" alt="Anime Character">
+            </div>
+        </div>
+    </section>
+
+    <!-- 關於我 -->
+    <section class="about" id="about">
+        <div class="about-container">
+            <div class="section-title">
+                <h2 class="lang-zh">關於我</h2>
+                <h2 class="lang-en" style="display:none;">About Me</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 500'><style>.skin{fill:%23f9d5bb;}.hair{fill:%23d4a373;}.eyes{fill:%23333;}.outfit{fill:%2398fb98;}.accent{fill:%23ffb6c1;}</style><path class='hair' d='M200,50c-60,0-100,40-100,100v150c0,60,40,100,100,100s100-40,100-100V150C300,90,260,50,200,50z'/><path class='skin' d='M200,160c-40,0-70,20-70,60v90c0,40,30,60,70,60s70-20,70-60V220C270,180,240,160,200,160z'/><path class='outfit' d='M200,320c-30,0-50,15-50,45v60c0,30,20,45,50,45s50-15,50-45v-60C250,335,230,320,200,320z'/><circle class='eyes' cx='150' cy='220' r='12'/><circle class='eyes' cx='250' cy='220' r='12'/><path class='accent' d='M200,270c-15,0-25,8-25,23v10c0,15,10,23,25,23s25-8,25-23v-10C225,278,215,270,200,270z'/></svg>" alt="About Me">
+                </div>
+                <div class="about-text">
+                    <h3 class="lang-zh">我是小櫻，專業動漫插畫師</h3>
+                    <h3 class="lang-en" style="display:none;">I'm Sakura, Professional Anime Illustrator</h3>
+                    <p class="lang-zh">從小熱愛動漫與繪畫，畢業於東京設計學院動漫設計系。擁有5年以上專業插畫經驗，擅長角色設計、場景繪製與故事板創作。</p>
+                    <p class="lang-en" style="display:none;">Passionate about anime and drawing since childhood, graduated from Tokyo Design Institute with a degree in Anime Design. With over 5 years of professional illustration experience, specializing in character design, scene drawing, and storyboard creation.</p>
+                    <p class="lang-zh">我的風格融合了傳統日式動漫與現代插畫技巧，特別擅長表現角色情感與故事性場景。曾參與多部動畫製作與遊戲角色設計。</p>
+                    <p class="lang-en" style="display:none;">My style combines traditional Japanese anime with modern illustration techniques, especially good at expressing character emotions and storytelling scenes. Participated in several animation productions and game character designs.</p>
+                    <div class="skills">
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span class="lang-zh">角色設計</span>
+                                <span class="lang-en" style="display:none;">Character Design</span>
+                                <span>90%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-level" data-level="90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span class="lang-zh">場景繪製</span>
+                                <span class="lang-en" style="display:none;">Scene Drawing</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-level" data-level="85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span class="lang-zh">色彩運用</span>
+                                <span class="lang-en" style="display:none;">Color Usage</span>
+                                <span>88%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-level" data-level="88%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span class="lang-zh">故事板創作</span>
+                                <span class="lang-en" style="display:none;">Storyboard Creation</span>
+                                <span>80%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-level" data-level="80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 作品集 -->
+    <section class="portfolio" id="portfolio">
+        <div class="portfolio-container">
+            <div class="section-title">
+                <h2 class="lang-zh">作品集</h2>
+                <h2 class="lang-en" style="display:none;">Portfolio</h2>
+            </div>
+            <div class="filter-buttons">
+                <button class="filter-btn active lang-zh" data-filter="all">全部</button>
+                <button class="filter-btn lang-zh" data-filter="character">角色設計</button>
+                <button class="filter-btn lang-zh" data-filter="scene">場景繪製</button>
+                <button class="filter-btn lang-zh" data-filter="storyboard">故事板</button>
+                <button class="filter-btn lang-en" style="display:none;" data-filter="all">All</button>
+                <button class="filter-btn lang-en" style="display:none;" data-filter="character">Characters</button>
+                <button class="filter-btn lang-en" style="display:none;" data-filter="scene">Scenes</button>
+                <button class="filter-btn lang-en" style="display:none;" data-filter="storyboard">Storyboards</button>
+            </div>
+            <div class="portfolio-grid">
+                <div class="portfolio-item" data-category="character">
+                    <div class="portfolio-img">
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'><rect width='400' height='300' fill='%23ffb6c1'/><circle cx='200' cy='150' r='80' fill='%23f9d5bb'/><path d='M150,120 Q200,100 250,120' stroke='%23333' fill='none' stroke-width='3'/><circle cx='170' cy='130' r='10' fill='%23333'/><circle cx='230' cy='130' r='10' fill='%23333'/></svg>" alt="Project 1">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3 class="lang-zh">魔法學園女主角</h3>
+                        <h3 class="lang-en" style="display:none;">Magic Academy Heroine</h3>
+                        <p class="lang-zh">為奇幻動畫《魔法學園》設計的女主角角色，展現青春活力與魔法天賦。</p>
+                        <p class="lang-en" style="display:none;">The heroine character designed for the fantasy animation "Magic Academy", showing youthful energy and magical talent.</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">角色設計</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="scene">
+                    <div class="portfolio-img">
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'><rect width='400' height='300' fill='%2387cefa'/><rect x='50' y='200' width='300' height='50' fill='%2398fb98'/><path d='M100,150 Q200,50 300,150' fill='%2398fb98'/><circle cx='100' cy='80' r='40' fill='%23ffd700'/></svg>" alt="Project 2">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3 class="lang-zh">奇幻森林場景</h3>
+                        <h3 class="lang-en" style="display:none;">Fantasy Forest Scene</h3>
+                        <p class="lang-zh">為RPG遊戲《精靈傳說》創作的奇幻森林場景，充滿神秘與冒險氛圍。</p>
+                        <p class="lang-en" style="display:none;">Fantasy forest scene created for the RPG game "Elf Legend", full of mystery and adventure atmosphere.</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">場景繪製</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="storyboard">
+                    <div class="portfolio-img">
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'><rect width='400' height='300' fill='%23d8bfd8'/><rect x='50' y='50' width='100' height='200' fill='%23fff'/><rect x='175' y='50' width='100' height='200' fill='%23fff'/><rect x='300' y='50' width='100' height='200' fill='%23fff'/></svg>" alt="Project 3">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3 class="lang-zh">愛情動畫故事板</h3>
+                        <h3 class="lang-en" style="display:none;">Romance Anime Storyboard</h3>
+                        <p class="lang-zh">為短篇動畫《櫻花下的約定》創作的故事板，捕捉關鍵情感瞬間。</p>
+                        <p class="lang-en" style="display:none;">Storyboard created for the short animation "Promise Under the Cherry Blossoms", capturing key emotional moments.</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">故事板</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="character">
+                    <div class="portfolio-img">
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'><rect width='400' height='300' fill='%23ffd700'/><circle cx='200' cy='150' r='80' fill='%23333'/><path d='M150,120 Q200,180 250,120' stroke='%23fff' fill='none' stroke-width='5'/><circle cx='170' cy='130' r='10' fill='%23fff'/><circle cx='230' cy='130' r='10' fill='%23fff'/></svg>" alt="Project 4">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3 class="lang-zh">科幻反派角色</h3>
+                        <h3 class="lang-en" style="display:none;">Sci-Fi Antagonist</h3>
+                        <p class="lang-zh">科幻系列《星際邊緣》的主要反派角色設計，展現冷酷與科技感。</p>
+                        <p class="lang-en" style="display:none;">Main antagonist character design for the sci-fi series "Stellar Edge", showing冷酷 and technological sense.</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">角色設計</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="scene">
+                    <div class="portfolio-img">
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'><rect width='400' height='300' fill='%23333'/><rect x='50' y='200' width='300' height='50' fill='%23555'/><rect x='150' y='100' width='100' height='150' fill='%23ffb6c1'/><rect x='170' y='120' width='20' height='20' fill='%23ffd700'/><rect x='210' y='120' width='20' height='20' fill='%23ffd700'/><rect x='170' y='160' width='60' height='20' fill='%23ffd700'/></svg>" alt="Project 5">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3 class="lang-zh">未來都市夜景</h3>
+                        <h3 class="lang-en" style="display:none;">Future City Night Scene</h3>
+                        <p class="lang-zh">為科幻視覺小說創作的未來都市夜景，霓虹燈光與高科技建築交織。</p>
+                        <p class="lang-en" style="display:none;">Future city night scene created for a sci-fi visual novel, with neon lights and high-tech buildings intertwined.</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">場景繪製</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="storyboard">
+                    <div class="portfolio-img">
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'><rect width='400' height='300' fill='%23ffb6c1'/><rect x='50' y='50' width='100' height='200' fill='%23fff'/><rect x='175' y='50' width='100' height='200' fill='%23fff'/><rect x='300' y='50' width='100' height='200' fill='%23fff'/></svg>" alt="Project 6">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3 class="lang-zh">動作場景分鏡</h3>
+                        <h3 class="lang-en" style="display:none;">Action Scene Storyboard</h3>
+                        <p class="lang-zh">為戰鬥動畫《劍與魔法》設計的動作場景分鏡，強調動態與節奏。</p>
+                        <p class="lang-en" style="display:none;">Action scene storyboard designed for the battle animation "Sword & Magic", emphasizing dynamics and rhythm.</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">故事板</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 服務 -->
+    <section class="services" id="services">
+        <div class="services-container">
+            <div class="section-title">
+                <h2 class="lang-zh">我的服務</h2>
+                <h2 class="lang-en" style="display:none;">My Services</h2>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,18C12,18 7,13 7,10C7,7 9,5 12,5C15,5 17,7 17,10C17,13 12,18 12,18M12,7C10.9,7 10,7.9 10,9C10,10.1 10.9,11 12,11C13.1,11 14,10.1 14,9C14,7.9 13.1,7 12,7M20,3H4A2,2 0 0,0 2,5V19A2,2 0 0,0 4,21H20A2,2 0 0,0 22,19V5A2,2 0 0,0 20,3M20,19H4V5H20V19Z"/></svg>
+                    </div>
+                    <h3 class="lang-zh">角色設計</h3>
+                    <h3 class="lang-en" style="display:none;">Character Design</h3>
+                    <p class="lang-zh">創造獨特且富有表現力的動漫角色，從概念到最終設計，包括多種表情與姿勢。</p>
+                    <p class="lang-en" style="display:none;">Create unique and expressive anime characters, from concept to final design, including various expressions and poses.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14,12L10,8V11H2V13H10V16M20,18V6C20,4.89 19.1,4 18,4H6A2,2 0 0,0 4,6V9H6V6H18V18H6V15H4V18A2,2 0 0,0 6,20H18A2,2 0 0,0 20,18Z"/></svg>
+                    </div>
+                    <h3 class="lang-zh">場景繪製</h3>
+                    <h3 class="lang-en" style="display:none;">Scene Illustration</h3>
+                    <p class="lang-zh">繪製各種風格的動漫場景，包括校園、奇幻世界、未來都市等，營造獨特氛圍。</p>
+                    <p class="lang-en" style="display:none;">Draw anime scenes in various styles, including schools, fantasy worlds, future cities, etc., to create unique atmospheres.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18,9H16V7H18M18,13H16V11H18M18,17H16V15H18M8,9H6V7H8M8,13H6V11H8M8,17H6V15H8M18,3V5H16V3H8V5H6V3H4V21H6V19H8V21H16V19H18V21H20V3H18Z"/></svg>
+                    </div>
+                    <h3 class="lang-zh">故事板創作</h3>
+                    <h3 class="lang-en" style="display:none;">Storyboard Creation</h3>
+                    <p class="lang-zh">將劇本轉化為視覺故事板，規劃鏡頭、構圖與動作，為動畫製作奠定基礎。</p>
+                    <p class="lang-en" style="display:none;">Transform scripts into visual storyboards, plan shots, compositions and actions, laying the foundation for animation production.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 聯絡表單 -->
+    <section class="contact" id="contact">
+        <div class="contact-container">
+            <div class="section-title">
+                <h2 class="lang-zh">聯絡我</h2>
+                <h2 class="lang-en" style="display:none;">Contact Me</h2>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3 class="lang-zh">讓我們一起創造動人的動漫作品</h3>
+                    <h3 class="lang-en" style="display:none;">Let's create moving anime works together</h3>
+                    <p class="lang-zh">如果您有任何專案合作或委託需求，請隨時與我聯繫。我會盡快回覆您的訊息。</p>
+                    <p class="lang-en" style="display:none;">If you have any project collaboration or commission needs, please feel free to contact me. I will reply to your message as soon as possible.</p>
+                    <div class="info-items">
+                        <div class="info-item">
+                            <div class="info-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 16C22 17.1 21.1 18 20 18H6C4.9 18 4 17.1 4 16V8C4 6.9 4.9 6 6 6H20C21.1 6 22 6.9 22 8V16M20 8L12 13L4 8V16H20V8M12 11L20 6H4L12 11Z"/></svg>
+                            </div>
+                            <div class="info-text">
+                                <h4 class="lang-zh">電子郵件</h4>
+                                <h4 class="lang-en" style="display:none;">Email</h4>
+                                <p>sakura@animeartist.com</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z"/></svg>
+                            </div>
+                            <div class="info-text">
+                                <h4 class="lang-zh">電話</h4>
+                                <h4 class="lang-en" style="display:none;">Phone</h4>
+                                <p>+886 912 345 678</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z"/></svg>
+                            </div>
+                            <div class="info-text">
+                                <h4 class="lang-zh">工作室</h4>
+                                <h4 class="lang-en" style="display:none;">Studio</h4>
+                                <p class="lang-zh">台北市動漫創意園區</p>
+                                <p class="lang-en" style="display:none;">Taipei Anime Creative Park</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <form class="contact-form" id="contactForm">
+                    <div class="form-group">
+                        <label for="name" class="lang-zh">姓名</label>
+                        <label for="name" class="lang-en" style="display:none;">Name</label>
+                        <input type="text" id="name" class="form-control" required>
+                        <div class="error-message lang-zh">請輸入您的姓名</div>
+                        <div class="error-message lang-en" style="display:none;">Please enter your name</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="lang-zh">電子郵件</label>
+                        <label for="email" class="lang-en" style="display:none;">Email</label>
+                        <input type="email" id="email" class="form-control" required>
+                        <div class="error-message lang-zh">請輸入有效的電子郵件</div>
+                        <div class="error-message lang-en" style="display:none;">Please enter a valid email</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject" class="lang-zh">主題</label>
+                        <label for="subject" class="lang-en" style="display:none;">Subject</label>
+                        <input type="text" id="subject" class="form-control" required>
+                        <div class="error-message lang-zh">請輸入主題</div>
+                        <div class="error-message lang-en" style="display:none;">Please enter a subject</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="message" class="lang-zh">訊息</label>
+                        <label for="message" class="lang-en" style="display:none;">Message</label>
+                        <textarea id="message" class="form-control" required></textarea>
+                        <div class="error-message lang-zh">請輸入您的訊息</div>
+                        <div class="error-message lang-en" style="display:none;">Please enter your message</div>
+                    </div>
+                    <button type="submit" class="submit-btn lang-zh">傳送訊息</button>
+                    <button type="submit" class="submit-btn lang-en" style="display:none;">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- 頁腳 -->
+    <footer>
+        <div class="footer-content">
+            <div class="social-links">
+                <a href="#" class="social-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10,15L15.19,12L10,9V15M21.56,7.17C21.69,7.64 21.78,8.27 21.84,9.07C21.91,9.87 21.94,10.56 21.94,11.16L22,12C22,14.19 21.84,15.8 21.56,16.83C21.31,17.73 20.73,18.31 19.83,18.56C19.36,18.69 18.5,18.78 17.18,18.84C15.88,18.91 14.69,18.94 13.59,18.94L12,19C7.81,19 5.2,18.84 4.17,18.56C3.27,18.31 2.69,17.73 2.44,16.83C2.31,16.36 2.22,15.73 2.16,14.93C2.09,14.13 2.06,13.44 2.06,12.84L2,12C2,9.81 2.16,8.2 2.44,7.17C2.69,6.27 3.27,5.69 4.17,5.44C4.64,5.31 5.5,5.22 6.82,5.16C8.12,5.09 9.31,5.06 10.41,5.06L12,5C16.19,5 18.8,5.16 19.83,5.44C20.73,5.69 21.31,6.27 21.56,7.17Z"/></svg>
+                </a>
+                <a href="#" class="social-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22.46,6C21.69,6.35 20.86,6.58 20,6.69C20.88,6.16 21.56,5.32 21.88,4.31C21.05,4.81 20.13,5.16 19.16,5.36C18.37,4.5 17.26,4 16,4C13.65,4 11.73,5.92 11.73,8.29C11.73,8.63 11.77,8.96 11.84,9.27C8.28,9.09 5.11,7.38 3,4.79C2.63,5.42 2.42,6.16 2.42,6.94C2.42,8.43 3.17,9.75 4.33,10.5C3.62,10.5 2.96,10.3 2.38,10C2.38,10 2.38,10 2.38,10.03C2.38,12.11 3.86,13.85 5.82,14.24C5.46,14.34 5.08,14.39 4.69,14.39C4.42,14.39 4.15,14.36 3.89,14.31C4.43,16 6,17.26 7.89,17.29C6.43,18.45 4.58,19.13 2.56,19.13C2.22,19.13 1.88,19.11 1.54,19.07C3.44,20.29 5.7,21 8.12,21C16,21 20.33,14.46 20.33,8.79C20.33,8.6 20.33,8.42 20.32,8.23C21.16,7.63 21.88,6.87 22.46,6Z"/></svg>
+                </a>
+                <a href="#" class="social-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,2.04C6.5,2.04 2,6.53 2,12.06C2,17.06 5.66,21.21 10.44,21.96V14.96H7.9V12.06H10.44V9.85C10.44,7.34 11.93,5.96 14.22,5.96C15.31,5.96 16.45,6.15 16.45,6.15V8.62H15.19C13.95,8.62 13.56,9.39 13.56,10.18V12.06H16.34L15.89,14.96H13.56V21.96A10,10 0 0,0 22,12.06C22,6.53 17.5,2.04 12,2.04Z"/></svg>
+                </a>
+                <a href="#" class="social-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z"/></svg>
+                </a>
+                <a href="#" class="social-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,15C12.81,15 13.5,14.7 14.11,14.11C14.7,13.5 15,12.81 15,12C15,11.19 14.7,10.5 14.11,9.89C13.5,9.3 12.81,9 12,9C11.19,9 10.5,9.3 9.89,9.89C9.3,10.5 9,11.19 9,12C9,12.81 9.3,13.5 9.89,14.11C10.5,14.7 11.19,15 12,15M12,2C14.75,2 17.1,3 19.05,4.95C21,6.9 22,9.25 22,12V13.45C22,14.45 21.65,15.3 21,16C20.3,16.67 19.5,17 18.5,17C17.3,17 16.31,16.5 15.56,15.5C14.56,16.5 13.38,17 12,17C10.63,17 9.45,16.5 8.46,15.54C7.5,14.55 7,13.38 7,12C7,10.63 7.5,9.45 8.46,8.46C9.45,7.5 10.63,7 12,7C13.38,7 14.55,7.5 15.54,8.46C16.5,9.45 17,10.63 17,12V13.45C17,13.9 17.18,14.3 17.5,14.63C17.8,14.96 18.2,15.13 18.65,15.13C19.1,15.13 19.5,14.96 19.8,14.63C20.13,14.3 20.3,13.9 20.3,13.45V12C20.3,9.75 19.55,7.8 18.05,6.35C16.55,4.85 14.6,4.1 12.35,4.1C10.1,4.1 8.16,4.85 6.65,6.35C5.15,7.85 4.4,9.8 4.4,12C4.4,14.2 5.15,16.15 6.65,17.65C8.15,19.15 10.1,19.9 12.35,19.9H17V21.35C15.4,21.85 13.75,22.1 12,22.1C9.25,22.1 6.9,21.1 4.95,19.15C3,17.2 2,14.85 2,12C2,9.15 3,6.8 4.95,4.85C6.9,2.9 9.25,2 12,2Z"/></svg>
+                </a>
+            </div>
+            <div class="footer-links">
+                <a href="#home" class="lang-zh">首頁</a>
+                <a href="#home" class="lang-en" style="display:none;">Home</a>
+                <a href="#about" class="lang-zh">關於我</a>
+                <a href="#about" class="lang-en" style="display:none;">About</a>
+                <a href="#portfolio" class="lang-zh">作品集</a>
+                <a href="#portfolio" class="lang-en" style="display:none;">Portfolio</a>
+                <a href="#services" class="lang-zh">服務</a>
+                <a href="#services" class="lang-en" style="display:none;">Services</a>
+                <a href="#contact" class="lang-zh">聯絡</a>
+                <a href="#contact" class="lang-en" style="display:none;">Contact</a>
+            </div>
+            <div class="copyright">
+                <p class="lang-zh">© 2023 櫻花動漫作品集. 保留所有權利。</p>
+                <p class="lang-en" style="display:none;">© 2023 Sakura Anime Portfolio. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 打字動畫
+        const typedTextSpan = document.querySelector(".typed-text");
+        const cursorSpan = document.querySelector(".cursor");
+
+        const textArray = ["小櫻", "Sakura", "さくら"];
+        const typingDelay = 200;
+        const erasingDelay = 100;
+        const newTextDelay = 2000;
+        let textArrayIndex = 0;
+        let charIndex = 0;
+
+        function type() {
+            if (charIndex < textArray[textArrayIndex].length) {
+                if(!cursorSpan.classList.contains("typing")) cursorSpan.classList.add("typing");
+                typedTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex);
+                charIndex++;
+                setTimeout(type, typingDelay);
+            } 
+            else {
+                cursorSpan.classList.remove("typing");
+                setTimeout(erase, newTextDelay);
+            }
+        }
+
+        function erase() {
+            if (charIndex > 0) {
+                if(!cursorSpan.classList.contains("typing")) cursorSpan.classList.add("typing");
+                typedTextSpan.textContent = textArray[textArrayIndex].substring(0, charIndex-1);
+                charIndex--;
+                setTimeout(erase, erasingDelay);
+            } 
+            else {
+                cursorSpan.classList.remove("typing");
+                textArrayIndex++;
+                if(textArrayIndex>=textArray.length) textArrayIndex=0;
+                setTimeout(type, typingDelay + 1100);
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            setTimeout(type, newTextDelay + 250);
+        });
+
+        // 語言切換
+        const langButtons = document.querySelectorAll('.lang-btn');
+        
+        langButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const lang = this.getAttribute('data-lang');
+                
+                // 切換按鈕活動狀態
+                langButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // 顯示/隱藏對應語言元素
+                document.querySelectorAll('.lang-' + lang).forEach(el => {
+                    el.style.display = '';
+                });
+                
+                const otherLang = lang === 'zh' ? 'en' : 'zh';
+                document.querySelectorAll('.lang-' + otherLang).forEach(el => {
+                    el.style.display = 'none';
+                });
+                
+                // 重新啟動打字動畫
+                typedTextSpan.textContent = '';
+                charIndex = 0;
+                textArrayIndex = 0;
+                setTimeout(type, newTextDelay + 250);
+            });
+        });
+
+        // 主題切換
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        
+        themeToggle.addEventListener('click', function() {
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+            }
+        });
+
+        // 作品過濾
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const portfolioItems = document.querySelectorAll('.portfolio-item');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // 切換按鈕活動狀態
+                filterButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                const filter = this.getAttribute('data-filter');
+                
+                portfolioItems.forEach(item => {
+                    if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // 表單驗證
+        const contactForm = document.getElementById('contactForm');
+        
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            let isValid = true;
+            
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const subjectInput = document.getElementById('subject');
+            const messageInput = document.getElementById('message');
+            
+            // 重置錯誤狀態
+            document.querySelectorAll('.form-control').forEach(input => {
+                input.classList.remove('error');
+            });
+            
+            document.querySelectorAll('.error-message').forEach(msg => {
+                msg.style.display = 'none';
+            });
+            
+            // 驗證姓名
+            if (nameInput.value.trim() === '') {
+                nameInput.classList.add('error');
+                nameInput.nextElementSibling.style.display = 'block';
+                isValid = false;
+            }
+            
+            // 驗證電子郵件
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(emailInput.value.trim())) {
+                emailInput.classList.add('error');
+                emailInput.nextElementSibling.style.display = 'block';
+                isValid = false;
+            }
+            
+            // 驗證主題
+            if (subjectInput.value.trim() === '') {
+                subjectInput.classList.add('error');
+                subjectInput.nextElementSibling.style.display = 'block';
+                isValid = false;
+            }
+            
+            // 驗證訊息
+            if (messageInput.value.trim() === '') {
+                messageInput.classList.add('error');
+                messageInput.nextElementSibling.style.display = 'block';
+                isValid = false;
+            }
+            
+            if (isValid) {
+                alert(document.querySelector('.submit-btn').textContent + ' (表單驗證成功，此為演示)');
+                contactForm.reset();
+            }
+        });
+
+        // 粒子效果
+        const particlesContainer = document.getElementById('particles');
+        const particleTypes = ['sakura', 'star', 'bubble'];
+        
+        function createParticle() {
+            const particle = document.createElement('div');
+            const type = particleTypes[Math.floor(Math.random() * particleTypes.length)];
+            
+            particle.classList.add('particle', type);
+            
+            // 隨機位置
+            const posX = Math.random() * 100;
+            const posY = Math.random() * 100 + 100; // 從屏幕下方開始
+            
+            particle.style.left = `${posX}vw`;
+            particle.style.top = `${posY}vh`;
+            
+            // 隨機大小
+            const size = Math.random() * 10 + 5;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            
+            // 隨機動畫持續時間
+            const duration = Math.random() * 15 + 10;
+            particle.style.animationDuration = `${duration}s`;
+            
+            // 隨機延遲
+            const delay = Math.random() * 5;
+            particle.style.animationDelay = `${delay}s`;
+            
+            particlesContainer.appendChild(particle);
+            
+            // 動畫結束後移除
+            particle.addEventListener('animationend', function() {
+                particle.remove();
+            });
+        }
+        
+        // 創建初始粒子
+        for (let i = 0; i < 20; i++) {
+            setTimeout(createParticle, i * 300);
+        }
+        
+        // 定期創建新粒子
+        setInterval(createParticle, 1000);
+
+        // 平滑滾動
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // 響應式導航
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        
+        hamburger.addEventListener('click', function() {
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        });
+        
+        // 調整窗口大小時重置導航
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                navLinks.style.display = 'flex';
+            } else {
+                navLinks.style.display = 'none';
+            }
+        });
+
+        // 技能條動畫
+        const skillLevels = document.querySelectorAll('.skill-level');
+        
+        function animateSkills() {
+            skillLevels.forEach(level => {
+                const width = level.getAttribute('data-level');
+                level.style.width = width;
+            });
+        }
+        
+        // 當技能區塊進入視圖時觸發動畫
+        const aboutSection = document.querySelector('.about');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateSkills();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        observer.observe(aboutSection);
+
+        // 作品淡入動畫
+        const portfolioObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const items = entry.target.querySelectorAll('.portfolio-item');
+                    items.forEach((item, index) => {
+                        setTimeout(() => {
+                            item.style.opacity = '1';
+                            item.style.transform = 'translateY(0)';
+                        }, index * 200);
+                    });
+                    portfolioObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        portfolioObserver.observe(document.querySelector('.portfolio'));
+
+        // 音效互動
+        const buttons = document.querySelectorAll('button, a.btn');
+        
+        buttons.forEach(button => {
+            button.addEventListener('click', function() {
+                // 創建音頻上下文 (僅在用戶交互後才能創建)
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.type = 'sine';
+                oscillator.frequency.value = 800 + Math.random() * 400;
+                gainNode.gain.value = 0.1;
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.start();
+                gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.3);
+                oscillator.stop(audioContext.currentTime + 0.3);
+            });
+        });
+    </script>
+</body>
+</html>

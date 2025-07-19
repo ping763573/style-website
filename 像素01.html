@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>像素風格作品集｜Pixel Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- 全域變數與基礎設定 --- */
+        :root {
+            --pixel-font: 'Press Start 2P', cursive;
+            --text-font: 'VT323', monospace;
+            --bg-color: #1a1a2e;
+            --primary-color: #e94560;
+            --secondary-color: #f0e68c;
+            --accent-color-1: #00ff7f;
+            --accent-color-2: #1e90ff;
+            --text-color: #ffffff;
+            --border-color: #ffffff;
+            --terminal-bg: #0d0d0d;
+            --terminal-text: #00ff00;
+
+            /* 自訂滑鼠游標 */
+            --cursor-default: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 16 16" style="fill:white;stroke:black;stroke-width:1;"><path d="M0,0 L0,11 L3,8 L6,14 L8,12 L5,6 L10,6 L0,0 Z" /></svg>'), auto;
+            --cursor-pointer: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 16 16" style="fill:white;stroke:black;stroke-width:1;"><path d="M4,0 L4,5 L2,5 L2,7 L4,7 L4,8 L0,8 L0,10 L4,10 L4,12 L0,12 L0,14 L4,14 L4,16 L6,16 L6,14 L10,14 L10,12 L6,12 L6,10 L10,10 L10,8 L6,8 L6,7 L8,7 L8,5 L6,5 L6,0 Z" /></svg>'), pointer;
+        }
+
+        /* --- 重設與基本樣式 --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--text-font);
+            font-size: 24px;
+            line-height: 1.6;
+            background-image: 
+                linear-gradient(rgba(26, 26, 46, 0.8), rgba(26, 26, 46, 0.8)),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="4" height="4" viewBox="0 0 4 4"><path fill="%23303050" d="M0 0h1v1H0zM2 2h1v1H2z"/></svg>');
+            cursor: var(--cursor-default);
+        }
+
+        h1, h2, h3 {
+            font-family: var(--pixel-font);
+            line-height: 1.2;
+            text-shadow: 3px 3px 0 var(--primary-color);
+        }
+        
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; margin-bottom: 40px; text-align: center; }
+        
+        a, button {
+            cursor: var(--cursor-pointer);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            image-rendering: pixelated; /* 保持像素感 */
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+        
+        /* --- 像素邊框樣式 --- */
+        .pixel-border {
+            border: 4px solid var(--border-color);
+            box-shadow: 
+                inset 0 0 0 4px var(--bg-color),
+                6px 6px 0px var(--primary-color);
+            padding: 30px;
+            background-color: var(--bg-color);
+            position: relative;
+        }
+
+        /* --- 閃爍動畫 --- */
+        @keyframes blink {
+            50% { opacity: 0.5; }
+        }
+        .blink {
+            animation: blink 1s step-end infinite;
+        }
+
+        /* --- Header & Nav --- */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            background: rgba(26, 26, 46, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            border-bottom: 2px solid var(--border-color);
+        }
+        .logo {
+            font-family: var(--pixel-font);
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+        .main-nav ul {
+            display: flex;
+            list-style: none;
+        }
+        .main-nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 10px 15px;
+            font-size: 1.2rem;
+            transition: all 0.2s ease;
+        }
+        .main-nav a:hover {
+            background-color: var(--primary-color);
+            color: var(--bg-color);
+            text-shadow: none;
+        }
+        .lang-switch {
+            background: none;
+            border: 2px solid var(--accent-color-2);
+            color: var(--accent-color-2);
+            padding: 8px 12px;
+            font-family: var(--pixel-font);
+            font-size: 0.8rem;
+            margin-left: 20px;
+        }
+        .lang-switch:hover {
+            background-color: var(--accent-color-2);
+            color: var(--bg-color);
+        }
+
+        /* 漢堡菜單 */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: var(--cursor-pointer);
+            background: none;
+            border: none;
+        }
+        .menu-toggle .bar {
+            width: 30px;
+            height: 4px;
+            background-color: var(--text-color);
+            margin: 4px 0;
+            transition: 0.4s;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-content {
+            z-index: 2;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        .typing-text {
+            color: var(--secondary-color);
+            border-right: 4px solid var(--secondary-color);
+            animation: blink-caret 0.75s step-end infinite;
+        }
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--secondary-color); }
+        }
+        .hero p {
+            font-size: 1.5rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        /* 像素背景 SVG */
+        .pixel-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        /* --- About Section --- */
+        .about-content {
+            display: flex;
+            gap: 50px;
+            align-items: center;
+        }
+        .avatar-container {
+            flex-shrink: 0;
+        }
+        .avatar-container svg {
+            width: 200px;
+            height: 200px;
+            border: 4px solid var(--border-color);
+            background: #333;
+        }
+        .skills-container {
+            width: 100%;
+        }
+        .skill {
+            margin-bottom: 20px;
+        }
+        .skill-name {
+            font-family: var(--pixel-font);
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+        .skill-bar {
+            width: 100%;
+            height: 30px;
+            background-color: #333;
+            border: 2px solid var(--border-color);
+            padding: 4px;
+        }
+        .skill-level {
+            height: 100%;
+            width: 0; /* JS控制 */
+            transition: width 2s ease-out;
+        }
+        .skill-level.hp { background: linear-gradient(90deg, #ff0000, #ff7f7f); }
+        .skill-level.mp { background: linear-gradient(90deg, #0000ff, #7f7fff); }
+        .skill-level.xp { background: linear-gradient(90deg, #00ff00, #7fff7f); }
+
+        /* --- Portfolio Section --- */
+        .filter-menu {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+        .filter-btn {
+            background: none;
+            border: 2px solid var(--accent-color-1);
+            color: var(--accent-color-1);
+            padding: 10px 20px;
+            font-family: var(--pixel-font);
+            font-size: 1rem;
+        }
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--accent-color-1);
+            color: var(--bg-color);
+        }
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 40px;
+        }
+        .project-card {
+            background: var(--bg-color);
+            border: 4px solid var(--border-color);
+            box-shadow: 4px 4px 0 var(--accent-color-2);
+            display: none; /* JS控制顯示 */
+            flex-direction: column;
+        }
+        .project-card.show {
+            display: flex;
+        }
+        .project-image {
+            width: 100%;
+            height: 200px;
+            background-color: #333;
+            border-bottom: 4px solid var(--border-color);
+        }
+        .project-image svg {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .project-info {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .project-info h3 {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            text-shadow: 2px 2px 0 var(--accent-color-2);
+            margin-bottom: 10px;
+        }
+        .project-info p {
+            font-size: 1.1rem;
+            flex-grow: 1;
+            margin-bottom: 15px;
+        }
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .tag {
+            background-color: #333;
+            padding: 5px 10px;
+            font-size: 0.9rem;
+            border: 1px solid var(--border-color);
+        }
+
+        /* --- Services Section --- */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 40px;
+        }
+        .service-item {
+            text-align: center;
+            padding: 30px;
+            border: 4px solid var(--border-color);
+            background-color: rgba(0,0,0,0.2);
+        }
+        .service-item svg {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+            fill: var(--secondary-color);
+        }
+        .service-item h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--secondary-color);
+            text-shadow: none;
+        }
+
+        /* --- Contact Section --- */
+        .terminal {
+            background-color: var(--terminal-bg);
+            border: 4px solid var(--terminal-text);
+            padding: 30px;
+            font-family: var(--text-font);
+        }
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed var(--terminal-text);
+            margin-bottom: 20px;
+        }
+        .dot {
+            width: 15px;
+            height: 15px;
+            background-color: #ff5f56;
+            border: 1px solid black;
+        }
+        .dot.yellow { background-color: #ffbd2e; }
+        .dot.green { background-color: #27c93f; }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            color: var(--terminal-text);
+            font-size: 1.2rem;
+            display: block;
+        }
+        .form-group label::before {
+            content: 'C:\\USER> ';
+        }
+        .form-input, .form-textarea {
+            background: none;
+            border: none;
+            border-bottom: 2px solid var(--terminal-text);
+            color: var(--terminal-text);
+            font-family: var(--text-font);
+            font-size: 1.2rem;
+            width: 100%;
+            padding: 5px 0;
+        }
+        .form-input:focus, .form-textarea:focus {
+            outline: none;
+            border-bottom-color: var(--secondary-color);
+        }
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .submit-btn {
+            background-color: var(--terminal-text);
+            color: var(--terminal-bg);
+            border: none;
+            padding: 12px 25px;
+            font-family: var(--pixel-font);
+            font-size: 1rem;
+        }
+        .submit-btn:hover {
+            background-color: var(--secondary-color);
+        }
+        .validation-msg {
+            color: #ff5f56;
+            font-family: var(--pixel-font);
+            font-size: 1rem;
+            display: none;
+            margin-top: 5px;
+        }
+        .validation-msg.show {
+            display: block;
+            animation: blink 0.5s step-end 3;
+        }
+
+        /* --- Footer --- */
+        .main-footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 2px solid var(--border-color);
+        }
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 20px;
+        }
+        .social-links a svg {
+            width: 40px;
+            height: 40px;
+            fill: var(--text-color);
+            transition: fill 0.2s;
+        }
+        .social-links a:hover svg {
+            fill: var(--primary-color);
+        }
+        .copyright {
+            font-size: 1rem;
+        }
+
+        /* --- 響應式設計 --- */
+        @media (max-width: 992px) {
+            h1 { font-size: 2rem; }
+            .hero h1 { font-size: 2.5rem; }
+            .about-content { flex-direction: column; text-align: center; }
+        }
+
+        @media (max-width: 768px) {
+            .main-header { padding: 15px 5%; }
+            .main-nav {
+                position: fixed;
+                top: 72px; /* header height */
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 72px);
+                background-color: var(--bg-color);
+                transition: 0.3s ease-in-out;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+            .main-nav.active {
+                left: 0;
+            }
+            .main-nav ul {
+                flex-direction: column;
+                text-align: center;
+            }
+            .main-nav li {
+                margin: 20px 0;
+            }
+            .menu-toggle {
+                display: flex;
+            }
+            .menu-toggle.active .bar:nth-child(1) {
+                transform: rotate(-45deg) translate(-7px, 7px);
+            }
+            .menu-toggle.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+            .menu-toggle.active .bar:nth-child(3) {
+                transform: rotate(45deg) translate(-7px, -7px);
+            }
+            .lang-switch {
+                position: absolute;
+                bottom: 30px;
+            }
+
+            .container { padding: 60px 15px; }
+            h2 { font-size: 1.8rem; }
+            .hero h1 { font-size: 2rem; }
+            .hero p { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SVG 定義 -->
+    <svg style="display:none;">
+        <defs>
+            <!-- 像素英雄背景 -->
+            <svg id="pixel-hero-bg" viewBox="0 0 400 225" preserveAspectRatio="xMidYMid slice">
+                <rect width="400" height="225" fill="#41a6f6"/>
+                <!-- 太陽 -->
+                <circle cx="350" cy="50" r="20" fill="#ffd700"/>
+                <!-- 星星 -->
+                <path fill="#fff" d="M10 10h2v2h-2z M50 30h2v2h-2z M100 20h2v2h-2z M150 40h2v2h-2z M200 15h2v2h-2z M250 35h2v2h-2z M300 25h2v2h-2z M380 45h2v2h-2z" class="blink"/>
+                <!-- 雲 -->
+                <path fill="#fff" d="M60 60h40v10H60z M70 50h20v10H70z"/>
+                <path fill="#fff" d="M220 70h50v10h-50z M230 60h30v10h-30z M240 80h10v10h-10z"/>
+                <!-- 山丘 -->
+                <path d="M0 225 L0 150 C 50 120, 150 120, 200 150 L200 180 C 250 160, 350 160, 400 180 L400 225 Z" fill="#228b22"/>
+                <path d="M150 225 L150 180 C 200 150, 300 150, 350 180 L350 225 Z" fill="#006400"/>
+            </svg>
+            <!-- 像素頭像 -->
+            <svg id="pixel-avatar" viewBox="0 0 24 24">
+                <path fill="#ffc278" d="M8 8h8v1h-8z M7 9h1v1h-1z M16 9h1v1h-1z M7 10h1v1h-1z M9 10h6v1h-6z M16 10h1v1h-1z M7 11h1v1h-1z M16 11h1v1h-1z M7 12h10v1h-10z M8 13h1v1h-1z M11 13h2v1h-2z M15 13h1v1h-1z"/>
+                <path fill="#55342b" d="M8 7h8v1h-8z M7 8h1v1h-1z M16 8h1v1h-1z"/>
+                <path fill="#fff" d="M9 11h2v1h-2z M13 11h2v1h-2z"/>
+                <path fill="#000" d="M10 11h1v1h-1z M14 11h1v1h-1z"/>
+                <path fill="#333" d="M6 5h12v2h-12z M5 7h1v1h-1z M18 7h1v1h-1z M4 8h1v6h-1z M19 8h1v6h-1z M5 14h1v1h-1z M18 14h1v1h-1z M6 15h12v1h-12z"/>
+                <path fill="#1e90ff" d="M7 6h1v1h-1z M16 6h1v1h-1z"/>
+                <path fill="#e94560" d="M8 17h8v1h-8z M9 18h6v1h-6z"/>
+            </svg>
+            <!-- 作品卡片: 城市 -->
+            <svg id="project-city" viewBox="0 0 100 60">
+                <rect width="100" height="60" fill="#1a1a2e"/>
+                <path fill="#f0e68c" d="M5 55h10v-20h-10z M10 40h2v2h-2z M10 45h2v2h-2z M10 50h2v2h-2z M20 55h15v-30h-15z M22 30h2v2h-2z M26 30h2v2h-2z M30 30h2v2h-2z M22 35h10v2h-10z M22 40h10v2h-10z M40 55h20v-40h-20z M45 20h10v10h-10z M65 55h10v-15h-10z M80 55h15v-25h-15z M85 35h5v5h-5z"/>
+            </svg>
+            <!-- 作品卡片: 電腦 -->
+            <svg id="project-computer" viewBox="0 0 100 60">
+                <rect width="100" height="60" fill="#333"/>
+                <rect x="10" y="10" width="80" height="40" fill="#00ff7f" stroke="#fff" stroke-width="2"/>
+                <path fill="#fff" d="M15 15h20v2h-20z M15 20h10v2h-10z M40 15h45v15h-45z M15 25h20v20h-20z"/>
+            </svg>
+            <!-- 作品卡片: 電流 -->
+            <svg id="project-network" viewBox="0 0 100 60">
+                <rect width="100" height="60" fill="#111"/>
+                <circle cx="10" cy="30" r="5" fill="#1e90ff"/>
+                <circle cx="90" cy="30" r="5" fill="#1e90ff"/>
+                <circle cx="50" cy="10" r="5" fill="#1e90ff"/>
+                <circle cx="50" cy="50" r="5" fill="#1e90ff"/>
+                <path stroke="#1e90ff" stroke-width="2" fill="none" d="M15 30h20 l10 -15 M55 10 l-5 15h20 l15 5"/>
+                <path stroke="#e94560" stroke-width="2" fill="none" d="M10 35 l35 10 M50 45 l-5 -30 M55 50 l30 -15"/>
+            </svg>
+            <!-- 服務圖示: Web Dev -->
+            <svg id="icon-webdev" viewBox="0 0 24 24"><path d="M20 18q.825 0 1.413-.587Q22 16.825 22 16V4q0-.825-.587-1.413Q20.825 2 20 2H4q-.825 0-1.413.587Q2 3.175 2 4v12q0 .825.587 1.413Q3.175 18 4 18h5v2H7v2h10v-2h-2v-2h5ZM4 14V4h16v10H4Zm7-5h2v2h-2v-2Zm-4 0h2v2H7v-2Zm8 0h2v2h-2v-2Z"/></svg>
+            <!-- 服務圖示: UI/UX -->
+            <svg id="icon-uiux" viewBox="0 0 24 24"><path d="M3 17v-5h2v5H3Zm4 4v-9h2v9H7Zm4 0v-5h2v5h-2Zm4-4v-5h2v5h-2Zm4-4V7h2v10h-2ZM3 5h18v2H3V5Z"/></svg>
+            <!-- 服務圖示: Marketing -->
+            <svg id="icon-marketing" viewBox="0 0 24 24"><path d="M12 22q-2.1 0-3.925-.788-1.825-.787-3.2-2.162-1.375-1.375-2.162-3.2Q2 14.1 2 12q0-2.1.788-3.925.787-1.825 2.162-3.2Q6.325 3.5 8.15 2.712 9.975 1.925 12 1.925q.5 0 .963.038.462.037.912.112v2.025q-.45-.075-.912-.113Q12.5 4 12 4q-3.35 0-5.675 2.325Q4 8.65 4 12q0 3.35 2.325 5.675Q8.65 20 12 20q3.35 0 5.675-2.325Q20 15.35 20 12h2q0 2.1-.788 3.925-.787 1.825-2.162 3.2-1.375 1.375-3.2 2.162Q14.1 22 12 22Zm7-7-1.4-1.4 2.1-2.1H11v-2h8.7l-2.1-2.1L19 6l4 4-4 4Z"/></svg>
+            <!-- 社群圖示: FB -->
+            <svg id="icon-fb" viewBox="0 0 16 16"><path d="M10 8h2v2h-2v4h-2v-4H6V8h2V6q0-1.65 1.175-2.825Q10.35 2 12 2h2v2h-2q-.825 0-1.112.288Q10.6 4.575 10.6 5.4L10 6v2Z"/></svg>
+            <!-- 社群圖示: IG -->
+            <svg id="icon-ig" viewBox="0 0 16 16"><path d="M4.5 2h7q.65 0 1.075.425Q13 2.85 13 3.5v7q0 .65-.425 1.075Q12.15 12 11.5 12h-7q-.65 0-1.075-.425Q3 11.15 3 10.5v-7Q3 2.85 3.425 2.425 3.85 2 4.5 2Zm0 1v7h7v-7h-7Zm3.5 1.5q.825 0 1.413.588Q10 5.675 10 6.5q0 .825-.587 1.412Q8.825 8.5 8 8.5q-.825 0-1.412-.588Q6 7.325 6 6.5q0-.825.588-1.412Q7.175 4.5 8 4.5Zm3-1h1v1h-1v-1Z"/></svg>
+            <!-- 社群圖示: GitHub -->
+            <svg id="icon-github" viewBox="0 0 16 16"><path d="M8 2q-1.725 0-2.938 1.212Q3.85 4.425 3.85 6.15q0 1.325.813 2.462.812 1.138 2.112 1.525.225.05.338-.1.112-.15.112-.325v-1.1q-1.2.25-1.45-.825-.075-.2-.188-.35-.112-.15-.237-.2-.175-.075-.175-.112t.175-.063q.225.025.4.175.175.15.25.35.15.35.413.562.262.213.612.213.325 0 .55-.15.05-.3.2-.5-1.025-.125-1.663-.737-.637-.613-.637-1.663 0-.8.275-1.375.275-.575.725-1 .025-.05-.063-.325-.087-.275-.087-.55 0-.25.088-.437.087-.188.162-.313.325-.1.675-.1.35 0 .6.15.425.2.725.55.25-.075.525-.125t.55-.075q.275 0 .55.075t.525.125q.3-.35.725-.55.25-.15.6-.15.35 0 .675.1.075.125.163.313.087.187.087.437 0 .275-.088.55t-.062.325q.45.425.725 1 .275.575.275 1.375 0 1.05-.637 1.663-.638.612-1.663.737.25.225.3.65v1.35q0 .175.113.325.112.15.337.1.9-.275 1.613-1.1.712-.825 1.012-1.9.3-1.075.3-2.225 0-1.725-1.212-2.938Q11.575 2 9.85 2H8Z"/></svg>
+        </defs>
+    </svg>
+
+    <!-- Header -->
+    <header class="main-header">
+        <a href="#" class="logo" data-lang-en="PIXEL.DEV" data-lang-zh="像素開發">像素開發</a>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="#about" data-lang-en="About" data-lang-zh="關於我">關於我</a></li>
+                <li><a href="#portfolio" data-lang-en="Portfolio" data-lang-zh="作品集">作品集</a></li>
+                <li><a href="#services" data-lang-en="Services" data-lang-zh="服務項目">服務項目</a></li>
+                <li><a href="#contact" data-lang-en="Contact" data-lang-zh="聯絡我">聯絡我</a></li>
+            </ul>
+            <button class="lang-switch">ENG / 繁</button>
+        </nav>
+        <button class="menu-toggle">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </button>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <svg class="pixel-bg"><use href="#pixel-hero-bg"/></svg>
+            <div class="hero-content">
+                <h1>
+                    <span data-lang-en="Hello, I'm" data-lang-zh="你好，我是">你好，我是</span>
+                    <span class="typing-text"></span>
+                </h1>
+                <p data-lang-en="A creative developer crafting pixel-perfect digital experiences." data-lang-zh="一位打造像素級完美數位體驗的創造性開發者。">一位打造像素級完美數位體驗的創造性開發者。</p>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="container">
+            <h2 data-lang-en="[ About Me ]" data-lang-zh="[ 關於我 ]">[ 關於我 ]</h2>
+            <div class="about-content pixel-border">
+                <div class="avatar-container">
+                    <svg><use href="#pixel-avatar"/></svg>
+                </div>
+                <div class="about-text">
+                    <p data-lang-en="I am a developer and designer with a passion for retro aesthetics and modern technology. My goal is to merge the charm of 8-bit games with smooth, user-friendly web functionality." data-lang-zh="我是一位對復古美學與現代技術充滿熱情的開發者與設計師。我的目標是將 8-bit 遊戲的魅力與流暢、友善的網頁功能相結合。">我是一位對復古美學與現代技術充滿熱情的開發者與設計師。我的目標是將 8-bit 遊戲的魅力與流暢、友善的網頁功能相結合。</p>
+                    <div class="skills-container" style="margin-top: 30px;">
+                        <div class="skill">
+                            <div class="skill-name">Frontend [HP]</div>
+                            <div class="skill-bar"><div class="skill-level hp" data-level="90"></div></div>
+                        </div>
+                        <div class="skill">
+                            <div class="skill-name">Backend [MP]</div>
+                            <div class="skill-bar"><div class="skill-level mp" data-level="75"></div></div>
+                        </div>
+                        <div class="skill">
+                            <div class="skill-name">UI/UX Design [XP]</div>
+                            <div class="skill-bar"><div class="skill-level xp" data-level="85"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio Section -->
+        <section id="portfolio" class="container">
+            <h2 data-lang-en="[ Portfolio ]" data-lang-zh="[ 作品集 ]">[ 作品集 ]</h2>
+            <div class="filter-menu">
+                <button class="filter-btn active" data-filter="all" data-lang-en="All" data-lang-zh="全部">全部</button>
+                <button class="filter-btn" data-filter="web" data-lang-en="Web" data-lang-zh="網頁">網頁</button>
+                <button class="filter-btn" data-filter="design" data-lang-en="Design" data-lang-zh="設計">設計</button>
+                <button class="filter-btn" data-filter="game" data-lang-en="Game" data-lang-zh="遊戲">遊戲</button>
+            </div>
+            <div class="portfolio-grid">
+                <!-- Project 1 -->
+                <div class="project-card" data-category="web">
+                    <div class="project-image"><svg><use href="#project-city"/></svg></div>
+                    <div class="project-info">
+                        <h3 data-lang-en="Cyber City Portal" data-lang-zh="賽博城市入口">賽博城市入口</h3>
+                        <p data-lang-en="A futuristic city directory built with React and Three.js." data-lang-zh="使用 React 和 Three.js 打造的未來城市指南。">使用 React 和 Three.js 打造的未來城市指南。</p>
+                        <div class="project-tags"><span class="tag">React</span><span class="tag">Three.js</span></div>
+                    </div>
+                </div>
+                <!-- Project 2 -->
+                <div class="project-card" data-category="design">
+                    <div class="project-image"><svg><use href="#project-computer"/></svg></div>
+                    <div class="project-info">
+                        <h3 data-lang-en="Retro OS UI Kit" data-lang-zh="復古作業系統 UI 包">復古作業系統 UI 包</h3>
+                        <p data-lang-en="A complete UI kit for Figma, inspired by 90s operating systems." data-lang-zh="一個為 Figma 設計的 UI 套件，靈感來自 90 年代作業系統。">一個為 Figma 設計的 UI 套件，靈感來自 90 年代作業系統。</p>
+                        <div class="project-tags"><span class="tag">Figma</span><span class="tag">UI/UX</span></div>
+                    </div>
+                </div>
+                <!-- Project 3 -->
+                <div class="project-card" data-category="game">
+                    <div class="project-image"><svg><use href="#project-network"/></svg></div>
+                    <div class="project-info">
+                        <h3 data-lang-en="Pixel Jumper" data-lang-zh="像素跳躍者">像素跳躍者</h3>
+                        <p data-lang-en="A simple platformer game made with pure JavaScript." data-lang-zh="一款用純 JavaScript 製作的簡單平台跳躍遊戲。">一款用純 JavaScript 製作的簡單平台跳躍遊戲。</p>
+                        <div class="project-tags"><span class="tag">JavaScript</span><span class="tag">Game</span></div>
+                    </div>
+                </div>
+                 <!-- Project 4 -->
+                <div class="project-card" data-category="web">
+                    <div class="project-image"><svg><use href="#project-computer"/></svg></div>
+                    <div class="project-info">
+                        <h3 data-lang-en="Data Dashboard" data-lang-zh="數據儀表板">數據儀表板</h3>
+                        <p data-lang-en="Interactive data visualization dashboard for a tech company." data-lang-zh="為一家科技公司設計的互動式數據可視化儀表板。">為一家科技公司設計的互動式數據可視化儀表板。</p>
+                        <div class="project-tags"><span class="tag">Vue.js</span><span class="tag">D3.js</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="container">
+            <h2 data-lang-en="[ Services ]" data-lang-zh="[ 服務項目 ]">[ 服務項目 ]</h2>
+            <div class="services-grid">
+                <div class="service-item">
+                    <svg><use href="#icon-webdev"/></svg>
+                    <h3 data-lang-en="Web Development" data-lang-zh="網站開發">網站開發</h3>
+                    <p data-lang-en="Creating responsive and dynamic websites from scratch." data-lang-zh="從零開始打造響應式且功能豐富的網站。">從零開始打造響應式且功能豐富的網站。</p>
+                </div>
+                <div class="service-item">
+                    <svg><use href="#icon-uiux"/></svg>
+                    <h3 data-lang-en="UI/UX Design" data-lang-zh="介面設計">介面設計</h3>
+                    <p data-lang-en="Designing intuitive and engaging user interfaces." data-lang-zh="設計直觀且引人入勝的使用者介面。">設計直觀且引人入勝的使用者介面。</p>
+                </div>
+                <div class="service-item">
+                    <svg><use href="#icon-marketing"/></svg>
+                    <h3 data-lang-en="Digital Art" data-lang-zh="數位藝術">數位藝術</h3>
+                    <p data-lang-en="Crafting custom pixel art assets and animations." data-lang-zh="客製化像素藝術資產與動畫。">客製化像素藝術資產與動畫。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="container">
+            <h2 data-lang-en="[ Contact Me ]" data-lang-zh="[ 聯絡我 ]">[ 聯絡我 ]</h2>
+            <div class="terminal">
+                <div class="terminal-header">
+                    <div class="dot"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+                <form id="contact-form" novalidate>
+                    <div class="form-group">
+                        <label for="name" data-lang-en="Enter your name:" data-lang-zh="輸入你的名字:">輸入你的名字:</label>
+                        <input type="text" id="name" name="name" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" data-lang-en="Enter your email:" data-lang-zh="輸入你的電子郵件:">輸入你的電子郵件:</label>
+                        <input type="email" id="email" name="email" class="form-input" required>
+                        <div class="validation-msg" data-lang-en="Wrong! Invalid email format." data-lang-zh="錯誤! 電子郵件格式無效。">錯誤! 電子郵件格式無效。</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="message" data-lang-en="Enter your message:" data-lang-zh="輸入你的訊息:">輸入你的訊息:</label>
+                        <textarea id="message" name="message" class="form-textarea" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn" data-lang-en="SEND >" data-lang-zh="傳送 >">傳送 ></button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="social-links">
+            <a href="#" aria-label="Facebook"><svg><use href="#icon-fb"/></svg></a>
+            <a href="#" aria-label="Instagram"><svg><use href="#icon-ig"/></svg></a>
+            <a href="#" aria-label="GitHub"><svg><use href="#icon-github"/></svg></a>
+        </div>
+        <p class="copyright" data-lang-en="© 2024 PIXEL.DEV. All rights reserved." data-lang-zh="© 2024 像素開發. 版權所有.">© 2024 像素開發. 版權所有.</p>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        
+        // --- 語言切換功能 ---
+        const langSwitchBtn = document.querySelector('.lang-switch');
+        const translatableElements = document.querySelectorAll('[data-lang-en]');
+        let currentLang = 'zh';
+
+        const switchLanguage = () => {
+            currentLang = (currentLang === 'zh') ? 'en' : 'zh';
+            translatableElements.forEach(el => {
+                el.textContent = el.dataset[`lang-${currentLang}`];
+            });
+            // 更新打字動畫的文字
+            initTypingAnimation();
+        };
+        langSwitchBtn.addEventListener('click', switchLanguage);
+
+        // --- 打字機動畫 ---
+        const typingTextElement = document.querySelector('.typing-text');
+        const names = {
+            zh: '像素人.',
+            en: 'Pixel Guy.'
+        };
+        let textIndex = 0;
+        let charIndex = 0;
+
+        function type() {
+            if (charIndex < names[currentLang].length) {
+                typingTextElement.textContent += names[currentLang].charAt(charIndex);
+                charIndex++;
+                setTimeout(type, 150);
+            } else {
+                setTimeout(erase, 2000);
+            }
+        }
+
+        function erase() {
+            if (charIndex > 0) {
+                typingTextElement.textContent = names[currentLang].substring(0, charIndex - 1);
+                charIndex--;
+                setTimeout(erase, 100);
+            } else {
+                // 如果需要循環播放不同文字，在這裡切換 textIndex
+                setTimeout(type, 500);
+            }
+        }
+        
+        function initTypingAnimation() {
+            typingTextElement.textContent = '';
+            charIndex = 0;
+            type();
+        }
+        initTypingAnimation();
+
+        // --- 技能條動畫 (Intersection Observer) ---
+        const skillLevels = document.querySelectorAll('.skill-level');
+        const skillObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const level = entry.target.dataset.level;
+                    entry.target.style.width = level + '%';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        skillLevels.forEach(skill => {
+            skillObserver.observe(skill);
+        });
+
+        // --- 作品集篩選 ---
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const filter = btn.dataset.filter;
+                projectCards.forEach(card => {
+                    card.classList.remove('show');
+                    if (filter === 'all' || card.dataset.category === filter) {
+                        card.classList.add('show');
+                    }
+                });
+            });
+        });
+        // 初始顯示全部
+        document.querySelector('.filter-btn[data-filter="all"]').click();
+
+        // --- 手機版菜單 ---
+        const menuToggle = document.querySelector('.menu-toggle');
+        const mainNav = document.querySelector('.main-nav');
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            mainNav.classList.toggle('active');
+        });
+        // 點擊導覽連結後關閉菜單
+        document.querySelectorAll('.main-nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                mainNav.classList.remove('active');
+            });
+        });
+
+        // --- 聯絡表單驗證 ---
+        const contactForm = document.getElementById('contact-form');
+        const emailInput = document.getElementById('email');
+        const emailValidationMsg = emailInput.nextElementSibling;
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let isValid = true;
+            
+            // 簡易 Email 驗證
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(emailInput.value)) {
+                emailValidationMsg.classList.add('show');
+                isValid = false;
+            } else {
+                emailValidationMsg.classList.remove('show');
+            }
+
+            // 檢查其他必填欄位
+            contactForm.querySelectorAll('[required]').forEach(input => {
+                if (!input.value.trim()) {
+                    isValid = false;
+                    input.style.borderBottomColor = '#ff5f56'; // 標示錯誤
+                } else {
+                    input.style.borderBottomColor = ''; // 恢復正常
+                }
+            });
+
+            if (isValid) {
+                // 在這裡可以加入實際的表單提交邏輯 (e.g., AJAX)
+                alert(currentLang === 'zh' ? '訊息已傳送！感謝您。' : 'Message sent! Thank you.');
+                contactForm.reset();
+            }
+        });
+    });
+    </script>
+</body>
+</html>

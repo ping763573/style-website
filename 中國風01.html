@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>墨韵集 - 中国风作品集</title>
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-red: #9c1b1f;
+            --dark-black: #2a1a1c;
+            --gold: #d4af37;
+            --ivory: #f8f3e6;
+            --paper: #f5f0e1;
+            --ink: #333;
+            --bamboo: #8d9e6f;
+            --cloud: #e0e0e0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Ma Shan Zheng', cursive;
+            background-color: var(--ivory);
+            color: var(--dark-black);
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23f8f3e6"/><path d="M0,0 Q50,20 100,0 T100,100 Q50,80 0,100 T0,0 Z" fill="%23f5f0e1" opacity="0.3"/></svg>');
+            background-size: 300px;
+            overflow-x: hidden;
+        }
+        
+        /* 中国风游标 */
+        body, button, a {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="none" stroke="%239c1b1f" stroke-width="2"/><path d="M10,10 L22,22 M22,10 L10,22" stroke="%239c1b1f" stroke-width="2"/></svg>') 16 16, auto;
+        }
+        
+        /* 导航栏样式 */
+        header {
+            background: rgba(42, 26, 28, 0.9);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-bottom: 2px solid var(--gold);
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'ZCOOL KuaiLe', cursive;
+            font-size: 2rem;
+            color: var(--ivory);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-red);
+            border-radius: 50%;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--gold);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--ivory);
+            text-decoration: none;
+            font-size: 1.2rem;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .lang-toggle {
+            background: transparent;
+            border: 2px solid var(--gold);
+            color: var(--ivory);
+            font-family: 'Ma Shan Zheng', cursive;
+            padding: 0.3rem 1rem;
+            font-size: 1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-left: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .lang-toggle:hover {
+            background: var(--gold);
+            color: var(--dark-black);
+        }
+        
+        .lang-toggle::before {
+            content: '繁';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--ivory);
+            margin: 2px 0;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        
+        /* 英雄区域样式 */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 70px;
+            background: linear-gradient(to bottom, rgba(248, 243, 230, 0.8), rgba(245, 240, 225, 0.9)), 
+                        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"><path d="M0,300 Q200,150 400,300 T800,300 L800,600 L0,600 Z" fill="%238d9e6f" opacity="0.1"/></svg>');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .mountain-bg {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 40%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 200"><path d="M0,200 Q300,100 600,150 T1200,200 L1200,0 L0,0 Z" fill="%232a1a1c" opacity="0.15"/></svg>');
+            background-size: cover;
+        }
+        
+        .hero-content {
+            text-align: center;
+            z-index: 10;
+            max-width: 800px;
+            padding: 2rem;
+        }
+        
+        .brush-title {
+            font-size: 4.5rem;
+            color: var(--dark-black);
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .brush-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: var(--primary-red);
+            transform: scaleX(0);
+            transform-origin: left;
+            animation: brushStroke 1.5s ease-in-out forwards;
+        }
+        
+        @keyframes brushStroke {
+            0% {
+                transform: scaleX(0);
+            }
+            100% {
+                transform: scaleX(1);
+            }
+        }
+        
+        .hero-subtitle {
+            font-size: 1.8rem;
+            color: var(--dark-black);
+            margin-bottom: 2rem;
+            font-family: 'ZCOOL KuaiLe', cursive;
+        }
+        
+        .avatar-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+        
+        .avatar {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 5px solid var(--ivory);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(45deg, #d4af37, #9c1b1f, #2a1a1c);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            color: var(--ivory);
+        }
+        
+        .stamp {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: var(--primary-red);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'ZCOOL KuaiLe', cursive;
+            color: var(--ivory);
+            transform: rotate(15deg);
+            animation: stampPulse 3s infinite;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        @keyframes stampPulse {
+            0%, 100% {
+                transform: rotate(15deg) scale(1);
+            }
+            50% {
+                transform: rotate(15deg) scale(1.1);
+            }
+        }
+        
+        /* 关于我区域 */
+        .section {
+            padding: 5rem 2rem;
+            position: relative;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            color: var(--dark-black);
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--primary-red);
+        }
+        
+        .about-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+            padding: 2rem;
+            background: var(--paper);
+            border: 1px solid rgba(156, 27, 31, 0.2);
+            border-radius: 5px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+        
+        .about-text::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 1px solid var(--gold);
+            border-radius: 8px;
+            z-index: -1;
+            opacity: 0.5;
+        }
+        
+        .about-text p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-family: 'ZCOOL KuaiLe', cursive;
+        }
+        
+        .skills {
+            flex: 1;
+            min-width: 300px;
+            padding: 2rem;
+        }
+        
+        .skill-item {
+            margin-bottom: 1.5rem;
+        }
+        
+        .skill-name {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-family: 'ZCOOL KuaiLe', cursive;
+        }
+        
+        .skill-bar {
+            height: 20px;
+            background: var(--ivory);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .skill-level {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary-red), var(--gold));
+            border-radius: 10px;
+            position: relative;
+        }
+        
+        .skill-level::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path d="M0,0 L20,20 M20,0 L0,20" stroke="rgba(255,255,255,0.2)" stroke-width="1"/></svg>');
+            opacity: 0.2;
+        }
+        
+        /* 作品集区域 */
+        .portfolio {
+            background: linear-gradient(to bottom, var(--paper), var(--ivory));
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .portfolio::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path d="M0,0 Q600,120 1200,0 L1200,120 L0,120 Z" fill="%23f8f3e6"/></svg>');
+            background-size: cover;
+        }
+        
+        .filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+        
+        .filter-btn {
+            background: transparent;
+            border: 2px solid var(--primary-red);
+            color: var(--dark-black);
+            padding: 0.5rem 1.5rem;
+            margin: 0.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--primary-red);
+            color: var(--ivory);
+        }
+        
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .portfolio-item {
+            background: var(--ivory);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            border: 1px solid rgba(156, 27, 31, 0.1);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        
+        .portfolio-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        .portfolio-img {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(45deg, var(--gold), var(--primary-red), var(--dark-black));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--ivory);
+            font-size: 4rem;
+        }
+        
+        .portfolio-info {
+            padding: 1.5rem;
+        }
+        
+        .portfolio-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark-black);
+        }
+        
+        .portfolio-info p {
+            color: var(--dark-black);
+            font-family: 'ZCOOL KuaiLe', cursive;
+        }
+        
+        .portfolio-item::before, .portfolio-item::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: var(--gold);
+            border-radius: 50%;
+            opacity: 0.2;
+        }
+        
+        .portfolio-item::before {
+            top: -20px;
+            left: -20px;
+        }
+        
+        .portfolio-item::after {
+            bottom: -20px;
+            right: -20px;
+        }
+        
+        /* 服务区域 */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .service-card {
+            background: var(--paper);
+            padding: 2rem;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            border: 1px solid rgba(156, 27, 31, 0.1);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: var(--ivory);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: var(--primary-red);
+            border: 2px solid var(--gold);
+        }
+        
+        .service-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--dark-black);
+            font-family: 'Ma Shan Zheng', cursive;
+        }
+        
+        .service-poem {
+            font-family: 'ZCOOL KuaiLe', cursive;
+            color: var(--dark-black);
+            font-size: 1.1rem;
+            font-style: italic;
+        }
+        
+        /* 联系表单区域 */
+        .contact {
+            background: linear-gradient(to bottom, var(--ivory), var(--paper));
+            position: relative;
+        }
+        
+        .contact::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path d="M0,120 Q600,0 1200,120 L1200,0 L0,0 Z" fill="%23f5f0e1"/></svg>');
+            background-size: cover;
+        }
+        
+        .contact-form {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--ivory);
+            padding: 3rem;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            position: relative;
+            border: 1px solid rgba(156, 27, 31, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-family: 'ZCOOL KuaiLe', cursive;
+            color: var(--dark-black);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid rgba(156, 27, 31, 0.3);
+            border-radius: 4px;
+            background: var(--paper);
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-red);
+            box-shadow: 0 0 0 3px rgba(156, 27, 31, 0.1);
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background: var(--primary-red);
+            color: var(--ivory);
+            border: none;
+            padding: 1rem 2.5rem;
+            font-size: 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: 'Ma Shan Zheng', cursive;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 2rem auto 0;
+        }
+        
+        .submit-btn:hover {
+            background: var(--dark-black);
+            transform: scale(1.05);
+        }
+        
+        .submit-btn::after {
+            content: '印';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            font-family: 'ZCOOL KuaiLe', cursive;
+            font-size: 3rem;
+            opacity: 0;
+            transition: all 0.5s ease;
+            color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .submit-btn:active::after {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+        
+        /* 页脚区域 */
+        footer {
+            background: var(--dark-black);
+            color: var(--ivory);
+            padding: 4rem 2rem 2rem;
+            position: relative;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+        
+        .social-link {
+            width: 50px;
+            height: 50px;
+            margin: 0 1rem;
+            background: var(--primary-red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--ivory);
+            font-size: 1.5rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .social-link:hover {
+            transform: translateY(-5px);
+            background: var(--gold);
+            color: var(--dark-black);
+        }
+        
+        .social-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50"><rect x="5" y="5" width="40" height="40" rx="20" fill="none" stroke="%23d4af37" stroke-width="1"/></svg>');
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .social-link:hover::before {
+            opacity: 1;
+        }
+        
+        .copyright {
+            margin-top: 2rem;
+            font-family: 'ZCOOL KuaiLe', cursive;
+            color: rgba(248, 243, 230, 0.7);
+        }
+        
+        .roof-decoration {
+            position: absolute;
+            top: -20px;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 40"><path d="M0,40 Q300,0 600,40 T1200,0 L1200,40 L0,40 Z" fill="%232a1a1c"/></svg>');
+            background-size: cover;
+        }
+        
+        .cloud {
+            position: absolute;
+            background: rgba(248, 243, 230, 0.1);
+            border-radius: 50%;
+            filter: blur(5px);
+        }
+        
+        .cloud-1 {
+            width: 120px;
+            height: 60px;
+            top: 20%;
+            left: 10%;
+            animation: float 15s infinite linear;
+        }
+        
+        .cloud-2 {
+            width: 80px;
+            height: 40px;
+            top: 40%;
+            right: 15%;
+            animation: float 12s infinite linear reverse;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(30px);
+            }
+            100% {
+                transform: translateX(0);
+            }
+        }
+        
+        .poem-container {
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            background: rgba(245, 240, 225, 0.9);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-red);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            max-width: 250px;
+            z-index: 100;
+            font-family: 'Ma Shan Zheng', cursive;
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+        }
+        
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+        
+        .poem-title {
+            font-size: 1.2rem;
+            color: var(--primary-red);
+            margin-bottom: 0.5rem;
+        }
+        
+        .poem-content {
+            font-size: 1.1rem;
+            color: var(--dark-black);
+            line-height: 1.6;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .hero-content {
+                padding: 1rem;
+            }
+            
+            .brush-title {
+                font-size: 3.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.5rem;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .about-text, .skills {
+                width: 100%;
+                margin-bottom: 2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(42, 26, 28, 0.95);
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem 0;
+                clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+                transition: clip-path 0.4s ease;
+            }
+            
+            .nav-links.active {
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            }
+            
+            .nav-links li {
+                margin: 1rem 0;
+            }
+            
+            .portfolio-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .services-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            }
+            
+            .poem-container {
+                position: static;
+                transform: none;
+                max-width: 100%;
+                margin: 2rem auto;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .brush-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .avatar {
+                width: 150px;
+                height: 150px;
+                font-size: 3rem;
+            }
+            
+            .stamp {
+                width: 40px;
+                height: 40px;
+                font-size: 0.8rem;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+            
+            .contact-form {
+                padding: 2rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 古诗词浮窗 -->
+    <div class="poem-container">
+        <div class="poem-title">《题西林壁》</div>
+        <div class="poem-content">横看成岭侧成峰，远近高低各不同。不识庐山真面目，只缘身在此山中。</div>
+    </div>
+    
+    <!-- 导航栏 -->
+    <header>
+        <nav class="navbar">
+            <a href="#" class="logo">
+                <div class="logo-icon">墨</div>
+                墨韵集
+            </a>
+            
+            <ul class="nav-links">
+                <li><a href="#home">首页</a></li>
+                <li><a href="#about">关于我</a></li>
+                <li><a href="#portfolio">作品集</a></li>
+                <li><a href="#services">服务</a></li>
+                <li><a href="#contact">联系</a></li>
+                <button class="lang-toggle">EN</button>
+            </ul>
+            
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+    
+    <!-- 英雄区域 -->
+    <section id="home" class="hero">
+        <div class="mountain-bg"></div>
+        <div class="hero-content">
+            <div class="avatar-container">
+                <div class="avatar">墨</div>
+                <div class="stamp">艺</div>
+            </div>
+            <h1 class="brush-title">笔意丹青</h1>
+            <p class="hero-subtitle">传统美学 · 现代设计 · 文化传承</p>
+        </div>
+    </section>
+    
+    <!-- 关于我区域 -->
+    <section id="about" class="section">
+        <h2 class="section-title">关于我</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>我是一位专注于融合中国传统文化与现代设计的视觉艺术家。从幼时研习书法与国画开始，到如今将东方美学融入数字创作，我的作品始终贯穿着对传统文化的敬意与创新精神。</p>
+                <p>毕业于中央美术学院，拥有超过10年的设计经验。擅长将传统元素如水墨、书法、剪纸、青花瓷等转化为现代设计语言，为品牌注入独特的东方韵味。</p>
+                <p>我的创作理念是"古为今用，洋为中用"，在尊重传统的基础上进行创新，让古老的艺术形式在现代设计中焕发新生。</p>
+            </div>
+            
+            <div class="skills">
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>书法创作</span>
+                        <span>LV.9</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-level" style="width: 90%;"></div>
+                    </div>
+                </div>
+                
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>水墨绘画</span>
+                        <span>LV.8</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-level" style="width: 80%;"></div>
+                    </div>
+                </div>
+                
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>平面设计</span>
+                        <span>LV.9</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-level" style="width: 90%;"></div>
+                    </div>
+                </div>
+                
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>网页设计</span>
+                        <span>LV.8</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-level" style="width: 80%;"></div>
+                    </div>
+                </div>
+                
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>品牌设计</span>
+                        <span>LV.7</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-level" style="width: 70%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 云朵装饰 -->
+        <div class="cloud cloud-1"></div>
+        <div class="cloud cloud-2"></div>
+    </section>
+    
+    <!-- 作品集区域 -->
+    <section id="portfolio" class="section portfolio">
+        <h2 class="section-title">作品集</h2>
+        
+        <div class="filters">
+            <button class="filter-btn active">全部</button>
+            <button class="filter-btn">品牌设计</button>
+            <button class="filter-btn">网页设计</button>
+            <button class="filter-btn">平面设计</button>
+            <button class="filter-btn">书法作品</button>
+        </div>
+        
+        <div class="portfolio-grid">
+            <div class="portfolio-item">
+                <div class="portfolio-img">
+                    <i class="fas fa-mountain"></i>
+                </div>
+                <div class="portfolio-info">
+                    <h3>山水品牌形象</h3>
+                    <p>融合水墨元素的现代品牌设计</p>
+                </div>
+            </div>
+            
+            <div class="portfolio-item">
+                <div class="portfolio-img">
+                    <i class="fas fa-dragon"></i>
+                </div>
+                <div class="portfolio-info">
+                    <h3>龙纹网页设计</h3>
+                    <p>传统龙纹与现代UI的完美结合</p>
+                </div>
+            </div>
+            
+            <div class="portfolio-item">
+                <div class="portfolio-img">
+                    <i class="fas fa-chess-rook"></i>
+                </div>
+                <div class="portfolio-info">
+                    <h3>古建文化海报</h3>
+                    <p>中国传统建筑元素系列海报</p>
+                </div>
+            </div>
+            
+            <div class="portfolio-item">
+                <div class="portfolio-img">
+                    <i class="fas fa-feather"></i>
+                </div>
+                <div class="portfolio-info">
+                    <h3>书法创作集</h3>
+                    <p>行书与草书的现代艺术表现</p>
+                </div>
+            </div>
+            
+            <div class="portfolio-item">
+                <div class="portfolio-img">
+                    <i class="fas fa-om"></i>
+                </div>
+                <div class="portfolio-info">
+                    <h3>禅意品牌设计</h3>
+                    <p>融合佛教元素的品牌视觉系统</p>
+                </div>
+            </div>
+            
+            <div class="portfolio-item">
+                <div class="portfolio-img">
+                    <i class="fas fa-wine-bottle"></i>
+                </div>
+                <div class="portfolio-info">
+                    <h3>青花瓷包装</h3>
+                    <p>传统青花瓷纹样现代应用</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 服务区域 -->
+    <section id="services" class="section">
+        <h2 class="section-title">我的服务</h2>
+        
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-paint-brush"></i>
+                </div>
+                <h3 class="service-title">品牌设计</h3>
+                <p class="service-poem">笔走龙蛇生万象，墨染云烟铸精魂</p>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-palette"></i>
+                </div>
+                <h3 class="service-title">视觉设计</h3>
+                <p class="service-poem">丹青妙手绘乾坤，万象更新意境深</p>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-laptop-code"></i>
+                </div>
+                <h3 class="service-title">网页设计</h3>
+                <p class="service-poem">网罗万象连今古，页纳乾坤展宏图</p>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <h3 class="service-title">前端开发</h3>
+                <p class="service-poem">巧手编织千机网，匠心雕琢万象屏</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 联系表单区域 -->
+    <section id="contact" class="section contact">
+        <h2 class="section-title">联系我</h2>
+        
+        <form class="contact-form">
+            <div class="form-group">
+                <label for="name">姓名</label>
+                <input type="text" id="name" class="form-control" placeholder="请输入您的姓名">
+            </div>
+            
+            <div class="form-group">
+                <label for="email">电子邮箱</label>
+                <input type="email" id="email" class="form-control" placeholder="请输入您的邮箱">
+            </div>
+            
+            <div class="form-group">
+                <label for="subject">主题</label>
+                <input type="text" id="subject" class="form-control" placeholder="请输入邮件主题">
+            </div>
+            
+            <div class="form-group">
+                <label for="message">留言</label>
+                <textarea id="message" class="form-control" placeholder="请在此输入您的留言..."></textarea>
+            </div>
+            
+            <button type="submit" class="submit-btn">发送</button>
+        </form>
+    </section>
+    
+    <!-- 页脚区域 -->
+    <footer>
+        <div class="roof-decoration"></div>
+        <div class="footer-content">
+            <div class="social-links">
+                <a href="#" class="social-link"><i class="fab fa-weixin"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-weibo"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-behance"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <p class="copyright">© 2023 墨韵集 · 保留所有权利</p>
+        </div>
+    </footer>
+    
+    <script>
+        // 导航菜单切换
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+        
+        // 语言切换功能
+        const langToggle = document.querySelector('.lang-toggle');
+        let isChinese = true;
+        
+        langToggle.addEventListener('click', () => {
+            isChinese = !isChinese;
+            langToggle.textContent = isChinese ? 'EN' : '繁';
+            langToggle.setAttribute('data-lang', isChinese ? 'zh' : 'en');
+            
+            // 这里可以添加实际的语言切换逻辑
+            if (isChinese) {
+                document.documentElement.lang = 'zh-TW';
+                document.title = '墨韵集 - 中国风作品集';
+                document.querySelector('.brush-title').textContent = '笔意丹青';
+                document.querySelector('.hero-subtitle').textContent = '传统美学 · 现代设计 · 文化传承';
+            } else {
+                document.documentElement.lang = 'en';
+                document.title = 'Ink Essence - Chinese Style Portfolio';
+                document.querySelector('.brush-title').textContent = 'Art of Ink';
+                document.querySelector('.hero-subtitle').textContent = 'Traditional Aesthetics · Modern Design · Cultural Heritage';
+            }
+        });
+        
+        // 作品集过滤功能
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // 移除所有按钮的active类
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                
+                // 给点击的按钮添加active类
+                button.classList.add('active');
+                
+                // 这里可以添加实际的过滤逻辑
+                console.log(`Filter: ${button.textContent}`);
+            });
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+                    
+                    // 关闭移动端菜单
+                    if (navLinks.classList.contains('active')) {
+                        navLinks.classList.remove('active');
+                        hamburger.classList.remove('active');
+                    }
+                }
+            });
+        });
+        
+        // 表单提交效果
+        const submitBtn = document.querySelector('.submit-btn');
+        if (submitBtn) {
+            submitBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // 创建印章动画元素
+                const stamp = document.createElement('div');
+                stamp.classList.add('stamp-animation');
+                stamp.textContent = '已发送';
+                stamp.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%) scale(0);
+                    width: 150px;
+                    height: 150px;
+                    background: ${getComputedStyle(document.documentElement).getPropertyValue('--primary-red')};
+                    color: ${getComputedStyle(document.documentElement).getPropertyValue('--ivory')};
+                    border-radius: 5px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-family: 'ZCOOL KuaiLe', cursive;
+                    font-size: 2rem;
+                    z-index: 2000;
+                    opacity: 0;
+                    pointer-events: none;
+                    animation: stampAppear 1s forwards;
+                `;
+                
+                document.body.appendChild(stamp);
+                
+                // 移除动画元素
+                setTimeout(() => {
+                    stamp.remove();
+                }, 1500);
+            });
+        }
+        
+        // 添加关键帧动画
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes stampAppear {
+                0% {
+                    transform: translate(-50%, -50%) scale(0);
+                    opacity: 0;
+                }
+                50% {
+                    transform: translate(-50%, -50%) scale(1.2);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translate(-50%, -50%) scale(1);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // 滚动动画效果
+        window.addEventListener('scroll', () => {
+            const scrollPosition = window.scrollY;
+            const mountainBg = document.querySelector('.mountain-bg');
+            
+            if (mountainBg) {
+                mountainBg.style.transform = `translateY(${scrollPosition * 0.3}px)`;
+            }
+        });
+    </script>
+</body>
+</html>

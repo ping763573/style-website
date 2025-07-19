@@ -1,0 +1,1654 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>港風動漫作品集｜Hong Kong Style Anime Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&family=Noto+Serif+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    /* 基礎重置與變數定義 */
+    :root {
+      /* 亮色主題變數 */
+      --light-bg: #f5e9dc;
+      --light-text: #3a2c1a;
+      --light-primary: #e74c3c;
+      --light-secondary: #f39c12;
+      --light-accent: #3498db;
+      --light-border: #d4a76a;
+      --light-card: #fff5e6;
+      --light-neon: rgba(231, 76, 60, 0.7);
+      
+      /* 暗色主題變數 */
+      --dark-bg: #1a1a1a;
+      --dark-text: #e6d8c3;
+      --dark-primary: #e74c3c;
+      --dark-secondary: #f39c12;
+      --dark-accent: #3498db;
+      --dark-border: #5d4b32;
+      --dark-card: #2a2a2a;
+      --dark-neon: rgba(231, 76, 60, 0.9);
+      
+      /* 共用變數 */
+      --font-sans: 'Noto Sans TC', sans-serif;
+      --font-serif: 'Noto Serif TC', serif;
+      --font-retro: 'Press Start 2P', cursive;
+      --border-radius: 8px;
+      --transition: all 0.3s ease;
+      --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      --box-shadow-neon: 0 0 10px var(--light-neon), 0 0 20px var(--light-neon);
+    }
+
+    /* 基礎樣式 */
+    body {
+      font-family: var(--font-sans);
+      color: var(--light-text);
+      background-color: var(--light-bg);
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+      position: relative;
+      overflow-x: hidden;
+      transition: var(--transition);
+    }
+
+    body.dark-theme {
+      color: var(--dark-text);
+      background-color: var(--dark-bg);
+    }
+
+    /* 膠片邊框樣式 */
+    .film-border {
+      position: fixed;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none" stroke="%23e74c3c" stroke-width="2"/><circle cx="10" cy="50" r="5" fill="%23e74c3c"/><circle cx="30" cy="50" r="5" fill="%23e74c3c"/><circle cx="50" cy="50" r="5" fill="%23e74c3c"/><circle cx="70" cy="50" r="5" fill="%23e74c3c"/><circle cx="90" cy="50" r="5" fill="%23e74c3c"/></svg>');
+      background-repeat: repeat;
+      z-index: 1000;
+      pointer-events: none;
+    }
+
+    .film-border.top {
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 20px;
+      background-position: 0 0;
+    }
+
+    .film-border.right {
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 20px;
+      background-position: 0 0;
+      transform: rotate(90deg);
+      transform-origin: right top;
+    }
+
+    .film-border.bottom {
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 20px;
+      background-position: 0 0;
+    }
+
+    .film-border.left {
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 20px;
+      background-position: 0 0;
+      transform: rotate(90deg);
+      transform-origin: left top;
+    }
+
+    /* 導航欄樣式 */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background-color: rgba(245, 233, 220, 0.9);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      transition: var(--transition);
+      border-bottom: 1px solid var(--light-border);
+    }
+
+    .dark-theme .navbar {
+      background-color: rgba(26, 26, 26, 0.9);
+      border-bottom-color: var(--dark-border);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo h1 {
+      font-family: var(--font-retro);
+      font-size: 1.5rem;
+      margin: 0;
+      color: var(--light-primary);
+    }
+
+    .dark-theme .logo h1 {
+      color: var(--dark-primary);
+    }
+
+    .film-reel {
+      width: 30px;
+      height: 30px;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="none" stroke="%23e74c3c" stroke-width="5"/><circle cx="50" cy="50" r="15" fill="none" stroke="%23e74c3c" stroke-width="5"/><circle cx="50" cy="20" r="5" fill="%23e74c3c"/><circle cx="80" cy="50" r="5" fill="%23e74c3c"/><circle cx="50" cy="80" r="5" fill="%23e74c3c"/><circle cx="20" cy="50" r="5" fill="%23e74c3c"/></svg>');
+      background-size: contain;
+      animation: spin 10s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: var(--light-text);
+      font-weight: 500;
+      position: relative;
+      padding: 0.5rem 0;
+      transition: var(--transition);
+    }
+
+    .dark-theme .nav-link {
+      color: var(--dark-text);
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--light-primary);
+      transition: var(--transition);
+    }
+
+    .dark-theme .nav-link::after {
+      background-color: var(--dark-primary);
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .header-controls {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    #themeToggle, #langToggle {
+      background: none;
+      border: 1px solid var(--light-border);
+      color: var(--light-text);
+      padding: 0.5rem 1rem;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: var(--font-sans);
+    }
+
+    .dark-theme #themeToggle, 
+    .dark-theme #langToggle {
+      border-color: var(--dark-border);
+      color: var(--dark-text);
+    }
+
+    #themeToggle:hover, #langToggle:hover {
+      background-color: var(--light-primary);
+      color: white;
+      border-color: var(--light-primary);
+    }
+
+    .dark-theme #themeToggle:hover,
+    .dark-theme #langToggle:hover {
+      background-color: var(--dark-primary);
+      border-color: var(--dark-primary);
+    }
+
+    /* 漢堡選單樣式 (移動設備) */
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 30px;
+      height: 24px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 100%;
+      height: 3px;
+      background-color: var(--light-text);
+      transition: var(--transition);
+    }
+
+    .dark-theme .hamburger span {
+      background-color: var(--dark-text);
+    }
+
+    /* Hero區域樣式 */
+    .hero-section {
+      height: 100vh;
+      background-image: url('https://images.unsplash.com/photo-1553826059-7a090c4bd362?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 60px; /* 導航欄高度 */
+    }
+
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.4);
+    }
+
+    .film-grain-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100" height="100" filter="url(%23noise)" opacity="0.2"/></svg>');
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 2rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .hero-title {
+      font-family: var(--font-retro);
+      font-size: 3rem;
+      color: white;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 10px var(--light-primary), 0 0 20px var(--light-primary);
+      animation: neonGlow 2s infinite alternate;
+    }
+
+    .dark-theme .hero-title {
+      text-shadow: 0 0 10px var(--dark-primary), 0 0 20px var(--dark-primary);
+    }
+
+    .hero-subtitle {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      color: white;
+      margin-bottom: 2rem;
+    }
+
+    .scrolling-film-strip {
+      display: flex;
+      overflow: hidden;
+      gap: 1rem;
+      margin: 2rem auto;
+      width: 100%;
+      height: 100px;
+      position: relative;
+    }
+
+    .film-frame {
+      min-width: 150px;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 4px;
+      position: relative;
+    }
+
+    .film-frame::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 10px;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="10" viewBox="0 0 100 10"><circle cx="5" cy="5" r="2" fill="%23fff"/><circle cx="15" cy="5" r="2" fill="%23fff"/><circle cx="25" cy="5" r="2" fill="%23fff"/><circle cx="35" cy="5" r="2" fill="%23fff"/><circle cx="45" cy="5" r="2" fill="%23fff"/><circle cx="55" cy="5" r="2" fill="%23fff"/><circle cx="65" cy="5" r="2" fill="%23fff"/><circle cx="75" cy="5" r="2" fill="%23fff"/><circle cx="85" cy="5" r="2" fill="%23fff"/><circle cx="95" cy="5" r="2" fill="%23fff"/></svg>');
+      background-repeat: repeat-x;
+    }
+
+    .hero-scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      text-align: center;
+      z-index: 2;
+      animation: bounce 2s infinite;
+    }
+
+    .arrow {
+      width: 20px;
+      height: 20px;
+      border-right: 2px solid white;
+      border-bottom: 2px solid white;
+      transform: rotate(45deg);
+      margin: 0.5rem auto;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
+      40% { transform: translateY(-20px) translateX(-50%); }
+      60% { transform: translateY(-10px) translateX(-50%); }
+    }
+
+    @keyframes neonGlow {
+      from {
+        text-shadow: 0 0 10px var(--light-primary), 0 0 20px var(--light-primary);
+      }
+      to {
+        text-shadow: 0 0 15px var(--light-primary), 0 0 30px var(--light-primary), 0 0 40px var(--light-primary);
+      }
+    }
+
+    .dark-theme @keyframes neonGlow {
+      from {
+        text-shadow: 0 0 10px var(--dark-primary), 0 0 20px var(--dark-primary);
+      }
+      to {
+        text-shadow: 0 0 15px var(--dark-primary), 0 0 30px var(--dark-primary), 0 0 40px var(--dark-primary);
+      }
+    }
+
+    /* 關於我區域樣式 */
+    .about-section {
+      padding: 4rem 2rem;
+      position: relative;
+      background-color: var(--light-card);
+    }
+
+    .dark-theme .about-section {
+      background-color: var(--dark-card);
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+
+    .section-header h2 {
+      font-family: var(--font-retro);
+      font-size: 2.5rem;
+      color: var(--light-primary);
+      margin-bottom: 1rem;
+      display: inline-block;
+      position: relative;
+    }
+
+    .dark-theme .section-header h2 {
+      color: var(--dark-primary);
+    }
+
+    .director-marker {
+      position: absolute;
+      top: -15px;
+      right: 20%;
+      width: 60px;
+      height: 30px;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50"><path d="M10,25 L90,25" stroke="%23e74c3c" stroke-width="2" stroke-dasharray="5,5"/><path d="M30,10 L30,40" stroke="%23e74c3c" stroke-width="2"/><path d="M70,10 L70,40" stroke="%23e74c3c" stroke-width="2"/></svg>');
+      background-repeat: no-repeat;
+      opacity: 0.7;
+    }
+
+    .about-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .avatar-container {
+      position: relative;
+      width: 300px;
+      height: 300px;
+    }
+
+    .avatar {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 5px solid var(--light-border);
+      box-shadow: var(--box-shadow);
+      position: relative;
+      z-index: 1;
+    }
+
+    .dark-theme .avatar {
+      border-color: var(--dark-border);
+    }
+
+    .camera-icon {
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      width: 80px;
+      height: 80px;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="20" y="30" width="60" height="40" rx="5" fill="none" stroke="%23e74c3c" stroke-width="3"/><circle cx="50" cy="50" r="15" fill="none" stroke="%23e74c3c" stroke-width="3"/><circle cx="50" cy="50" r="5" fill="%23e74c3c"/><rect x="65" y="20" width="15" height="10" rx="2" fill="%23e74c3c"/></svg>');
+      background-size: contain;
+      z-index: 2;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .film-burn-effect {
+      position: absolute;
+      bottom: -10px;
+      left: -10px;
+      width: 120%;
+      height: 120%;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><filter id="burn"><feTurbulence type="fractalNoise" baseFrequency="0.5" numOctaves="3"/><feDisplacementMap in="SourceGraphic" scale="10"/></filter><circle cx="50" cy="50" r="48" fill="none" stroke="%23e74c3c" stroke-width="1" filter="url(%23burn)" opacity="0.3"/></svg>');
+      background-size: cover;
+      z-index: 0;
+      opacity: 0.7;
+    }
+
+    .about-text {
+      flex: 1;
+      min-width: 300px;
+      max-width: 600px;
+    }
+
+    .about-text p {
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      line-height: 1.8;
+    }
+
+    .skills-container {
+      margin-top: 2rem;
+    }
+
+    .skill-bar {
+      margin-bottom: 1.5rem;
+    }
+
+    .skill-label {
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .skill-progress {
+      height: 10px;
+      background-color: rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .dark-theme .skill-progress {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .progress-bar {
+      height: 100%;
+      background-color: var(--light-primary);
+      width: 0;
+      transition: width 1.5s ease;
+      position: relative;
+    }
+
+    .dark-theme .progress-bar {
+      background-color: var(--dark-primary);
+    }
+
+    .film-strip {
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10"><rect width="10" height="10" fill="%23e74c3c" opacity="0.3"/><rect x="0" y="0" width="2" height="10" fill="%23fff" opacity="0.5"/><rect x="8" y="0" width="2" height="10" fill="%23fff" opacity="0.5"/></svg>');
+      background-repeat: repeat;
+    }
+
+    .anime-quote {
+      margin-top: 3rem;
+      text-align: center;
+    }
+
+    .quote-bubble {
+      display: inline-block;
+      padding: 1.5rem 2rem;
+      background-color: var(--light-card);
+      border-radius: 20px;
+      position: relative;
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 1.2rem;
+      color: var(--light-primary);
+      box-shadow: var(--box-shadow);
+      max-width: 80%;
+    }
+
+    .dark-theme .quote-bubble {
+      background-color: var(--dark-card);
+      color: var(--dark-primary);
+    }
+
+    .quote-bubble::before {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 15px solid transparent;
+      border-right: 15px solid transparent;
+      border-top: 15px solid var(--light-card);
+    }
+
+    .dark-theme .quote-bubble::before {
+      border-top-color: var(--dark-card);
+    }
+
+    /* 作品集區域樣式 */
+    .portfolio-section {
+      padding: 4rem 2rem;
+      background-color: var(--light-bg);
+      position: relative;
+    }
+
+    .dark-theme .portfolio-section {
+      background-color: var(--dark-bg);
+    }
+
+    .filter-buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .filter-buttons button {
+      padding: 0.5rem 1.5rem;
+      background-color: transparent;
+      border: 2px solid var(--light-primary);
+      color: var(--light-primary);
+      border-radius: 30px;
+      cursor: pointer;
+      font-family: var(--font-sans);
+      font-weight: bold;
+      transition: var(--transition);
+    }
+
+    .dark-theme .filter-buttons button {
+      border-color: var(--dark-primary);
+      color: var(--dark-primary);
+    }
+
+    .filter-buttons button:hover {
+      background-color: var(--light-primary);
+      color: white;
+    }
+
+    .dark-theme .filter-buttons button:hover {
+      background-color: var(--dark-primary);
+    }
+
+    .filter-buttons button.active {
+      background-color: var(--light-primary);
+      color: white;
+    }
+
+    .dark-theme .filter-buttons button.active {
+      background-color: var(--dark-primary);
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .portfolio-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      aspect-ratio: 4 / 3;
+      transition: var(--transition);
+      background-color: var(--light-card);
+    }
+
+    .dark-theme .portfolio-item {
+      background-color: var(--dark-card);
+    }
+
+    .portfolio-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+
+    .portfolio-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect x="0" y="0" width="100" height="100" fill="none" stroke="%23e74c3c" stroke-width="2"/><rect x="5" y="5" width="90" height="90" fill="none" stroke="%23e74c3c" stroke-width="1" stroke-dasharray="5,5"/></svg>');
+      background-size: cover;
+      opacity: 0;
+      transition: var(--transition);
+      z-index: 1;
+    }
+
+    .portfolio-item:hover::before {
+      opacity: 0.7;
+    }
+
+    .portfolio-item:hover img {
+      transform: scale(1.05);
+    }
+
+    .portfolio-item .item-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1.5rem;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+      color: white;
+      transform: translateY(100%);
+      transition: var(--transition);
+    }
+
+    .portfolio-item:hover .item-overlay {
+      transform: translateY(0);
+    }
+
+    /* 服務區域樣式 */
+    .services-section {
+      padding: 4rem 2rem;
+      background-color: var(--light-card);
+    }
+
+    .dark-theme .services-section {
+      background-color: var(--dark-card);
+    }
+
+    .service-cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .service-card {
+      flex: 1;
+      min-width: 300px;
+      max-width: 350px;
+      padding: 2rem;
+      background-color: var(--light-bg);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dark-theme .service-card {
+      background-color: var(--dark-bg);
+    }
+
+    .service-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .service-icon {
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .service-card h3 {
+      font-family: var(--font-retro);
+      font-size: 1.5rem;
+      color: var(--light-primary);
+      margin-bottom: 1rem;
+    }
+
+    .dark-theme .service-card h3 {
+      color: var(--dark-primary);
+    }
+
+    .service-card p {
+      margin-bottom: 1.5rem;
+    }
+
+    .film-strip-decoration {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 10px;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="10" viewBox="0 0 100 10"><rect width="100" height="10" fill="%23e74c3c" opacity="0.5"/><circle cx="5" cy="5" r="3" fill="%23fff"/><circle cx="25" cy="5" r="3" fill="%23fff"/><circle cx="45" cy="5" r="3" fill="%23fff"/><circle cx="65" cy="5" r="3" fill="%23fff"/><circle cx="85" cy="5" r="3" fill="%23fff"/></svg>');
+      background-repeat: repeat-x;
+    }
+
+    /* 聯絡區域樣式 */
+    .contact-section {
+      padding: 4rem 2rem;
+      background-color: var(--light-bg);
+    }
+
+    .dark-theme .contact-section {
+      background-color: var(--dark-bg);
+    }
+
+    .contact-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    #contactForm {
+      flex: 1;
+      min-width: 300px;
+      max-width: 500px;
+      padding: 2rem;
+      background-color: var(--light-card);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      position: relative;
+    }
+
+    .dark-theme #contactForm {
+      background-color: var(--dark-card);
+    }
+
+    .film-credits-style {
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect x="0" y="0" width="100" height="100" fill="none" stroke="%23e74c3c" stroke-width="1" stroke-dasharray="5,5"/></svg>');
+      background-size: 20px 20px;
+      background-repeat: repeat;
+      background-position: 0 0;
+      animation: scrollBackground 20s linear infinite;
+    }
+
+    @keyframes scrollBackground {
+      from { background-position: 0 0; }
+      to { background-position: 0 100px; }
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border: none;
+      background-color: transparent;
+      border-bottom: 2px solid var(--light-border);
+      font-family: var(--font-sans);
+      transition: var(--transition);
+    }
+
+    .dark-theme .form-group input,
+    .dark-theme .form-group textarea {
+      border-bottom-color: var(--dark-border);
+      color: var(--dark-text);
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-bottom-color: var(--light-primary);
+    }
+
+    .dark-theme .form-group input:focus,
+    .dark-theme .form-group textarea:focus {
+      border-bottom-color: var(--dark-primary);
+    }
+
+    .film-underline {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--light-primary);
+      transition: var(--transition);
+    }
+
+    .dark-theme .film-underline {
+      background-color: var(--dark-primary);
+    }
+
+    .form-group input:focus ~ .film-underline,
+    .form-group textarea:focus ~ .film-underline {
+      width: 100%;
+    }
+
+    .submit-btn {
+      padding: 0.8rem 2rem;
+      background-color: var(--light-primary);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      font-family: var(--font-sans);
+      font-weight: bold;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .dark-theme .submit-btn {
+      background-color: var(--dark-primary);
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+    }
+
+    .film-roll-effect {
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: var(--transition);
+    }
+
+    .submit-btn:hover .film-roll-effect {
+      left: 100%;
+    }
+
+    .contact-info {
+      flex: 1;
+      min-width: 300px;
+      max-width: 500px;
+      padding: 2rem;
+      background-color: var(--light-card);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+    }
+
+    .dark-theme .contact-info {
+      background-color: var(--dark-card);
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .info-icon {
+      font-size: 1.5rem;
+      color: var(--light-primary);
+    }
+
+    .dark-theme .info-icon {
+      color: var(--dark-primary);
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .social-icon {
+      font-size: 1.8rem;
+      color: var(--light-text);
+      transition: var(--transition);
+    }
+
+    .dark-theme .social-icon {
+      color: var(--dark-text);
+    }
+
+    .social-icon:hover {
+      color: var(--light-primary);
+      transform: translateY(-5px);
+    }
+
+    .dark-theme .social-icon:hover {
+      color: var(--dark-primary);
+    }
+
+    /* 頁腳樣式 */
+    footer {
+      padding: 2rem;
+      text-align: center;
+      background-color: var(--light-card);
+      position: relative;
+    }
+
+    .dark-theme footer {
+      background-color: var(--dark-card);
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .film-projector {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 80px;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 80"><rect x="20" y="30" width="60" height="40" rx="5" fill="%23e74c3c" opacity="0.5"/><rect x="30" y="10" width="40" height="20" rx="3" fill="%23e74c3c" opacity="0.5"/><circle cx="50" cy="50" r="15" fill="%23e74c3c" opacity="0.3"/><path d="M50,65 L50,80" stroke="%23e74c3c" stroke-width="2" stroke-linecap="round"/><path d="M30,65 L70,65" stroke="%23e74c3c" stroke-width="2" stroke-linecap="round"/></svg>');
+      background-repeat: no-repeat;
+      background-position: center bottom;
+      opacity: 0.7;
+    }
+
+    .copyright {
+      margin-bottom: 1rem;
+      font-weight: bold;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .footer-links a {
+      color: var(--light-text);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .dark-theme .footer-links a {
+      color: var(--dark-text);
+    }
+
+    .footer-links a:hover {
+      color: var(--light-primary);
+    }
+
+    .dark-theme .footer-links a:hover {
+      color: var(--dark-primary);
+    }
+
+    /* 霓虹燈牌樣式 */
+    .neon-sign {
+      position: fixed;
+      font-family: var(--font-retro);
+      color: var(--light-primary);
+      text-shadow: 0 0 10px var(--light-primary), 0 0 20px var(--light-primary);
+      opacity: 0.7;
+      z-index: -1;
+      animation: neonFlicker 3s infinite alternate;
+    }
+
+    .dark-theme .neon-sign {
+      color: var(--dark-primary);
+      text-shadow: 0 0 10px var(--dark-primary), 0 0 20px var(--dark-primary);
+    }
+
+    .neon-sign[data-sign="創作"] {
+      top: 20%;
+      left: 5%;
+      transform: rotate(-15deg);
+      font-size: 2rem;
+    }
+
+    .neon-sign[data-sign="光影"] {
+      bottom: 20%;
+      right: 5%;
+      transform: rotate(10deg);
+      font-size: 2rem;
+    }
+
+    @keyframes neonFlicker {
+      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        opacity: 0.7;
+        text-shadow: 0 0 10px var(--light-primary), 0 0 20px var(--light-primary);
+      }
+      20%, 24%, 55% {
+        opacity: 0.3;
+        text-shadow: none;
+      }
+    }
+
+    .dark-theme @keyframes neonFlicker {
+      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        opacity: 0.7;
+        text-shadow: 0 0 10px var(--dark-primary), 0 0 20px var(--dark-primary);
+      }
+      20%, 24%, 55% {
+        opacity: 0.3;
+        text-shadow: none;
+      }
+    }
+
+    /* 語言切換樣式 */
+    .chinese, .english {
+      display: block;
+    }
+
+    .english {
+      display: none;
+    }
+
+    body.english-mode .chinese {
+      display: none;
+    }
+
+    body.english-mode .english {
+      display: block;
+    }
+
+    /* 響應式設計 */
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        padding: 1rem;
+      }
+      
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        gap: 0;
+      }
+      
+      .nav-links.active {
+        display: flex;
+      }
+      
+      .nav-link {
+        padding: 1rem;
+        text-align: center;
+        border-bottom: 1px solid var(--light-border);
+      }
+      
+      .dark-theme .nav-link {
+        border-bottom-color: var(--dark-border);
+      }
+      
+      .hamburger {
+        display: flex;
+      }
+      
+      .header-controls {
+        margin-top: 1rem;
+      }
+      
+      .hero-title {
+        font-size: 2rem;
+      }
+      
+      .hero-subtitle {
+        font-size: 1.2rem;
+      }
+      
+      .about-content {
+        flex-direction: column;
+      }
+      
+      .avatar-container {
+        width: 200px;
+        height: 200px;
+      }
+      
+      .service-cards {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .service-card {
+        min-width: 100%;
+      }
+      
+      .contact-container {
+        flex-direction: column;
+      }
+      
+      #contactForm, .contact-info {
+        min-width: 100%;
+      }
+    }
+
+    /* 減少動畫的媒體查詢 */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+        transition: none !important;
+      }
+      
+      .film-reel {
+        animation: none;
+      }
+      
+      .scrolling-film-strip {
+        animation: none;
+      }
+    }
+  </style>
+</head>
+<body class="light-theme">
+  <!-- 膠片邊框裝飾元素 -->
+  <div class="film-border top"></div>
+  <div class="film-border right"></div>
+  <div class="film-border bottom"></div>
+  <div class="film-border left"></div>
+  
+  <!-- 霓虹燈裝飾元素 -->
+  <div class="neon-sign" data-sign="創作"></div>
+  <div class="neon-sign" data-sign="光影"></div>
+  
+  <header class="navbar">
+    <div class="logo">
+      <h1>
+        <span class="chinese">📸 港風動漫</span>
+        <span class="english">HK Anime Style</span>
+      </h1>
+      <div class="film-reel"></div>
+    </div>
+    <nav>
+      <button class="hamburger" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="#about" class="nav-link"><span class="chinese">關於我</span><span class="english">About</span></a></li>
+        <li><a href="#portfolio" class="nav-link"><span class="chinese">作品集</span><span class="english">Portfolio</span></a></li>
+        <li><a href="#services" class="nav-link"><span class="chinese">服務</span><span class="english">Services</span></a></li>
+        <li><a href="#contact" class="nav-link"><span class="chinese">聯絡</span><span class="english">Contact</span></a></li>
+      </ul>
+      <div class="header-controls">
+        <button id="themeToggle" aria-label="Toggle theme">
+          <span class="light-icon">☀️</span>
+          <span class="dark-icon">🌙</span>
+        </button>
+        <button id="langToggle" aria-label="Toggle language">EN / 繁</button>
+      </div>
+    </nav>
+  </header>
+
+  <section id="hero" class="hero-section">
+    <div class="film-grain-overlay"></div>
+    <div class="hero-overlay">
+      <div class="hero-content">
+        <h2 class="hero-title">
+          <span class="chinese">👁️‍🗨️ 透過鏡頭說故事</span>
+          <span class="english">👁️‍🗨️ Storytelling Through Lens</span>
+        </h2>
+        <p class="hero-subtitle">
+          <span class="chinese">港風 × 動漫 × 電影感</span>
+          <span class="english">HK Style × Anime × Cinematic</span>
+        </p>
+        <div class="scrolling-film-strip">
+          <div class="film-frame"></div>
+          <div class="film-frame"></div>
+          <div class="film-frame"></div>
+          <div class="film-frame"></div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll-indicator">
+      <span class="chinese">向下滾動</span>
+      <span class="english">Scroll Down</span>
+      <div class="arrow"></div>
+    </div>
+  </section>
+
+  <section id="about" class="about-section">
+    <div class="section-header">
+      <h2>
+        <span class="chinese">關於我</span>
+        <span class="english">About Me</span>
+      </h2>
+      <div class="director-marker"></div>
+    </div>
+    <div class="about-content">
+      <div class="avatar-container">
+        <img src="https://i.imgur.com/JR6x0lO.png" alt="攝影師頭像" class="avatar">
+        <div class="camera-icon"></div>
+        <div class="film-burn-effect"></div>
+      </div>
+      <div class="about-text">
+        <p class="chinese">
+          一位擅長捕捉角色情緒與光影交錯的攝影創作者，融合港片氛圍與動漫敘事風格。受90年代香港電影與日本動漫影響，作品充滿懷舊情懷與現代視覺衝擊。
+        </p>
+        <p class="english">
+          A photography creator skilled in capturing character emotions and light-shadow interplay, blending Hong Kong film atmosphere with anime narrative style. Influenced by 90s HK cinema and Japanese anime, my works are full of nostalgic sentiment and modern visual impact.
+        </p>
+        <div class="skills-container">
+          <div class="skill-bar">
+            <div class="skill-label chinese">攝影構圖</div>
+            <div class="skill-label english">Photography</div>
+            <div class="skill-progress" data-level="90%">
+              <div class="progress-bar film-strip"></div>
+            </div>
+          </div>
+          <div class="skill-bar">
+            <div class="skill-label chinese">動漫分鏡</div>
+            <div class="skill-label english">Storyboard</div>
+            <div class="skill-progress" data-level="85%">
+              <div class="progress-bar film-strip"></div>
+            </div>
+          </div>
+          <div class="skill-bar">
+            <div class="skill-label chinese">後期調色</div>
+            <div class="skill-label english">Color Grading</div>
+            <div class="skill-progress" data-level="88%">
+              <div class="progress-bar film-strip"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="anime-quote">
+      <div class="quote-bubble chinese">
+        "在霓虹與陰影之間，我找到了最真實的故事。"
+      </div>
+      <div class="quote-bubble english">
+        "Between neon and shadow, I find the most authentic stories."
+      </div>
+    </div>
+  </section>
+
+  <section id="portfolio" class="portfolio-section">
+    <div class="section-header">
+      <h2>
+        <span class="chinese">作品集</span>
+        <span class="english">Portfolio</span>
+      </h2>
+      <div class="film-clip-decoration"></div>
+    </div>
+    <div class="filter-buttons">
+      <button data-filter="all" class="active">
+        <span class="chinese">全部</span>
+        <span class="english">All</span>
+      </button>
+      <button data-filter="portrait">
+        <span class="chinese">寫真</span>
+        <span class="english">Portrait</span>
+      </button>
+      <button data-filter="anime">
+        <span class="chinese">動漫角色</span>
+        <span class="english">Anime</span>
+      </button>
+      <button data-filter="street">
+        <span class="chinese">街拍</span>
+        <span class="english">Street</span>
+      </button>
+      <button data-filter="collab">
+        <span class="chinese">合作企劃</span>
+        <span class="english">Collaboration</span>
+      </button>
+    </div>
+    <div class="portfolio-grid">
+      <!-- 作品項目會由JavaScript動態生成 -->
+    </div>
+  </section>
+
+  <section id="services" class="services-section">
+    <div class="section-header">
+      <h2>
+        <span class="chinese">服務項目</span>
+        <span class="english">Services</span>
+      </h2>
+      <div class="film-reel-decoration"></div>
+    </div>
+    <div class="service-cards">
+      <div class="service-card" data-service="photography">
+        <div class="service-icon">🎥</div>
+        <h3>
+          <span class="chinese">攝影指導</span>
+          <span class="english">Photography Director</span>
+        </h3>
+        <p class="chinese">
+          港風與動漫風格融合的專業攝影指導，從構圖到燈光設計全程把控。
+        </p>
+        <p class="english">
+          Professional photography direction blending HK and anime styles, overseeing from composition to lighting design.
+        </p>
+        <div class="film-strip-decoration"></div>
+      </div>
+      <div class="service-card" data-service="storyboard">
+        <div class="service-icon">✏️</div>
+        <h3>
+          <span class="chinese">動漫分鏡構圖</span>
+          <span class="english">Anime Storyboard</span>
+        </h3>
+        <p class="chinese">
+          為您的企劃提供電影級分鏡設計，融合港式美學與動漫敘事節奏。
+        </p>
+        <p class="english">
+          Providing cinematic storyboard designs for your projects, blending HK aesthetics with anime narrative rhythm.
+        </p>
+        <div class="film-strip-decoration"></div>
+      </div>
+      <div class="service-card" data-service="grading">
+        <div class="service-icon">🎞️</div>
+        <h3>
+          <span class="chinese">後製調色</span>
+          <span class="english">Color Grading</span>
+        </h3>
+        <p class="chinese">
+          獨家港風動漫調色方案，重現90年代膠片質感與霓虹色調。
+        </p>
+        <p class="english">
+          Exclusive HK anime color grading solutions, recreating 90s film texture and neon tones.
+        </p>
+        <div class="film-strip-decoration"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact-section">
+    <div class="section-header">
+      <h2>
+        <span class="chinese">聯絡我</span>
+        <span class="english">Contact</span>
+      </h2>
+      <div class="credits-scroll-decoration"></div>
+    </div>
+    <div class="contact-container">
+      <form id="contactForm" class="film-credits-style">
+        <div class="form-group">
+          <label for="name" class="chinese">姓名</label>
+          <label for="name" class="english">Name</label>
+          <input type="text" id="name" placeholder="Your Name" required>
+          <div class="film-underline"></div>
+        </div>
+        <div class="form-group">
+          <label for="email" class="chinese">電子郵件</label>
+          <label for="email" class="english">Email</label>
+          <input type="email" id="email" placeholder="your@email.com" required>
+          <div class="film-underline"></div>
+        </div>
+        <div class="form-group">
+          <label for="message" class="chinese">訊息</label>
+          <label for="message" class="english">Message</label>
+          <textarea id="message" placeholder="Your message..." required></textarea>
+          <div class="film-underline"></div>
+        </div>
+        <button type="submit" class="submit-btn">
+          <span class="chinese">送出</span>
+          <span class="english">Submit</span>
+          <div class="film-roll-effect"></div>
+        </button>
+      </form>
+      <div class="contact-info">
+        <div class="info-item">
+          <div class="info-icon">📧</div>
+          <span>contact@hkanimestyle.com</span>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">📱</div>
+          <span>+852 1234 5678</span>
+        </div>
+        <div class="social-links">
+          <a href="#" class="social-icon" aria-label="Instagram">🎞️</a>
+          <a href="#" class="social-icon" aria-label="Behance">✏️</a>
+          <a href="#" class="social-icon" aria-label="YouTube">🎥</a>
+          <a href="#" class="social-icon" aria-label="Twitter">📽️</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="film-credits-footer">
+    <div class="footer-content">
+      <p class="copyright chinese">
+        © 2025 港風動漫攝影作品集 | 所有內容受版權保護
+      </p>
+      <p class="copyright english">
+        © 2025 HK Anime Style Portfolio | All Rights Reserved
+      </p>
+      <div class="footer-links">
+        <a href="#" class="chinese">隱私政策</a>
+        <a href="#" class="english">Privacy Policy</a>
+        <a href="#" class="chinese">使用條款</a>
+        <a href="#" class="english">Terms</a>
+      </div>
+    </div>
+    <div class="film-projector"></div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 語言切換功能
+      const langToggle = document.getElementById('langToggle');
+      langToggle.addEventListener('click', function() {
+        document.body.classList.toggle('english-mode');
+        this.textContent = document.body.classList.contains('english-mode') ? '繁 / EN' : 'EN / 繁';
+      });
+
+      // 主題切換功能
+      const themeToggle = document.getElementById('themeToggle');
+      themeToggle.addEventListener('click', function() {
+        document.body.classList.toggle('dark-theme');
+        localStorage.setItem('theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
+      });
+
+      // 檢查本地存儲的主題偏好
+      if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-theme');
+      }
+
+      // 漢堡選單功能
+      const hamburger = document.querySelector('.hamburger');
+      const navLinks = document.querySelector('.nav-links');
+      hamburger.addEventListener('click', function() {
+        this.classList.toggle('active');
+        navLinks.classList.toggle('active');
+      });
+
+      // 平滑滾動導航
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          e.preventDefault();
+          const targetId = this.getAttribute('href');
+          const targetElement = document.querySelector(targetId);
+          
+          if (targetElement) {
+            window.scrollTo({
+              top: targetElement.offsetTop - 80,
+              behavior: 'smooth'
+            });
+            
+            // 關閉漢堡選單如果它是打開的
+            if (navLinks.classList.contains('active')) {
+              hamburger.classList.remove('active');
+              navLinks.classList.remove('active');
+            }
+          }
+        });
+      });
+
+      // 技能條動畫
+      const skillBars = document.querySelectorAll('.skill-progress');
+      const animateSkills = () => {
+        skillBars.forEach(bar => {
+          const level = bar.getAttribute('data-level');
+          const progressBar = bar.querySelector('.progress-bar');
+          progressBar.style.width = level;
+        });
+      };
+
+      // 作品集過濾功能
+      const filterButtons = document.querySelectorAll('.filter-buttons button');
+      const portfolioItems = []; // 這裡應該從實際數據填充
+
+      // 示例作品集數據
+      const portfolioData = [
+        { id: 1, category: 'portrait', title: '人像寫真', enTitle: 'Portrait', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80' },
+        { id: 2, category: 'anime', title: '動漫角色', enTitle: 'Anime Character', image: 'https://images.unsplash.com/photo-1545566239-0d774c0336e7?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80' },
+        { id: 3, category: 'street', title: '街頭攝影', enTitle: 'Street Photography', image: 'https://images.unsplash.com/photo-1503899036084-c55cdd92da26?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80' },
+        { id: 4, category: 'collab', title: '合作企劃', enTitle: 'Collaboration', image: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80' },
+        { id: 5, category: 'portrait', title: '人像寫真', enTitle: 'Portrait', image: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80' },
+        { id: 6, category: 'anime', title: '動漫角色', enTitle: 'Anime Character', image: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80' },
+      ];
+
+      // 生成作品集項目
+      const portfolioGrid = document.querySelector('.portfolio-grid');
+      portfolioData.forEach(item => {
+        const portfolioItem = document.createElement('div');
+        portfolioItem.className = `portfolio-item ${item.category}`;
+        portfolioItem.innerHTML = `
+          <img src="${item.image}" alt="${item.title}">
+          <div class="item-overlay">
+            <h3 class="chinese">${item.title}</h3>
+            <h3 class="english">${item.enTitle}</h3>
+          </div>
+        `;
+        portfolioGrid.appendChild(portfolioItem);
+      });
+
+      // 過濾功能
+      filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          // 更新活動按鈕樣式
+          filterButtons.forEach(btn => btn.classList.remove('active'));
+          this.classList.add('active');
+          
+          const filter = this.getAttribute('data-filter');
+          const items = document.querySelectorAll('.portfolio-item');
+          
+          items.forEach(item => {
+            if (filter === 'all' || item.classList.contains(filter)) {
+              item.style.display = 'block';
+            } else {
+              item.style.display = 'none';
+            }
+          });
+        });
+      });
+
+      // 表單提交處理
+      const contactForm = document.getElementById('contactForm');
+      if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          
+          // 獲取表單數據
+          const formData = new FormData(this);
+          const data = Object.fromEntries(formData);
+          
+          // 這裡應該有實際的表單提交邏輯
+          console.log('Form submitted:', data);
+          
+          // 顯示成功消息
+          alert(document.body.classList.contains('english-mode') 
+            ? 'Thank you! Your message has been sent.' 
+            : '感謝您！您的訊息已送出。');
+          
+          // 重置表單
+          this.reset();
+        });
+      }
+
+      // 滾動時觸發動畫
+      const observerOptions = {
+        threshold: 0.1
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            if (entry.target.id === 'about') {
+              animateSkills();
+            }
+            entry.target.classList.add('animated');
+          }
+        });
+      }, observerOptions);
+
+      // 觀察所有部分
+      document.querySelectorAll('section').forEach(section => {
+        observer.observe(section);
+      });
+
+      // 滾動時導航欄樣式變化
+      window.addEventListener('scroll', function() {
+        const navbar = document.querySelector('.navbar');
+        if (window.scrollY > 50) {
+          navbar.style.background = document.body.classList.contains('dark-theme') 
+            ? 'rgba(26, 26, 26, 0.95)' 
+            : 'rgba(245, 233, 220, 0.95)';
+          navbar.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+        } else {
+          navbar.style.background = document.body.classList.contains('dark-theme') 
+            ? 'rgba(26, 26, 26, 0.9)' 
+            : 'rgba(245, 233, 220, 0.9)';
+          navbar.style.boxShadow = 'none';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumina | 人像攝影作品集</title>
+    <!-- 引入Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- 引入Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind配置 -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#D4B59E', // 焦糖棕
+                        secondary: '#8A9EB4', // 霧灰藍
+                        accent: '#7D4E57', // 暗酒紅
+                        neutral: '#F5F1E9', // 米白
+                        'neutral-dark': '#2C2C2C', // 深灰
+                        gold: '#D9C5B4', // 暖沙金
+                        green: '#4A5D23' // 墨綠
+                    },
+                    fontFamily: {
+                        'noto': ['"Noto Serif TC"', 'serif'],
+                        'playfair': ['"Playfair Display"', 'serif']
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 1.5s ease-in-out',
+                        'fade-in-up': 'fadeInUp 1.2s ease-out',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'light-spot': 'lightSpot 15s ease-in-out infinite alternate'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        lightSpot: {
+                            '0%': { transform: 'translate(-20%, -20%) scale(1)' },
+                            '100%': { transform: 'translate(20%, 20%) scale(1.2)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            }
+            .film-grain {
+                background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            }
+            .vintage-border {
+                border: 10px solid;
+                border-image: linear-gradient(45deg, #D4B59E, #F5F1E9, #D4B59E) 1;
+            }
+            .photo-frame {
+                position: relative;
+            }
+            .photo-frame::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                margin: 15px;
+                pointer-events: none;
+            }
+            .light-leak {
+                position: absolute;
+                width: 60%;
+                height: 60%;
+                background: radial-gradient(circle, rgba(217, 197, 180, 0.15) 0%, rgba(217, 197, 180, 0) 70%);
+                border-radius: 50%;
+                animation: lightSpot 15s ease-in-out infinite alternate;
+                z-index: 0;
+            }
+            .shutter-cursor {
+                cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23D4B59E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Ccircle cx='12' cy='12' r='3'%3E%3C/circle%3E%3C/svg%3E") 12 12, auto;
+            }
+            .shutter-effect {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: white;
+                opacity: 0;
+                pointer-events: none;
+                z-index: 1000;
+                transition: opacity 0.1s ease;
+            }
+        }
+    </style>
+</head>
+
+<body class="font-noto bg-neutral text-neutral-dark dark:bg-neutral-dark dark:text-neutral film-grain shutter-cursor transition-colors duration-500">
+    <!-- 快門特效元素 -->
+    <div id="shutterEffect" class="shutter-effect"></div>
+    
+    <!-- 光影效果 -->
+    <div class="light-leak top-0 left-0"></div>
+    <div class="light-leak bottom-0 right-0" style="animation-delay: 2s;"></div>
+    
+    <!-- 導航欄 -->
+    <header id="navbar" class="fixed w-full z-50 transition-all duration-500 py-4">
+        <div class="container mx-auto px-4 md:px-8 flex justify-between items-center">
+            <a href="#" class="text-2xl md:text-3xl font-playfair font-bold tracking-wider">
+                <span class="text-accent">Lumina</span>
+            </a>
+            
+            <!-- 桌面端導航 -->
+            <nav class="hidden md:flex space-x-8 items-center">
+                <a href="#home" class="nav-link font-playfair hover:text-accent transition-colors duration-300" data-lang-key="nav.home">首頁</a>
+                <a href="#about" class="nav-link font-playfair hover:text-accent transition-colors duration-300" data-lang-key="nav.about">關於</a>
+                <a href="#portfolio" class="nav-link font-playfair hover:text-accent transition-colors duration-300" data-lang-key="nav.portfolio">作品集</a>
+                <a href="#services" class="nav-link font-playfair hover:text-accent transition-colors duration-300" data-lang-key="nav.services">服務</a>
+                <a href="#contact" class="nav-link font-playfair hover:text-accent transition-colors duration-300" data-lang-key="nav.contact">聯絡</a>
+                
+                <!-- 語言切換 -->
+                <div class="flex items-center space-x-2">
+                    <button id="lang-zh" class="lang-btn py-1 px-2 rounded border border-primary text-sm hover:bg-primary hover:text-white transition-colors duration-300 active">繁</button>
+                    <button id="lang-en" class="lang-btn py-1 px-2 rounded border border-primary text-sm hover:bg-primary hover:text-white transition-colors duration-300">En</button>
+                </div>
+                
+                <!-- 明暗模式切換 -->
+                <button id="theme-toggle" class="p-2 rounded-full hover:bg-primary/20 transition-colors duration-300">
+                    <i class="fa fa-sun-o text-primary dark:hidden"></i>
+                    <i class="fa fa-moon-o text-primary hidden dark:inline-block"></i>
+                </button>
+            </nav>
+            
+            <!-- 手機端漢堡菜單按鈕 -->
+            <button id="menu-toggle" class="md:hidden p-2 rounded-md hover:bg-primary/20 transition-colors duration-300">
+                <i class="fa fa-bars text-xl text-primary"></i>
+            </button>
+        </div>
+        
+        <!-- 手機端導航菜單 -->
+        <div id="mobile-menu" class="md:hidden hidden bg-neutral/95 dark:bg-neutral-dark/95 backdrop-blur-sm absolute top-full left-0 w-full border-t border-primary/20 shadow-lg">
+            <div class="container mx-auto px-4 py-4 flex flex-col space-y-4">
+                <a href="#home" class="mobile-nav-link py-2 border-b border-primary/10 hover:text-accent transition-colors duration-300" data-lang-key="nav.home">首頁</a>
+                <a href="#about" class="mobile-nav-link py-2 border-b border-primary/10 hover:text-accent transition-colors duration-300" data-lang-key="nav.about">關於</a>
+                <a href="#portfolio" class="mobile-nav-link py-2 border-b border-primary/10 hover:text-accent transition-colors duration-300" data-lang-key="nav.portfolio">作品集</a>
+                <a href="#services" class="mobile-nav-link py-2 border-b border-primary/10 hover:text-accent transition-colors duration-300" data-lang-key="nav.services">服務</a>
+                <a href="#contact" class="mobile-nav-link py-2 hover:text-accent transition-colors duration-300" data-lang-key="nav.contact">聯絡</a>
+                
+                <div class="flex justify-between items-center pt-2">
+                    <div class="flex items-center space-x-2">
+                        <button id="mobile-lang-zh" class="lang-btn py-1 px-2 rounded border border-primary text-sm hover:bg-primary hover:text-white transition-colors duration-300 active">繁</button>
+                        <button id="mobile-lang-en" class="lang-btn py-1 px-2 rounded border border-primary text-sm hover:bg-primary hover:text-white transition-colors duration-300">En</button>
+                    </div>
+                    
+                    <button id="mobile-theme-toggle" class="p-2 rounded-full hover:bg-primary/20 transition-colors duration-300">
+                        <i class="fa fa-sun-o text-primary dark:hidden"></i>
+                        <i class="fa fa-moon-o text-primary hidden dark:inline-block"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 英雄區 -->
+    <section id="home" class="h-screen relative flex items-center justify-center overflow-hidden">
+        <!-- 背景圖片 -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://picsum.photos/id/64/1920/1080" alt="人像攝影作品封面" class="w-full h-full object-cover opacity-70 dark:opacity-50">
+            <div class="absolute inset-0 bg-gradient-to-b from-neutral/30 to-neutral-dark/50 dark:from-neutral-dark/50 dark:to-neutral-dark/80"></div>
+        </div>
+        
+        <!-- 膠片燈光圈裝飾 -->
+        <svg class="absolute top-1/4 left-1/4 w-64 h-64 opacity-10 z-10" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="45" fill="none" stroke="#D4B59E" stroke-width="1"/>
+            <circle cx="50" cy="50" r="40" fill="none" stroke="#D4B59E" stroke-width="1"/>
+            <circle cx="50" cy="50" r="35" fill="none" stroke="#D4B59E" stroke-width="1"/>
+            <circle cx="50" cy="50" r="30" fill="none" stroke="#D4B59E" stroke-width="1"/>
+        </svg>
+        
+        <!-- 標題內容 -->
+        <div class="container mx-auto px-4 z-20 text-center">
+            <h1 class="font-playfair text-[clamp(2.5rem,8vw,5rem)] font-bold text-white leading-tight text-shadow animate-fade-in" data-lang-key="hero.title">
+                捕捉生命中的<br class="md:hidden">珍貴瞬間
+            </h1>
+            <p class="font-noto text-[clamp(1rem,3vw,1.5rem)] text-white/90 mt-6 max-w-2xl mx-auto text-shadow animate-fade-in" style="animation-delay: 0.3s;" data-lang-key="hero.subtitle">
+                透過鏡頭，將情感與故事轉化為永恆的影像
+            </p>
+            <div class="mt-10 animate-fade-in" style="animation-delay: 0.6s;">
+                <a href="#portfolio" class="inline-block px-8 py-3 bg-primary text-white rounded-sm hover:bg-accent transition-colors duration-300 transform hover:scale-105 transition-transform font-playfair" onclick="triggerShutterEffect()">
+                    <span data-lang-key="hero.cta">瀏覽作品</span>
+                </a>
+            </div>
+        </div>
+        
+        <!-- 向下滾動指示 -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce z-20">
+            <a href="#about" class="text-white/70 hover:text-white transition-colors duration-300">
+                <i class="fa fa-chevron-down"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- 關於我 -->
+    <section id="about" class="py-20 md:py-32 relative">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <!-- 人像照片 -->
+                <div class="w-full md:w-1/2 photo-frame vintage-border transform hover:scale-[1.02] transition-transform duration-700">
+                    <img src="https://picsum.photos/id/823/800/1000" alt="攝影師肖像" class="w-full h-auto grayscale hover:grayscale-0 transition-all duration-1000">
+                </div>
+                
+                <!-- 關於內容 -->
+                <div class="w-full md:w-1/2 space-y-6 opacity-0 animate-fade-in-up" data-animate="true">
+                    <h2 class="font-playfair text-[clamp(1.8rem,4vw,2.5rem)] font-bold text-accent" data-lang-key="about.title">關於攝影師</h2>
+                    
+                    <div class="h-1 w-20 bg-primary"></div>
+                    
+                    <p class="text-lg leading-relaxed" data-lang-key="about.bio">
+                        我是一名專注於人像攝影的藝術家，擁有超過十年的拍攝經驗。透過我的鏡頭，我希望捕捉被攝者最真實、最自然的一面，讓每張照片都承載著獨特的故事與情感。
+                    </p>
+                    
+                    <p class="text-lg leading-relaxed" data-lang-key="about.philosophy">
+                        我的攝影哲學是「簡單即美」，我相信最動人的影像往往來自最真實的瞬間。無論是婚禮、寫真或商業拍攝，我都會用心對待每一個細節，創造出令人難忘的作品。
+                    </p>
+                    
+                    <!-- 展覽經歷 -->
+                    <div class="mt-8">
+                        <h3 class="font-playfair text-xl font-semibold mb-4" data-lang-key="about.exhibitions">展覽經歷</h3>
+                        <ul class="space-y-2">
+                            <li class="flex items-start">
+                                <i class="fa fa-camera text-primary mt-1 mr-3"></i>
+                                <span data-lang-key="about.exhibition1">2023 - 「人間百態」個人攝影展，台北當代藝術館</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-camera text-primary mt-1 mr-3"></i>
+                                <span data-lang-key="about.exhibition2">2021 - 「情感瞬間」聯展，上海攝影藝術中心</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-camera text-primary mt-1 mr-3"></i>
+                                <span data-lang-key="about.exhibition3">2019 - 「城市面孔」國際攝影展，東京攝影美術館</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 攝影設備 -->
+                    <div class="mt-8">
+                        <h3 class="font-playfair text-xl font-semibold mb-4" data-lang-key="about.equipment">攝影設備</h3>
+                        <div class="flex flex-wrap gap-4">
+                            <span class="px-3 py-1 bg-primary/10 text-accent rounded-full text-sm">Canon EOS R5</span>
+                            <span class="px-3 py-1 bg-primary/10 text-accent rounded-full text-sm">Sony A7R IV</span>
+                            <span class="px-3 py-1 bg-primary/10 text-accent rounded-full text-sm">50mm f/1.2</span>
+                            <span class="px-3 py-1 bg-primary/10 text-accent rounded-full text-sm">85mm f/1.4</span>
+                            <span class="px-3 py-1 bg-primary/10 text-accent rounded-full text-sm">Profoto 閃光燈</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 作品集 -->
+    <section id="portfolio" class="py-20 md:py-32 bg-primary/5 dark:bg-primary/10 relative">
+        <div class="container mx-auto px-4">
+            <div class="text-center max-w-3xl mx-auto mb-16 opacity-0 animate-fade-in-up" data-animate="true">
+                <h2 class="font-playfair text-[clamp(1.8rem,4vw,2.5rem)] font-bold text-accent" data-lang-key="portfolio.title">攝影作品集</h2>
+                <div class="h-1 w-20 bg-primary mx-auto my-4"></div>
+                <p class="text-lg" data-lang-key="portfolio.description">
+                    精選多年來的人像攝影作品，每張照片都記錄著獨特的故事與情感。透過下方分類可篩選不同風格的作品。
+                </p>
+            </div>
+            
+            <!-- 過濾按鈕 -->
+            <div class="flex flex-wrap justify-center gap-3 mb-12 opacity-0 animate-fade-in-up" data-animate="true" style="animation-delay: 0.2s;">
+                <button class="filter-btn active px-5 py-2 bg-primary text-white rounded-sm hover:bg-accent transition-colors duration-300" data-filter="all" data-lang-key="portfolio.all">全部</button>
+                <button class="filter-btn px-5 py-2 bg-neutral dark:bg-neutral-dark text-neutral-dark dark:text-neutral border border-primary rounded-sm hover:bg-primary hover:text-white transition-colors duration-300" data-filter="blackwhite" data-lang-key="portfolio.blackwhite">黑白</button>
+                <button class="filter-btn px-5 py-2 bg-neutral dark:bg-neutral-dark text-neutral-dark dark:text-neutral border border-primary rounded-sm hover:bg-primary hover:text-white transition-colors duration-300" data-filter="color" data-lang-key="portfolio.color">彩色</button>
+                <button class="filter-btn px-5 py-2 bg-neutral dark:bg-neutral-dark text-neutral-dark dark:text-neutral border border-primary rounded-sm hover:bg-primary hover:text-white transition-colors duration-300" data-filter="indoor" data-lang-key="portfolio.indoor">室內</button>
+                <button class="filter-btn px-5 py-2 bg-neutral dark:bg-neutral-dark text-neutral-dark dark:text-neutral border border-primary rounded-sm hover:bg-primary hover:text-white transition-colors duration-300" data-filter="outdoor" data-lang-key="portfolio.outdoor">戶外</button>
+            </div>
+            
+            <!-- 作品網格 -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- 作品項目 1 -->
+                <div class="portfolio-item group" data-category="blackwhite outdoor" onclick="triggerShutterEffect()">
+                    <div class="relative overflow-hidden rounded-sm shadow-lg transform hover:-translate-y-2 transition-all duration-500">
+                        <img src="https://picsum.photos/id/1027/800/1000" alt="黑白戶外人像" class="w-full h-80 object-cover object-center grayscale transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-neutral-dark/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end">
+                            <div class="p-6 w-full">
+                                <h3 class="font-playfair text-xl font-semibold text-white" data-lang-key="portfolio.item1">山間沉思</h3>
+                                <p class="text-white/80 mt-2" data-lang-key="portfolio.item1_desc">戶外黑白人像 · 自然光拍攝</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 作品項目 2 -->
+                <div class="portfolio-item group" data-category="color indoor" onclick="triggerShutterEffect()">
+                    <div class="relative overflow-hidden rounded-sm shadow-lg transform hover:-translate-y-2 transition-all duration-500">
+                        <img src="https://picsum.photos/id/64/800/1000" alt="室內彩色人像" class="w-full h-80 object-cover object-center transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-neutral-dark/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end">
+                            <div class="p-6 w-full">
+                                <h3 class="font-playfair text-xl font-semibold text-white" data-lang-key="portfolio.item2">窗邊光影</h3>
+                                <p class="text-white/80 mt-2" data-lang-key="portfolio.item2_desc">室內彩色人像 · 窗光拍攝</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 作品項目 3 -->
+                <div class="portfolio-item group" data-category="blackwhite indoor" onclick="triggerShutterEffect()">
+                    <div class="relative overflow-hidden rounded-sm shadow-lg transform hover:-translate-y-2 transition-all duration-500">
+                        <img src="https://picsum.photos/id/338/800/1000" alt="室內黑白人像" class="w-full h-80 object-cover object-center grayscale transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-neutral-dark/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end">
+                            <div class="p-6 w-full">
+                                <h3 class="font-playfair text-xl font-semibold text-white" data-lang-key="portfolio.item3">沉思時刻</h3>
+                                <p class="text-white/80 mt-2" data-lang-key="portfolio.item3_desc">室內黑白人像 · 柔和燈光</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 作品項目 4 -->
+                <div class="portfolio-item group" data-category="color outdoor" onclick="triggerShutterEffect()">
+                    <div class="relative overflow-hidden rounded-sm shadow-lg transform hover:-translate-y-2 transition-all duration-500">
+                        <img src="https://picsum.photos/id/1062/800/1000" alt="戶外彩色人像" class="w-full h-80 object-cover object-center transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-neutral-dark/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end">
+                            <div class="p-6 w-full">
+                                <h3 class="font-playfair text-xl font-semibold text-white" data-lang-key="portfolio.item4">夏日微笑</h3>
+                                <p class="text-white/80 mt-2" data-lang-key="portfolio.item4_desc">戶外彩色人像 · 黃金時段</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 作品項目 5 -->
+                <div class="portfolio-item group" data-category="blackwhite outdoor" onclick="triggerShutterEffect()">
+                    <div class="relative overflow-hidden rounded-sm shadow-lg transform hover:-translate-y-2 transition-all duration-500">
+                        <img src="https://picsum.photos/id/177/800/1000" alt="戶外黑白人像" class="w-full h-80 object-cover object-center grayscale transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-neutral-dark/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end">
+                            <div class="p-6 w-full">
+                                <h3 class="font-playfair text-xl font-semibold text-white" data-lang-key="portfolio.item5">城市角落</h3>
+                                <p class="text-white/80 mt-2" data-lang-key="portfolio.item5_desc">戶外黑白人像 · 街頭拍攝</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 作品項目 6 -->
+                <div class="portfolio-item group" data-category="color indoor" onclick="triggerShutterEffect()">
+                    <div class="relative overflow-hidden rounded-sm shadow-lg transform hover:-translate-y-2 transition-all duration-500">
+                        <img src="https://picsum.photos/id/614/800/1000" alt="室內彩色人像" class="w-full h-80 object-cover object-center transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-neutral-dark/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end">
+                            <div class="p-6 w-full">
+                                <h3 class="font-playfair text-xl font-semibold text-white" data-lang-key="portfolio.item6">室內氛圍</h3>
+                                <p class="text-white/80 mt-2" data-lang-key="portfolio.item6_desc">室內彩色人像 · 工作室拍攝</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 加載更多按鈕 -->
+            <div class="text-center mt-12">
+                <button class="px-8 py-3 bg-neutral dark:bg-neutral-dark text-neutral-dark dark:text-neutral border border-primary rounded-sm hover:bg-primary hover:text-white transition-colors duration-300 transform hover:scale-105 transition-transform font-playfair" onclick="triggerShutterEffect()" data-lang-key="portfolio.loadmore">
+                    加載更多作品
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 服務項目 -->
+    <section id="services" class="py-20 md:py-32 relative">
+        <div class="container mx-auto px-4">
+            <div class="text-center max-w-3xl mx-auto mb-16 opacity-0 animate-fade-in-up" data-animate="true">
+                <h2 class="font-playfair text-[clamp(1.8rem,4vw,2.5rem)] font-bold text-accent" data-lang-key="services.title">攝影服務</h2>
+                <div class="h-1 w-20 bg-primary mx-auto my-4"></div>
+                <p class="text-lg" data-lang-key="services.description">
+                    提供多種人像攝影服務，無論是個人寫真、婚禮紀錄還是商業拍攝，都能為您捕捉最美好的瞬間。
+                </p>
+            </div>
+            
+            <!-- 服務卡片 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- 服務 1 -->
+                <div class="bg-white dark:bg-neutral-dark/50 rounded-sm shadow-md overflow-hidden transform hover:-translate-y-2 transition-all duration-500 opacity-0 animate-fade-in-up" data-animate="true" style="animation-delay: 0.1s;">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://picsum.photos/id/1005/800/600" alt="個人寫真服務" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                            <i class="fa fa-user text-primary text-xl"></i>
+                        </div>
+                        <h3 class="font-playfair text-xl font-semibold mb-3" data-lang-key="services.personal">個人寫真</h3>
+                        <p class="text-neutral-dark/80 dark:text-neutral/80 mb-4" data-lang-key="services.personal_desc">
+                            為您量身打造獨特的個人寫真，展現您最真實的魅力與個性。
+                        </p>
+                        <ul class="space-y-2 mb-6">
+                            <li class="flex items-center text-sm">
+                                <i class="fa fa-check text-primary mr-2"></i>
+                                <span data-lang-key="services.include1">2小時拍攝時間</span>
+                            </li>
+                            <li class="flex items-center text-sm">
+                                <i class="fa fa-check text-primary mr-2"></i>
+                                <span data-lang-key="services.include2">2套服裝更換</span>
+                            </li>
+                            <li class="flex items-center text-sm">
+                                <i class="fa fa-check text-primary mr-2"></i>
+                                <span data-lang-key="services.include3">20張精修照片</span>
+                            </li>
+                        </ul>
+                        <a href="#contact" class="inline-block text-accent hover:text-primary transition-colors duration-300 font-medium" data-lang-key="services.inquire">詢問詳情</a>
+                    </div>
+                </div>
+                
+                <!-- 服務 2 -->
+                <div class="bg-white dark:bg-neutral-dark/50 rounded-sm shadow-md overflow-hidden transform hover:-translate-y-2 transition-all duration-500 opacity-0 animate-fade-in-up" data-animate="true" style="animation-delay: 0.2s;">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://picsum.photos/id/1060/800/600" alt="婚禮攝影服務" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                            <i class="fa fa-heart text-primary text-xl"></i>
+                        </div>
+                        <h3 class="font-playfair text-xl font-semibold mb-3" data-lang-key="services.wedding">婚禮攝影</h3>
+                        <p class="text-neutral-dark/80 dark:text-neutral/80 mb-4" data-lang-key="services.wedding_desc">
+                            記錄您人生中最重要的一天，捕捉每個感動瞬間與珍貴回憶。
+                        </p>
+                        <ul class="space-y-2 mb-6">
+                            <li class="flex items-center text-sm">
+                                <i class="fa fa-check text-primary mr-2"></i>
+                                <span data-lang-key="services.include4">全天拍攝服務</span>
+                            </li>
+                            <li class="flex items-center text-sm">
+                                <i class="fa fa-check text-primary mr-2"></i>
+                                <span data-lang-key="services.include5">50張精修照片</span>
+                            </li>
+                            <li class="flex items-center text-sm">
+                                <i class="fa fa-check text-primary mr-2"></i>
+                                <span data-lang-key="services.include6">精美相冊一本</span>
+                            </li>
+                        </ul>
+                        <a href="#contact" class="inline-block text-accent hover:text-primary transition-colors duration-300 font-medium" data-lang-key="services.inquire">詢問詳情</a>
+                    </div>
+                </div>
+                
+                <!-- 服務 3 -->
+                <div class="bg-white dark:bg-neutral-dark/50 rounded-sm shadow-md overflow-hidden transform hover:-translate-y-2 transition-all duration-500 opacity-0 animate-fade-in-up" data-animate="true" style="animation-delay: 0.3s;">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://picsum.photos/id/1074/800/600" alt="家庭寫真服務" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                            <i class="fa fa-users text-primary text-xl"></i>
+                        </div>
+                        <h3 class="font-playfair text-xl font-semibold mb-3" data-lang-key="services.family">家庭寫真</h3>
+                        <p class="text-neutral-dark/80 dark:text-neutral/80 mb-4" data-lang-key="services.family_desc">
+                            記錄家庭成員間的溫馨互動，留下珍貴的家族回憶與情感瞬間。
+                        </p>
+                        <ul class="space-y-2 mb-6">
+                            <li class="flex items-center text-sm">
+                                <i class="fa fa-check text-primary mr-2"></i>
+                                <span data-lang-key="services.include7">3小時拍攝時間</span>
+                            </li>
+                            <li class="flex items-center text-sm">
+                                <i class="fa fa-check text-primary mr-2"></i>
+                                <span data-lang-key="services.include8">室內外場景拍攝</span>
+                            </li>
+                            <li class="flex items-center text-sm">
+                                <i class="fa fa-check text-primary mr-2"></i>
+                                <span data-lang-key="services.include9">30張精修照片</span>
+                            </li>
+                        </ul>
+                        <a href="#contact" class="inline-block text-accent hover:text-primary transition-colors duration-300 font-medium" data-lang-key="services.inquire">詢問詳情</a>
+                    </div>
+                </div>
+                
+                <!-- 服務 4 -->
+                <div class="bg-white dark:bg-neutral-dark/50 rounded-sm shadow-md overflow-hidden transform hover:-translate-y-2 transition-all duration-500 opacity-0 animate-fade-in-up" data-animate="true" style="animation-delay: 0.4s;">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://picsum.photos/id/349/800/600" alt="商業人像服務" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                            <i class="fa fa-briefcase text-primary text-xl"></i>
+                        </div>
+                        <h3 class="font-playfair text-xl font-semibold mb-3" data-lang-key="services.commercial">商業人像</h3>
+                        <p class="text-neutral-dark/80 dark:text-neutral/80 mb-4" data-lang-key="services.commercial_desc">
+                            為企業與個人提供專業商業人像，展現專業形象與品牌價值。
+                        </p>
+                        <ul class="space-y-2 mb-6">
+                            <li class="flex items-center text-sm">
+                                <i class="fa fa-check text-primary mr-2"></i>
+                                <span data-lang-key="services.include10">4小時拍攝時間</span>
+                            </li>
+                            <li class="flex items-center text-sm">
+                                <i class="fa fa-check text-primary mr-2"></i>
+                                <span data-lang-key="services.include11">多場景拍攝</span>
+                            </li>
+                            <li class="flex items-center text-sm">
+                                <i class="fa fa-check text-primary mr-2"></i>
+                                <span data-lang-key="services.include12">40張精修照片</span>
+                            </li>
+                        </ul>
+                        <a href="#contact" class="inline-block text-accent hover:text-primary transition-colors duration-300 font-medium" data-lang-key="services.inquire">詢問詳情</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 聯絡表單 -->
+    <section id="contact" class="py-20 md:py-32 bg-primary/5 dark:bg-primary/10 relative">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <div class="flex flex-col lg:flex-row gap-12">
+                    <!-- 聯絡信息 -->
+                    <div class="w-full lg:w-1/2 opacity-0 animate-fade-in-up" data-animate="true">
+                        <h2 class="font-playfair text-[clamp(1.8rem,4vw,2.5rem)] font-bold text-accent mb-6" data-lang-key="contact.title">聯絡我們</h2>
+                        <div class="h-1 w-20 bg-primary mb-8"></div>
+                        
+                        <p class="text-lg mb-8" data-lang-key="contact.description">
+                            無論您有任何疑問或需求，歡迎透過以下方式與我們聯繫。我們將盡快回復您的訊息，為您提供最專業的攝影服務諮詢。
+                        </p>
+                        
+                        <div class="space-y-6 mb-10">
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                    <i class="fa fa-envelope text-primary"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-playfair text-lg font-semibold mb-1" data-lang-key="contact.email">電子郵件</h3>
+                                    <p>contact@luminaphoto.com</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                    <i class="fa fa-phone text-primary"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-playfair text-lg font-semibold mb-1" data-lang-key="contact.phone">電話</h3>
+                                    <p>+886 912 345 678</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                    <i class="fa fa-map-marker text-primary"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-playfair text-lg font-semibold mb-1" data-lang-key="contact.studio">工作室地址</h3>
+                                    <p data-lang-key="contact.address">台北市大安區仁愛路四段123號5樓</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 社交媒體 -->
+                        <div>
+                            <h3 class="font-playfair text-lg font-semibold mb-4" data-lang-key="contact.follow">追蹤我們</h3>
+                            <div class="flex space-x-4">
+                                <a href="#" class="w-10 h-10 bg-neutral dark:bg-neutral-dark border border-primary rounded-full flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors duration-300" onclick="triggerShutterEffect()">
+                                    <i class="fa fa-instagram"></i>
+                                </a>
+                                <a href="#" class="w-10 h-10 bg-neutral dark:bg-neutral-dark border border-primary rounded-full flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors duration-300" onclick="triggerShutterEffect()">
+                                    <i class="fa fa-facebook"></i>
+                                </a>
+                                <a href="#" class="w-10 h-10 bg-neutral dark:bg-neutral-dark border border-primary rounded-full flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors duration-300" onclick="triggerShutterEffect()">
+                                    <i class="fa fa-flickr"></i>
+                                </a>
+                                <a href="#" class="w-10 h-10 bg-neutral dark:bg-neutral-dark border border-primary rounded-full flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors duration-300" onclick="triggerShutterEffect()">
+                                    <i class="fa fa-behance"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 聯絡表單 (底片風格) -->
+                    <div class="w-full lg:w-1/2 opacity-0 animate-fade-in-up" data-animate="true" style="animation-delay: 0.3s;">
+                        <div class="bg-white dark:bg-neutral-dark/50 p-8 rounded-sm shadow-lg vintage-border">
+                            <h3 class="font-playfair text-2xl font-semibold mb-6 text-accent" data-lang-key="contact.form_title">詢問表單</h3>
+                            
+                            <form id="contactForm" class="space-y-6">
+                                <div>
+                                    <label for="name" class="block text-sm font-medium mb-2" data-lang-key="contact.name">姓名</label>
+                                    <input type="text" id="name" name="name" class="w-full px-4 py-2 border border-primary/30 bg-neutral dark:bg-neutral-dark rounded-sm focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-300" required>
+                                </div>
+                                
+                                <div>
+                                    <label for="email" class="block text-sm font-medium mb-2" data-lang-key="contact.email">電子郵件</label>
+                                    <input type="email" id="email" name="email" class="w-full px-4 py-2 border border-primary/30 bg-neutral dark:bg-neutral-dark rounded-sm focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-300" required>
+                                </div>
+                                
+                                <div>
+                                    <label for="service" class="block text-sm font-medium mb-2" data-lang-key="contact.service">服務類型</label>
+                                    <select id="service" name="service" class="w-full px-4 py-2 border border-primary/30 bg-neutral dark:bg-neutral-dark rounded-sm focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-300">
+                                        <option value="" data-lang-key="contact.select_service">請選擇服務類型</option>
+                                        <option value="personal" data-lang-key="services.personal">個人寫真</option>
+                                        <option value="wedding" data-lang-key="services.wedding">婚禮攝影</option>
+                                        <option value="family" data-lang-key="services.family">家庭寫真</option>
+                                        <option value="commercial" data-lang-key="services.commercial">商業人像</option>
+                                        <option value="other" data-lang-key="contact.other">其他服務</option>
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label for="message" class="block text-sm font-medium mb-2" data-lang-key="contact.message">留言內容</label>
+                                    <textarea id="message" name="message" rows="4" class="w-full px-4 py-2 border border-primary/30 bg-neutral dark:bg-neutral-dark rounded-sm focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-300" required data-lang-key="contact.message_placeholder" placeholder="請詳細描述您的需求..."></textarea>
+                                </div>
+                                
+                                <button type="submit" class="w-full py-3 bg-primary text-white rounded-sm hover:bg-accent transition-colors duration-300 transform hover:scale-[1.02] transition-transform font-playfair flex items-center justify-center" onclick="triggerShutterEffect()">
+                                    <i class="fa fa-paper-plane mr-2"></i>
+                                    <span data-lang-key="contact.send">發送訊息</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 頁腳 -->
+    <footer class="py-12 bg-neutral-dark text-neutral/80 dark:bg-neutral dark:text-neutral-dark/80">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <a href="#" class="text-2xl font-playfair font-bold tracking-wider">
+                        <span class="text-primary">Lumina</span>
+                    </a>
+                    <p class="mt-2 text-sm max-w-md text-center md:text-left" data-lang-key="footer.copyright">
+                        © 2023 Lumina 人像攝影。保留所有權利。
+                    </p>
+                </div>
+                
+                <div class="flex space-x-6">
+                    <a href="#" class="text-neutral/60 hover:text-primary transition-colors duration-300" onclick="triggerShutterEffect()">
+                        <i class="fa fa-instagram text-xl"></i>
+                    </a>
+                    <a href="#" class="text-neutral/60 hover:text-primary transition-colors duration-300" onclick="triggerShutterEffect()">
+                        <i class="fa fa-facebook text-xl"></i>
+                    </a>
+                    <a href="#" class="text-neutral/60 hover:text-primary transition-colors duration-300" onclick="triggerShutterEffect()">
+                        <i class="fa fa-flickr text-xl"></i>
+                    </a>
+                    <a href="#" class="text-neutral/60 hover:text-primary transition-colors duration-300" onclick="triggerShutterEffect()">
+                        <i class="fa fa-behance text-xl"></i>
+                    </a>
+                    <a href="#" class="text-neutral/60 hover:text-primary transition-colors duration-300" onclick="triggerShutterEffect()">
+                        <i class="fa fa-envelope text-xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // 語言翻譯資料
+        const translations = {
+            zh: {
+                nav: {
+                    home: "首頁",
+                    about: "關於",
+                    portfolio: "作品集",
+                    services: "服務",
+                    contact: "聯絡"
+                },
+                hero: {
+                    title: "捕捉生命中的<br>珍貴瞬間",
+                    subtitle: "透過鏡頭，將情感與故事轉化為永恆的影像",
+                    cta: "瀏覽作品"
+                },
+                about: {
+                    title: "關於攝影師",
+                    bio: "我是一名專注於人像攝影的藝術家，擁有超過十年的拍攝經驗。透過我的鏡頭，我希望捕捉被攝者最真實、最自然的一面，讓每張照片都承載著獨特的故事與情感。",
+                    philosophy: "我的攝影哲學是「簡單即美」，我相信最動人的影像往往來自最真實的瞬間。無論是婚禮、寫真或商業拍攝，我都會用心對待每一個細節，創造出令人難忘的作品。",
+                    exhibitions: "展覽經歷",
+                    exhibition1: "2023 - 「人間百態」個人攝影展，台北當代藝術館",
+                    exhibition2: "2021 - 「情感瞬間」聯展，上海攝影藝術中心",
+                    exhibition3: "2019 - 「城市面孔」國際攝影展，東京攝影美術館",
+                    equipment: "攝影設備"
+                },
+                portfolio: {
+                    title: "攝影作品集",
+                    description: "精選多年來的人像攝影作品，每張照片都記錄著獨特的故事與情感。透過下方分類可篩選不同風格的作品。",
+                    all: "全部",
+                    blackwhite: "黑白",
+                    color: "彩色",
+                    indoor: "室內",
+                    outdoor: "戶外",
+                    item1: "山間沉思",
+                    item1_desc: "戶外黑白人像 · 自然光拍攝",
+                    item2: "窗邊光影",
+                    item2_desc: "室內彩色人像 · 窗光拍攝",
+                    item3: "沉思時刻",
+                    item3_desc: "室內黑白人像 · 柔和燈光",
+                    item4: "夏日微笑",
+                    item4_desc: "戶外彩色人像 · 黃金時段",
+                    item5: "城市角落",
+                    item5_desc: "戶外黑白人像 · 街頭拍攝",
+                    item6: "室內氛圍",
+                    item6_desc: "室內彩色人像 · 工作室拍攝",
+                    loadmore: "加載更多作品"
+                },
+                services: {
+                    title: "攝影服務",
+                    description: "提供多種人像攝影服務，無論是個人寫真、婚禮紀錄還是商業拍攝，都能為您捕捉最美好的瞬間。",
+                    personal: "個人寫真",
+                    personal_desc: "為您量身打造獨特的個人寫真，展現您最真實的魅力與個性。",
+                    wedding: "婚禮攝影",
+                    wedding_desc: "記錄您人生中最重要的一天，捕捉每個感動瞬間與珍貴回憶。",
+                    family: "家庭寫真",
+                    family_desc: "記錄家庭成員間的溫馨互動，留下珍貴的家族回憶與情感瞬間。",
+                    commercial: "商業人像",
+                    commercial_desc: "為企業與個人提供專業商業人像，展現專業形象與品牌價值。",
+                    include1: "2小時拍攝時間",
+                    include2: "2套服裝更換",
+                    include3: "20張精修照片",
+                    include4: "全天拍攝服務",
+                    include5: "50張精修照片",
+                    include6: "精美相冊一本",
+                    include7: "3小時拍攝時間",
+                    include8: "室內外場景拍攝",
+                    include9: "30張精修照片",
+                    include10: "4小時拍攝時間",
+                    include11: "多場景拍攝",
+                    include12: "40張精修照片",
+                    inquire: "詢問詳情"
+                },
+                contact: {
+                    title: "聯絡我們",
+                    description: "無論您有任何疑問或需求，歡迎透過以下方式與我們聯繫。我們將盡快回復您的訊息，為您提供最專業的攝影服務諮詢。",
+                    email: "電子郵件",
+                    phone: "電話",
+                    studio: "工作室地址",
+                    address: "台北市大安區仁愛路四段123號5樓",
+                    follow: "追蹤我們",
+                    form_title: "詢問表單",
+                    name: "姓名",
+                    service: "服務類型",
+                    select_service: "請選擇服務類型",
+                    other: "其他服務",
+                    message: "留言內容",
+                    message_placeholder: "請詳細描述您的需求...",
+                    send: "發送訊息"
+                },
+                footer: {
+                    copyright: "© 2023 Lumina 人像攝影。保留所有權利。"
+                }
+            },
+            en: {
+                nav: {
+                    home: "Home",
+                    about: "About",
+                    portfolio: "Portfolio",
+                    services: "Services",
+                    contact: "Contact"
+                },
+                hero: {
+                    title: "Capturing Precious<br>Moments in Life",
+                    subtitle: "Transforming emotions and stories into timeless images through the lens",
+                    cta: "View Portfolio"
+                },
+                about: {
+                    title: "About the Photographer",
+                    bio: "I am a portrait photography artist with over ten years of experience. Through my lens, I hope to capture the most authentic and natural side of my subjects, allowing each photo to carry a unique story and emotion.",
+                    philosophy: "My photography philosophy is 'simplicity is beauty'. I believe the most touching images often come from the most genuine moments. Whether it's a wedding, portrait, or commercial shoot, I take care of every detail to create unforgettable works.",
+                    exhibitions: "Exhibitions",
+                    exhibition1: "2023 - 'Faces of Life' Solo Exhibition, Taipei Contemporary Art Museum",
+                    exhibition2: "2021 - 'Emotional Moments' Group Exhibition, Shanghai Photography Art Center",
+                    exhibition3: "2019 - 'Urban Faces' International Photography Exhibition, Tokyo Photographic Art Museum",
+                    equipment: "Photography Equipment"
+                },
+                portfolio: {
+                    title: "Photography Portfolio",
+                    description: "A selection of portrait photography works over the years, each photo records a unique story and emotion. You can filter works of different styles through the categories below.",
+                    all: "All",
+                    blackwhite: "Black & White",
+                    color: "Color",
+                    indoor: "Indoor",
+                    outdoor: "Outdoor",
+                    item1: "Mountain Meditation",
+                    item1_desc: "Outdoor Black & White · Natural Light",
+                    item2: "Window Light",
+                    item2_desc: "Indoor Color · Window Lighting",
+                    item3: "Moments of Contemplation",
+                    item3_desc: "Indoor Black & White · Soft Lighting",
+                    item4: "Summer Smile",
+                    item4_desc: "Outdoor Color · Golden Hour",
+                    item5: "Urban Corner",
+                    item5_desc: "Outdoor Black & White · Street Shooting",
+                    item6: "Indoor Atmosphere",
+                    item6_desc: "Indoor Color · Studio Shooting",
+                    loadmore: "Load More Works"
+                },
+                services: {
+                    title: "Photography Services",
+                    description: "Offering a variety of portrait photography services, whether it's personal portraits, wedding records, or commercial shoots, we can capture the most beautiful moments for you.",
+                    personal: "Personal Portraits",
+                    personal_desc: "Tailor-made unique personal portraits to showcase your most authentic charm and personality.",
+                    wedding: "Wedding Photography",
+                    wedding_desc: "Record the most important day of your life, capturing every touching moment and precious memory.",
+                    family: "Family Portraits",
+                    family_desc: "Record the warm interactions among family members, leaving precious family memories and emotional moments.",
+                    commercial: "Commercial Portraits",
+                    commercial_desc: "Providing professional commercial portraits for businesses and individuals to showcase professional image and brand value.",
+                    include1: "2 hours shooting time",
+                    include2: "2 costume changes",
+                    include3: "20 retouched photos",
+                    include4: "Full-day shooting service",
+                    include5: "50 retouched photos",
+                    include6: "One exquisite photo album",
+                    include7: "3 hours shooting time",
+                    include8: "Indoor and outdoor shooting",
+                    include9: "30 retouched photos",
+                    include10: "4 hours shooting time",
+                    include11: "Multi-scene shooting",
+                    include12: "40 retouched photos",
+                    inquire: "Inquire Details"
+                },
+                contact: {
+                    title: "Contact Us",
+                    description: "If you have any questions or needs, please feel free to contact us through the following methods. We will reply to your message as soon as possible and provide you with the most professional photography service consultation.",
+                    email: "Email",
+                    phone: "Phone",
+                    studio: "Studio Address",
+                    address: "5F, No. 123, Section 4, Ren'ai Road, Da'an District, Taipei City",
+                    follow: "Follow Us",
+                    form_title: "Inquiry Form",
+                    name: "Name",
+                    service: "Service Type",
+                    select_service: "Please select service type",
+                    other: "Other Services",
+                    message: "Message Content",
+                    message_placeholder: "Please describe your needs in detail...",
+                    send: "Send Message"
+                },
+                footer: {
+                    copyright: "© 2023 Lumina Portrait Photography. All rights reserved."
+                }
+            }
+        };
+
+        // 切換語言
+        function setLanguage(lang) {
+            document.querySelectorAll('[data-lang-key]').forEach(element => {
+                const keys = element.getAttribute('data-lang-key').split('.');
+                let value = translations[lang];
+                
+                for (const key of keys) {
+                    if (value[key] !== undefined) {
+                        value = value[key];
+                    } else {
+                        value = '';
+                        break;
+                    }
+                }
+                
+                if (element.tagName === 'INPUT' && element.getAttribute('placeholder')) {
+                    element.setAttribute('placeholder', value);
+                } else {
+                    element.innerHTML = value;
+                }
+            });
+            
+            // 更新語言按鈕狀態
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-primary', 'text-white');
+                btn.classList.add('hover:bg-primary', 'hover:text-white');
+            });
+            
+            document.querySelectorAll(`#lang-${lang}, #mobile-lang-${lang}`).forEach(btn => {
+                btn.classList.add('active', 'bg-primary', 'text-white');
+                btn.classList.remove('hover:bg-primary', 'hover:text-white');
+            });
+            
+            // 保存語言偏好
+            localStorage.setItem('preferredLanguage', lang);
+        }
+
+        // 切換主題
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark');
+            
+            // 保存主題偏好
+            if (document.documentElement.classList.contains('dark')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // 初始化主題
+        function initTheme() {
+            if (localStorage.getItem('theme') === 'dark' || 
+                (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        }
+
+        // 初始化語言
+        function initLanguage() {
+            const savedLang = localStorage.getItem('preferredLanguage');
+            if (savedLang && translations[savedLang]) {
+                setLanguage(savedLang);
+            } else {
+                // 默認使用繁體中文
+                setLanguage('zh');
+            }
+        }
+
+        // 過濾作品
+        function filterPortfolio(category) {
+            const items = document.querySelectorAll('.portfolio-item');
+            
+            items.forEach(item => {
+                if (category === 'all' || item.getAttribute('data-category').includes(category)) {
+                    item.style.display = 'block';
+                    // 添加延遲以顯示動畫
+                    setTimeout(() => {
+                        item.style.opacity = '1';
+                        item.style.transform = 'scale(1)';
+                    }, 50);
+                } else {
+                    item.style.opacity = '0';
+                    item.style.transform = 'scale(0.8)';
+                    setTimeout(() => {
+                        item.style.display = 'none';
+                    }, 300);
+                }
+            });
+            
+            // 更新過濾按鈕狀態
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-primary', 'text-white');
+                btn.classList.add('bg-neutral', 'dark:bg-neutral-dark', 'text-neutral-dark', 'dark:text-neutral', 'border', 'border-primary', 'hover:bg-primary', 'hover:text-white');
+            });
+            
+            document.querySelector(`.filter-btn[data-filter="${category}"]`).classList.add('active', 'bg-primary', 'text-white');
+            document.querySelector(`.filter-btn[data-filter="${category}"]`).classList.remove('bg-neutral', 'dark:bg-neutral-dark', 'text-neutral-dark', 'dark:text-neutral', 'border', 'border-primary', 'hover:bg-primary', 'hover:text-white');
+        }
+
+        // 相機快門特效
+        function triggerShutterEffect() {
+            const shutter = document.getElementById('shutterEffect');
+            shutter.style.opacity = '1';
+            setTimeout(() => {
+                shutter.style.opacity = '0';
+            }, 100);
+        }
+
+        // 滾動動畫
+        function handleScrollAnimations() {
+            const elements = document.querySelectorAll('[data-animate="true"]');
+            
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.style.opacity = '1';
+                }
+            });
+        }
+
+        // 導航欄滾動效果
+        function handleNavbarScroll() {
+            const navbar = document.getElementById('navbar');
+            
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-neutral/90', 'dark:bg-neutral-dark/90', 'backdrop-blur-sm', 'shadow-md', 'py-2');
+                navbar.classList.remove('py-4');
+            } else {
+                navbar.classList.remove('bg-neutral/90', 'dark:bg-neutral-dark/90', 'backdrop-blur-sm', 'shadow-md', 'py-2');
+                navbar.classList.add('py-4');
+            }
+        }
+
+        // 初始化頁面
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化主題和語言
+            initTheme();
+            initLanguage();
+            
+            // 導航菜單切換
+            const menuToggle = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            menuToggle.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+                triggerShutterEffect();
+            });
+            
+            // 點擊移動端導航鏈接後關閉菜單
+            document.querySelectorAll('.mobile-nav-link').forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+            
+            // 語言切換按鈕
+            document.getElementById('lang-zh').addEventListener('click', () => setLanguage('zh'));
+            document.getElementById('lang-en').addEventListener('click', () => setLanguage('en'));
+            document.getElementById('mobile-lang-zh').addEventListener('click', () => setLanguage('zh'));
+            document.getElementById('mobile-lang-en').addEventListener('click', () => setLanguage('en'));
+            
+            // 主題切換按鈕
+            document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+            document.getElementById('mobile-theme-toggle').addEventListener('click', toggleTheme);
+            
+            // 作品過濾按鈕
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const category = this.getAttribute('data-filter');
+                    filterPortfolio(category);
+                });
+            });
+            
+            // 表單提交
+            const contactForm = document.getElementById('contactForm');
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // 在真實環境中，這裡會有表單提交的代碼
+                alert('感謝您的留言！我們將盡快回復您。\nThank you for your message! We will reply to you as soon as possible.');
+                contactForm.reset();
+            });
+            
+            // 初始化滾動動畫
+            handleScrollAnimations();
+            
+            // 初始化導航欄樣式
+            handleNavbarScroll();
+            
+            // 滾動事件監聽
+            window.addEventListener('scroll', function() {
+                handleScrollAnimations();
+                handleNavbarScroll();
+            });
+        });
+    </script>
+</body>
+</html>

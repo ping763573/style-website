@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>光影之間 | 人像攝影作品集</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* 日景模式色彩 */
+            --bg-primary: #f8f4ee;
+            --bg-secondary: #e6e0d8;
+            --accent-1: #c4a586;
+            --accent-2: #a67c52;
+            --accent-3: #8d6e63;
+            --text-primary: #333;
+            --text-secondary: #5d5d5d;
+            --border-color: #d0c0b0;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --photo-border: #f0e6d8;
+            
+            /* 特效色彩 */
+            --light-effect: rgba(255, 253, 208, 0.3);
+            --frame-color: #d4c6b5;
+        }
+
+        .night-mode {
+            /* 夜景模式色彩 */
+            --bg-primary: #2a2624;
+            --bg-secondary: #3a3634;
+            --accent-1: #8a6d5b;
+            --accent-2: #a67c52;
+            --accent-3: #7d5e54;
+            --text-primary: #f0e6d8;
+            --text-secondary: #d0c0b0;
+            --border-color: #554d47;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            --photo-border: #554d47;
+            
+            /* 特效色彩 */
+            --light-effect: rgba(208, 168, 92, 0.15);
+            --frame-color: #554d47;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Serif TC', serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            transition: all 0.4s ease;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 0h50v50H50z' fill='%23c4a586' fill-opacity='0.03'/%3E%3C/svg%3E");
+            opacity: 0.4;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .light-spots {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 30%, var(--light-effect) 0%, transparent 20%),
+                        radial-gradient(circle at 80% 70%, var(--light-effect) 0%, transparent 20%);
+            pointer-events: none;
+            z-index: -1;
+            animation: lightMovement 15s infinite alternate;
+        }
+
+        @keyframes lightMovement {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(10px, 10px); }
+        }
+
+        /* 導航欄樣式 */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            background-color: rgba(248, 244, 238, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: var(--shadow);
+            transition: all 0.4s ease;
+        }
+
+        .night-mode header {
+            background-color: rgba(42, 38, 36, 0.85);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--accent-2);
+        }
+
+        .logo span {
+            color: var(--accent-3);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav li {
+            margin-left: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: color 0.3s;
+        }
+
+        nav a::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-2);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--accent-2);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .mode-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: var(--bg-secondary);
+            transition: all 0.3s;
+        }
+
+        .mode-toggle:hover {
+            transform: rotate(15deg);
+        }
+
+        .lang-toggle {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Noto Serif TC', serif;
+        }
+
+        .lang-toggle:hover {
+            background-color: var(--accent-1);
+            color: white;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        /* 英雄區樣式 */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 5%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 100%);
+            z-index: -1;
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80');
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+            filter: blur(2px) brightness(0.9);
+        }
+
+        .hero-content {
+            max-width: 800px;
+            animation: fadeInUp 1.2s ease-out;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 400;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background-color: var(--accent-2);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: all 0.3s;
+            border: 2px solid var(--accent-2);
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            background-color: transparent;
+            color: var(--accent-2);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-outline:hover {
+            background-color: white;
+            color: var(--accent-2);
+        }
+
+        /* 區塊共用樣式 */
+        .section {
+            padding: 8rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 5rem;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            display: inline-block;
+            padding-bottom: 1rem;
+        }
+
+        .section-title h2::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--accent-2);
+        }
+
+        .section-title p {
+            margin-top: 1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* 關於區樣式 */
+        .about-content {
+            display: flex;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-2);
+        }
+
+        .about-image {
+            flex: 1;
+            position: relative;
+        }
+
+        .photo-frame {
+            position: relative;
+            padding: 20px;
+            background-color: var(--bg-primary);
+            box-shadow: var(--shadow);
+            max-width: 450px;
+            margin: 0 auto;
+        }
+
+        .photo-frame::before {
+            content: "";
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 1px solid var(--frame-color);
+            pointer-events: none;
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: grayscale(20%) contrast(110%);
+            transition: filter 0.4s;
+        }
+
+        .photo-frame:hover img {
+            filter: grayscale(0%) contrast(120%);
+        }
+
+        .equipment-list {
+            margin-top: 2rem;
+            background-color: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+
+        .equipment-list h4 {
+            margin-bottom: 1rem;
+            color: var(--accent-2);
+        }
+
+        .equipment-list ul {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            list-style: none;
+        }
+
+        .equipment-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .equipment-list li::before {
+            content: "•";
+            color: var(--accent-2);
+        }
+
+        /* 作品集區樣式 */
+        .portfolio {
+            background-color: var(--bg-secondary);
+        }
+
+        .portfolio-filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1.5rem;
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background-color: var(--accent-2);
+            color: white;
+            border-color: var(--accent-2);
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .portfolio-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.6s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+            aspect-ratio: 3/4;
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(166, 124, 82, 0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.4s;
+            padding: 2rem;
+            text-align: center;
+            color: white;
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+
+        .portfolio-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .portfolio-overlay h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .portfolio-overlay p {
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        /* 服務區樣式 */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .service-card {
+            background-color: var(--bg-primary);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+            border: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .service-icon {
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--accent-1);
+            color: white;
+            font-size: 2.5rem;
+        }
+
+        .service-content {
+            padding: 2rem;
+        }
+
+        .service-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-2);
+        }
+
+        .service-content p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        /* 聯絡區樣式 */
+        .contact {
+            background-color: var(--bg-secondary);
+        }
+
+        .contact-container {
+            display: flex;
+            gap: 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-2);
+        }
+
+        .contact-info p {
+            margin-bottom: 2rem;
+            color: var(--text-secondary);
+        }
+
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .contact-detail {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .contact-icon {
+            background-color: var(--accent-1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .contact-form {
+            flex: 1;
+            background-color: var(--bg-primary);
+            padding: 2.5rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Noto Serif TC', serif;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-2);
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* 頁腳樣式 */
+        footer {
+            background-color: var(--bg-secondary);
+            padding: 3rem 5%;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--accent-1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-link:hover {
+            background-color: var(--accent-2);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            color: var(--text-secondary);
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        /* 響應式設計 */
+        @media (max-width: 992px) {
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .contact-container {
+                flex-direction: column;
+            }
+            
+            .hero-title {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .section {
+                padding: 6rem 5%;
+            }
+        }
+
+        /* 動畫效果 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="light-spots"></div>
+    
+    <header>
+        <div class="nav-container">
+            <div class="logo">光影<span>之間</span></div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#home">首頁</a></li>
+                    <li><a href="#about">關於我</a></li>
+                    <li><a href="#portfolio">作品集</a></li>
+                    <li><a href="#services">服務項目</a></li>
+                    <li><a href="#contact">聯絡我</a></li>
+                </ul>
+            </nav>
+            <div class="nav-actions">
+                <button class="mode-toggle" id="modeToggle">🌙</button>
+                <button class="lang-toggle">EN</button>
+                <div class="hamburger">☰</div>
+            </div>
+        </div>
+    </header>
+    
+    <section id="home" class="hero">
+        <div class="hero-background"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">捕捉瞬間的永恆</h1>
+            <p class="hero-subtitle">透過鏡頭訴說故事，用光影刻畫情感，創造令人難忘的人像攝影作品</p>
+            <div class="hero-buttons">
+                <a href="#portfolio" class="btn">瀏覽作品</a>
+                <a href="#contact" class="btn btn-outline">預約拍攝</a>
+            </div>
+        </div>
+    </section>
+    
+    <section id="about" class="section">
+        <div class="section-title">
+            <h2>關於攝影師</h2>
+            <p>用光影捕捉靈魂，讓每一張照片訴說獨特故事</p>
+        </div>
+        
+        <div class="about-content">
+            <div class="about-text animate-on-scroll">
+                <h3>陳文軒 | 人像攝影師</h3>
+                <p>擁有超過十年的專業人像攝影經驗，專注於捕捉人物最真實的情感和瞬間。畢業於台灣藝術大學攝影研究所，擅長運用自然光線創造溫暖而富有層次的畫面。</p>
+                <p>我的攝影哲學是「少即是多」，相信簡單的構圖與真誠的情感最能打動人心。透過鏡頭，我希望展現每個人獨特的美與故事。</p>
+                
+                <div class="equipment-list">
+                    <h4>攝影設備</h4>
+                    <ul>
+                        <li>Sony A7IV 全片幅相機</li>
+                        <li>Canon EOS R5 全片幅相機</li>
+                        <li>Sony FE 85mm f/1.4 GM 鏡頭</li>
+                        <li>Canon RF 50mm f/1.2L 鏡頭</li>
+                        <li>Profoto B10 外拍燈系統</li>
+                        <li>Godox AD200Pro 閃光燈</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="about-image animate-on-scroll">
+                <div class="photo-frame">
+                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80" alt="攝影師陳文軒">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="portfolio" class="section portfolio">
+        <div class="section-title">
+            <h2>攝影作品集</h2>
+            <p>探索不同風格的人像攝影作品，感受光影與情感的對話</p>
+        </div>
+        
+        <div class="portfolio-filters">
+            <button class="filter-btn active" data-filter="all">全部作品</button>
+            <button class="filter-btn" data-filter="black-white">黑白人像</button>
+            <button class="filter-btn" data-filter="color">彩色人像</button>
+            <button class="filter-btn" data-filter="indoor">室內攝影</button>
+            <button class="filter-btn" data-filter="outdoor">戶外攝影</button>
+        </div>
+        
+        <div class="portfolio-grid">
+            <div class="portfolio-item" data-category="black-white outdoor">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80" alt="黑白人像攝影">
+                <div class="portfolio-overlay">
+                    <h3>凝視</h3>
+                    <p>黑白 | 戶外 | 自然光</p>
+                </div>
+            </div>
+            
+            <div class="portfolio-item" data-category="color indoor">
+                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1888&q=80" alt="彩色人像攝影">
+                <div class="portfolio-overlay">
+                    <h3>窗邊沉思</h3>
+                    <p>彩色 | 室內 | 窗光</p>
+                </div>
+            </div>
+            
+            <div class="portfolio-item" data-category="color outdoor">
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80" alt="戶外人像攝影">
+                <div class="portfolio-overlay">
+                    <h3>夏日微風</h3>
+                    <p>彩色 | 戶外 | 黃金時刻</p>
+                </div>
+            </div>
+            
+            <div class="portfolio-item" data-category="black-white indoor">
+                <img src="https://images.unsplash.com/photo-1516726817505-f5ed825624d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80" alt="室內黑白攝影">
+                <div class="portfolio-overlay">
+                    <h3>影舞</h3>
+                    <p>黑白 | 室內 | 單燈照明</p>
+                </div>
+            </div>
+            
+            <div class="portfolio-item" data-category="color outdoor">
+                <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80" alt="戶外人像攝影">
+                <div class="portfolio-overlay">
+                    <h3>秋日絮語</h3>
+                    <p>彩色 | 戶外 | 逆光攝影</p>
+                </div>
+            </div>
+            
+            <div class="portfolio-item" data-category="black-white outdoor">
+                <img src="https://images.unsplash.com/photo-1554151228-14d9def656e4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1886&q=80" alt="黑白人像攝影">
+                <div class="portfolio-overlay">
+                    <h3>城市輪廓</h3>
+                    <p>黑白 | 戶外 | 街拍攝影</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="services" class="section">
+        <div class="section-title">
+            <h2>攝影服務</h2>
+            <p>提供專業人像攝影服務，為您記錄重要時刻</p>
+        </div>
+        
+        <div class="services-grid">
+            <div class="service-card animate-on-scroll">
+                <div class="service-icon">📸</div>
+                <div class="service-content">
+                    <h3>個人寫真</h3>
+                    <p>專業個人形象照、藝術寫真拍攝，展現您獨特的氣質與魅力。適合用於個人簡介、社交媒體或藝術收藏。</p>
+                    <a href="#contact" class="btn">預約拍攝</a>
+                </div>
+            </div>
+            
+            <div class="service-card animate-on-scroll">
+                <div class="service-icon">👰</div>
+                <div class="service-content">
+                    <h3>婚禮攝影</h3>
+                    <p>捕捉婚禮中的珍貴時刻與真實情感，從訂婚到婚禮當天，為您記錄一生一次的重要回憶。</p>
+                    <a href="#contact" class="btn">預約拍攝</a>
+                </div>
+            </div>
+            
+            <div class="service-card animate-on-scroll">
+                <div class="service-icon">👨‍👩‍👧</div>
+                <div class="service-content">
+                    <h3>家庭攝影</h3>
+                    <p>自然溫馨的家庭紀錄，捕捉家人間的親密互動與真實情感，留下珍貴的家庭回憶。</p>
+                    <a href="#contact" class="btn">預約拍攝</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="contact" class="section contact">
+        <div class="section-title">
+            <h2>聯絡預約</h2>
+            <p>歡迎預約拍攝或洽詢攝影相關事宜</p>
+        </div>
+        
+        <div class="contact-container">
+            <div class="contact-info animate-on-scroll">
+                <h3>預約攝影服務</h3>
+                <p>請填寫右側表單或直接透過以下方式與我聯繫，我將盡快回覆您的詢問。</p>
+                
+                <div class="contact-details">
+                    <div class="contact-detail">
+                        <div class="contact-icon">✉️</div>
+                        <div>
+                            <h4>電子郵件</h4>
+                            <p>contact@lightandshadow.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-detail">
+                        <div class="contact-icon">📱</div>
+                        <div>
+                            <h4>電話</h4>
+                            <p>+886 912 345 678</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-detail">
+                        <div class="contact-icon">📍</div>
+                        <div>
+                            <h4>工作室</h4>
+                            <p>台北市大安區信義路三段100號</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="contact-form animate-on-scroll">
+                <form>
+                    <div class="form-group">
+                        <label for="name">姓名</label>
+                        <input type="text" id="name" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">電子郵件</label>
+                        <input type="email" id="email" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="service">攝影服務</label>
+                        <select id="service" class="form-control" required>
+                            <option value="">請選擇服務項目</option>
+                            <option value="personal">個人寫真</option>
+                            <option value="wedding">婚禮攝影</option>
+                            <option value="family">家庭攝影</option>
+                            <option value="other">其他服務</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">訊息</label>
+                        <textarea id="message" class="form-control" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn" style="width: 100%">送出預約</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="social-links">
+                <a href="#" class="social-link">📷</a>
+                <a href="#" class="social-link">👁️</a>
+                <a href="#" class="social-link">🌐</a>
+                <a href="#" class="social-link">✉️</a>
+            </div>
+            <p class="copyright">© 2023 光影之間人像攝影工作室 | 保留所有權利</p>
+        </div>
+    </footer>
+    
+    <script>
+        // 日夜模式切換
+        const modeToggle = document.getElementById('modeToggle');
+        const body = document.body;
+        
+        modeToggle.addEventListener('click', () => {
+            body.classList.toggle('night-mode');
+            modeToggle.textContent = body.classList.contains('night-mode') ? '☀️' : '🌙';
+        });
+        
+        // 滾動動畫
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // 作品集過濾
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const portfolioItems = document.querySelectorAll('.portfolio-item');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // 更新按鈕狀態
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                const filter = button.getAttribute('data-filter');
+                
+                // 過濾作品
+                portfolioItems.forEach(item => {
+                    if (filter === 'all' || item.getAttribute('data-category').includes(filter)) {
+                        item.style.display = 'block';
+                        item.classList.add('visible');
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // 導航連結平滑滾動
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // 頁面載入時觸發動畫
+        window.addEventListener('load', () => {
+            const heroContent = document.querySelector('.hero-content');
+            heroContent.style.animation = 'fadeInUp 1.2s ease-out';
+        });
+    </script>
+</body>
+</html>

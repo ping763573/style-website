@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动漫风格作品集</title>
+    <!-- 引入Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- 引入Google字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700&family=Zen+Maru+Gothic:wght@400;500;700&family=Sawarabi+Gothic&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind配置 -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'sakura': '#FFB7C5',
+                        'sakura-dark': '#FF8DA1',
+                        'sky': '#BDE0FE',
+                        'sky-dark': '#87CEFA',
+                        'mint': '#B5EAD7',
+                        'mint-dark': '#80E8C1',
+                        'lavender': '#E2D1F8',
+                        'lavender-dark': '#C0A8F0',
+                        'night': '#1A1A2E',
+                        'night-light': '#16213E'
+                    },
+                    fontFamily: {
+                        'jp': ['"Zen Maru Gothic"', 'sans-serif'],
+                        'jp-light': ['"Sawarabi Gothic"', 'sans-serif'],
+                        'en': ['Barlow', 'sans-serif']
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'fall': 'fall 10s linear infinite',
+                        'shine': 'shine 2s ease-in-out infinite alternate',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' }
+                        },
+                        fall: {
+                            '0%': { transform: 'translateY(-10px) rotate(0deg)' },
+                            '100%': { transform: 'translateY(100vh) rotate(360deg)' }
+                        },
+                        shine: {
+                            '0%': { boxShadow: '0 0 5px rgba(255, 183, 197, 0.5)' },
+                            '100%': { boxShadow: '0 0 20px rgba(255, 183, 197, 0.8)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            }
+            .text-shadow-lg {
+                text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+            }
+            .backdrop-blur {
+                backdrop-filter: blur(8px);
+            }
+            .cursor-anime {
+                cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='%23FF8DA1'%3E%3Cpath d='M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-1 17.93c-3.955-.497-7-3.855-7-7.93 0-.628.07-1.241.201-1.832l4.764 4.764c-.097.371-.151.75-.151 1.155 0 1.93.782 3.685 2.059 4.963l-4.873 1.929zm6.464-1.678l-4.873-1.929c1.277-1.277 2.059-3.032 2.059-4.963 0-.405-.054-.784-.151-1.155l4.764-4.764c.13.591.201 1.204.201 1.832 0 4.075-3.045 7.433-7 7.93l4.817 1.907c.299.117.618.17.936.153z'/%3E%3C/svg%3E"), auto;
+            }
+            .btn-anime {
+                position: relative;
+                overflow: hidden;
+                transition: all 0.3s ease;
+            }
+            .btn-anime::after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 300%;
+                height: 300%;
+                background: rgba(255, 255, 255, 0.1);
+                transform: translate(-50%, -50%) rotate(45deg);
+                transition: all 0.6s ease;
+            }
+            .btn-anime:hover::after {
+                width: 0;
+                height: 0;
+            }
+            .skill-bar {
+                position: relative;
+                height: 20px;
+                border-radius: 10px;
+                overflow: hidden;
+                background: rgba(255, 255, 255, 0.2);
+            }
+            .skill-fill {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                border-radius: 10px;
+                transition: width 1.5s ease-in-out;
+                background: linear-gradient(90deg, var(--start-color), var(--end-color));
+            }
+            .skill-glow {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 30%;
+                background: rgba(255, 255, 255, 0.3);
+                transform: skewX(-20deg);
+                animation: glow 2s infinite;
+            }
+            @keyframes glow {
+                0% { transform: translateX(-100%) skewX(-20deg); }
+                100% { transform: translateX(400%) skewX(-20deg); }
+            }
+            .card-anime {
+                transition: all 0.3s ease;
+                transform-style: preserve-3d;
+            }
+            .card-anime:hover {
+                transform: translateY(-10px) rotateX(5deg);
+                box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+            .sakura-petal {
+                position: absolute;
+                background-color: #FFB7C5;
+                border-radius: 50% 50% 0 0;
+                opacity: 0.7;
+                z-index: 0;
+            }
+            .nav-item {
+                position: relative;
+            }
+            .nav-item::after {
+                content: '';
+                position: absolute;
+                width: 0;
+                height: 2px;
+                bottom: -2px;
+                left: 0;
+                background-color: #FF8DA1;
+                transition: width 0.3s ease;
+            }
+            .nav-item:hover::after {
+                width: 100%;
+            }
+            .form-input-anime {
+                transition: all 0.3s ease;
+                background: rgba(255, 255, 255, 0.8);
+                border: 2px solid transparent;
+            }
+            .form-input-anime:focus {
+                border-color: #FF8DA1;
+                box-shadow: 0 0 10px rgba(255, 183, 197, 0.5);
+                transform: translateY(-2px);
+            }
+            .form-input-anime.error {
+                border-color: #ff4d6d;
+                animation: shake 0.5s;
+            }
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                20%, 40%, 60%, 80% { transform: translateX(5px); }
+            }
+        }
+    </style>
+</head>
+<body class="font-jp bg-gradient-to-b from-sky/30 to-white dark:from-night dark:to-night-light text-gray-800 dark:text-gray-100 cursor-anime transition-colors duration-500">
+    <!-- 樱花粒子效果容器 -->
+    <div id="sakura-container" class="fixed top-0 left-0 w-full h-full pointer-events-none z-0"></div>
+    
+    <!-- 导航栏 -->
+    <header id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300">
+        <nav class="container mx-auto px-4 py-4 flex justify-between items-center backdrop-blur bg-white/70 dark:bg-night/70 rounded-b-xl shadow-md">
+            <a href="#" class="text-2xl font-bold text-sakura-dark dark:text-sakura flex items-center">
+                <span class="mr-2"><i class="fa fa-paint-brush"></i></span>
+                <span class="en:hidden">動漫作品集</span>
+                <span class="hidden en:inline">Anime Portfolio</span>
+            </a>
+            
+            <!-- 桌面导航 -->
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="#hero" class="nav-item font-medium hover:text-sakura-dark transition-colors">
+                    <span class="en:hidden">首頁</span>
+                    <span class="hidden en:inline">Home</span>
+                </a>
+                <a href="#about" class="nav-item font-medium hover:text-sakura-dark transition-colors">
+                    <span class="en:hidden">關於我</span>
+                    <span class="hidden en:inline">About</span>
+                </a>
+                <a href="#works" class="nav-item font-medium hover:text-sakura-dark transition-colors">
+                    <span class="en:hidden">作品集</span>
+                    <span class="hidden en:inline">Works</span>
+                </a>
+                <a href="#services" class="nav-item font-medium hover:text-sakura-dark transition-colors">
+                    <span class="en:hidden">服務</span>
+                    <span class="hidden en:inline">Services</span>
+                </a>
+                <a href="#contact" class="nav-item font-medium hover:text-sakura-dark transition-colors">
+                    <span class="en:hidden">聯絡</span>
+                    <span class="hidden en:inline">Contact</span>
+                </a>
+                
+                <!-- 语言切换 -->
+                <button id="lang-toggle" class="px-3 py-1 rounded-full bg-sakura/20 hover:bg-sakura/40 transition-colors text-sm font-medium">
+                    <span class="en:hidden">EN</span>
+                    <span class="hidden en:inline">繁中</span>
+                </button>
+                
+                <!-- 暗模式切换 -->
+                <button id="theme-toggle" class="w-10 h-10 rounded-full flex items-center justify-center bg-sakura/20 hover:bg-sakura/40 transition-colors">
+                    <i class="fa fa-moon-o dark:hidden"></i>
+                    <i class="fa fa-sun-o hidden dark:inline"></i>
+                </button>
+            </div>
+            
+            <!-- 移动端菜单按钮 -->
+            <button id="menu-toggle" class="md:hidden w-10 h-10 rounded-full flex items-center justify-center bg-sakura/20 hover:bg-sakura/40 transition-colors">
+                <i class="fa fa-bars"></i>
+            </button>
+        </nav>
+        
+        <!-- 移动端导航菜单 -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white/95 dark:bg-night/95 backdrop-blur shadow-lg absolute w-full">
+            <div class="container mx-auto px-4 py-4 flex flex-col space-y-4">
+                <a href="#hero" class="py-2 border-b border-gray-100 dark:border-gray-800 hover:text-sakura-dark transition-colors">
+                    <span class="en:hidden">首頁</span>
+                    <span class="hidden en:inline">Home</span>
+                </a>
+                <a href="#about" class="py-2 border-b border-gray-100 dark:border-gray-800 hover:text-sakura-dark transition-colors">
+                    <span class="en:hidden">關於我</span>
+                    <span class="hidden en:inline">About</span>
+                </a>
+                <a href="#works" class="py-2 border-b border-gray-100 dark:border-gray-800 hover:text-sakura-dark transition-colors">
+                    <span class="en:hidden">作品集</span>
+                    <span class="hidden en:inline">Works</span>
+                </a>
+                <a href="#services" class="py-2 border-b border-gray-100 dark:border-gray-800 hover:text-sakura-dark transition-colors">
+                    <span class="en:hidden">服務</span>
+                    <span class="hidden en:inline">Services</span>
+                </a>
+                <a href="#contact" class="py-2 border-b border-gray-100 dark:border-gray-800 hover:text-sakura-dark transition-colors">
+                    <span class="en:hidden">聯絡</span>
+                    <span class="hidden en:inline">Contact</span>
+                </a>
+                
+                <div class="flex justify-between items-center pt-2">
+                    <button id="mobile-lang-toggle" class="px-3 py-1 rounded-full bg-sakura/20 hover:bg-sakura/40 transition-colors text-sm font-medium">
+                        <span class="en:hidden">EN</span>
+                        <span class="hidden en:inline">繁中</span>
+                    </button>
+                    
+                    <button id="mobile-theme-toggle" class="w-10 h-10 rounded-full flex items-center justify-center bg-sakura/20 hover:bg-sakura/40 transition-colors">
+                        <i class="fa fa-moon-o dark:hidden"></i>
+                        <i class="fa fa-sun-o hidden dark:inline"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero区块 -->
+        <section id="hero" class="min-h-screen pt-24 pb-16 relative overflow-hidden">
+            <!-- 动漫天空背景 -->
+            <div class="absolute inset-0 z-0">
+                <svg width="100%" height="100%" viewBox="0 0 1440 800" preserveAspectRatio="xMidYMid slice" class="dark:hidden">
+                    <defs>
+                        <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#BDE0FE" />
+                            <stop offset="100%" stop-color="#E2D1F8" />
+                        </linearGradient>
+                        <filter id="blur" x="-20%" y="-20%" width="140%" height="140%">
+                            <feGaussianBlur in="SourceGraphic" stdDeviation="10" />
+                        </filter>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#skyGradient)" />
+                    <!-- 云朵 -->
+                    <g class="animate-float">
+                        <ellipse cx="300" cy="150" rx="80" ry="40" fill="white" opacity="0.8" />
+                        <ellipse cx="350" cy="130" rx="60" ry="35" fill="white" opacity="0.8" />
+                        <ellipse cx="250" cy="130" rx="60" ry="35" fill="white" opacity="0.8" />
+                    </g>
+                    <g class="animate-float" style="animation-delay: 2s;">
+                        <ellipse cx="800" cy="100" rx="100" ry="50" fill="white" opacity="0.7" />
+                        <ellipse cx="850" cy="80" rx="70" ry="40" fill="white" opacity="0.7" />
+                        <ellipse cx="750" cy="80" rx="70" ry="40" fill="white" opacity="0.7" />
+                    </g>
+                    <g class="animate-float" style="animation-delay: 4s;">
+                        <ellipse cx="1200" cy="200" rx="70" ry="35" fill="white" opacity="0.9" />
+                        <ellipse cx="1250" cy="180" rx="50" ry="30" fill="white" opacity="0.9" />
+                        <ellipse cx="1150" cy="180" rx="50" ry="30" fill="white" opacity="0.9" />
+                    </g>
+                </svg>
+                <!-- 夜晚背景 -->
+                <svg width="100%" height="100%" viewBox="0 0 1440 800" preserveAspectRatio="xMidYMid slice" class="hidden dark:block">
+                    <rect width="100%" height="100%" fill="#1A1A2E" />
+                    <rect width="100%" height="60%" y="40%" fill="#16213E" />
+                    <!-- 星星 -->
+                    <g>
+                        <circle cx="200" cy="100" r="2" fill="white" opacity="0.8">
+                            <animate attributeName="opacity" values="0.5;1;0.5" dur="3s" repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="400" cy="150" r="1.5" fill="white" opacity="0.7">
+                            <animate attributeName="opacity" values="0.3;0.8;0.3" dur="4s" repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="600" cy="80" r="2" fill="white" opacity="0.9">
+                            <animate attributeName="opacity" values="0.6;1;0.6" dur="2.5s" repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="800" cy="200" r="1" fill="white" opacity="0.6">
+                            <animate attributeName="opacity" values="0.2;0.7;0.2" dur="3.5s" repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="1000" cy="120" r="2.5" fill="white" opacity="0.9">
+                            <animate attributeName="opacity" values="0.7;1;0.7" dur="2s" repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="1200" cy="180" r="1.5" fill="white" opacity="0.8">
+                            <animate attributeName="opacity" values="0.4;0.9;0.4" dur="3s" repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="300" cy="250" r="2" fill="white" opacity="0.7">
+                            <animate attributeName="opacity" values="0.5;1;0.5" dur="3.2s" repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="500" cy="300" r="1" fill="white" opacity="0.6">
+                            <animate attributeName="opacity" values="0.3;0.8;0.3" dur="4.1s" repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="700" cy="220" r="2" fill="white" opacity="0.8">
+                            <animate attributeName="opacity" values="0.6;1;0.6" dur="2.8s" repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="900" cy="280" r="1.5" fill="white" opacity="0.7">
+                            <animate attributeName="opacity" values="0.4;0.9;0.4" dur="3.7s" repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="1100" cy="250" r="2" fill="white" opacity="0.8">
+                            <animate attributeName="opacity" values="0.5;1;0.5" dur="3.3s" repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="1300" cy="300" r="1" fill="white" opacity="0.6">
+                            <animate attributeName="opacity" values="0.3;0.8;0.3" dur="4s" repeatCount="indefinite" />
+                        </circle>
+                    </g>
+                    <!-- 月亮 -->
+                    <circle cx="1200" cy="100" r="50" fill="#E0E0E0" />
+                    <circle cx="1170" cy="80" r="10" fill="#D0D0D0" />
+                </svg>
+            </div>
+            
+            <div class="container mx-auto px-4 relative z-10">
+                <div class="flex flex-col md:flex-row items-center justify-between">
+                    <!-- 动漫角色头像 -->
+                    <div class="w-full md:w-1/2 mb-10 md:mb-0 flex justify-center">
+                        <div class="relative animate-float">
+                            <!-- 角色SVG -->
+                            <svg width="300" height="400" viewBox="0 0 300 400" class="relative z-10">
+                                <!-- 头发 -->
+                                <path d="M150,50 C100,50 80,100 80,150 C80,200 100,250 150,250 C200,250 220,200 220,150 C220,100 200,50 150,50 Z" fill="#FFB7C5" />
+                                <path d="M100,80 C70,80 60,120 60,160 C60,220 80,270 150,270 C220,270 240,220 240,160 C240,120 230,80 200,80" fill="#FFB7C5" />
+                                
+                                <!-- 脸 -->
+                                <circle cx="150" cy="160" r="50" fill="#FFE0B2" />
+                                
+                                <!-- 眼睛 -->
+                                <ellipse cx="130" cy="150" rx="8" ry="10" fill="white" />
+                                <ellipse cx="170" cy="150" rx="8" ry="10" fill="white" />
+                                <ellipse cx="130" cy="150" rx="4" ry="6" fill="#333" />
+                                <ellipse cx="170" cy="150" rx="4" ry="6" fill="#333" />
+                                <circle cx="127" cy="147" r="2" fill="white" />
+                                <circle cx="167" cy="147" r="2" fill="white" />
+                                
+                                <!-- 眉毛 -->
+                                <path d="M120,135 Q130,130 140,135" stroke="#333" stroke-width="2" fill="none" />
+                                <path d="M160,135 Q170,130 180,135" stroke="#333" stroke-width="2" fill="none" />
+                                
+                                <!-- 嘴巴 -->
+                                <path d="M140,180 Q150,185 160,180" stroke="#333" stroke-width="1.5" fill="none" />
+                                
+                                <!-- 身体 -->
+                                <path d="M110,210 L90,300 L120,350 L180,350 L210,300 L190,210 Z" fill="#BDE0FE" />
+                                <path d="M110,210 L190,210 C200,210 210,220 210,230 L210,250 C210,240 200,230 190,230 L110,230 C100,230 90,240 90,250 L90,230 C90,220 100,210 110,210 Z" fill="#87CEFA" />
+                            </svg>
+                            <!-- 装饰元素 -->
+                            <div class="absolute -top-5 -right-5 w-12 h-12 bg-lavender rounded-full animate-pulse-slow"></div>
+                            <div class="absolute -bottom-3 -left-3 w-8 h-8 bg-mint rounded-full animate-pulse-slow" style="animation-delay: 1s;"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- 文字内容 -->
+                    <div class="w-full md:w-1/2 text-center md:text-left">
+                        <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold leading-tight text-shadow-lg mb-6">
+                            <span class="en:hidden">你好，我是<br></span>
+                            <span class="hidden en:inline">Hello, I'm<br></span>
+                            <span id="typed-text" class="text-sakura-dark dark:text-sakura">動漫創作者</span>
+                            <span id="typed-cursor" class="animate-pulse">|</span>
+                        </h1>
+                        <p class="text-[clamp(1rem,2vw,1.25rem)] mb-8 max-w-lg mx-auto md:mx-0 text-gray-700 dark:text-gray-300">
+                            <span class="en:hidden">熱愛動漫藝術的創作者，擅長角色設計、場景繪製與動畫製作。歡迎瀏覽我的作品集！</span>
+                            <span class="hidden en:inline">Anime artist specializing in character design, scene illustration, and animation production. Welcome to my portfolio!</span>
+                        </p>
+                        <div class="flex flex-col sm:flex-row justify-center md:justify-start space-y-4 sm:space-y-0 sm:space-x-4">
+                            <a href="#works" class="btn-anime bg-sakura hover:bg-sakura-dark text-white font-medium py-3 px-8 rounded-full transition-colors shadow-lg hover:shadow-xl animate-shine text-center">
+                                <span class="en:hidden">瀏覽作品</span>
+                                <span class="hidden en:inline">View Works</span>
+                            </a>
+                            <a href="#contact" class="btn-anime bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-sakura-dark dark:text-sakura font-medium py-3 px-8 rounded-full transition-colors shadow-md hover:shadow-lg border border-sakura/30 text-center">
+                                <span class="en:hidden">聯絡我</span>
+                                <span class="hidden en:inline">Contact Me</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 向下滚动指示 -->
+            <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+                <a href="#about" class="text-sakura-dark dark:text-sakura opacity-80 hover:opacity-100 transition-opacity">
+                    <i class="fa fa-chevron-down text-2xl"></i>
+                </a>
+            </div>
+        </section>
+
+        <!-- 关于我区块 -->
+        <section id="about" class="py-20 relative">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-4 text-shadow">
+                        <span class="en:hidden">關於我</span>
+                        <span class="hidden en:inline">About Me</span>
+                    </h2>
+                    <div class="w-24 h-1 bg-sakura mx-auto rounded-full"></div>
+                </div>
+                
+                <div class="flex flex-col lg:flex-row items-center gap-12">
+                    <!-- 动漫角色全身像 -->
+                    <div class="w-full lg:w-2/5 flex justify-center">
+                        <div class="relative animate-float">
+                            <svg width="300" height="500" viewBox="0 0 300 500" class="relative z-10">
+                                <!-- 头发 -->
+                                <path d="M150,50 C100,50 80,100 80,150 C80,200 100,250 150,250 C200,250 220,200 220,150 C220,100 200,50 150,50 Z" fill="#FFB7C5" />
+                                <path d="M100,80 C70,80 60,120 60,160 C60,220 80,270 150,270 C220,270 240,220 240,160 C240,120 230,80 200,80" fill="#FFB7C5" />
+                                <path d="M80,150 C70,200 70,300 100,350" fill="#FFB7C5" />
+                                <path d="M220,150 C230,200 230,300 200,350" fill="#FFB7C5" />
+                                
+                                <!-- 脸 -->
+                                <circle cx="150" cy="160" r="50" fill="#FFE0B2" />
+                                
+                                <!-- 眼睛 -->
+                                <ellipse cx="130" cy="150" rx="8" ry="10" fill="white" />
+                                <ellipse cx="170" cy="150" rx="8" ry="10" fill="white" />
+                                <ellipse cx="130" cy="150" rx="4" ry="6" fill="#333" />
+                                <ellipse cx="170" cy="150" rx="4" ry="6" fill="#333" />
+                                <circle cx="127" cy="147" r="2" fill="white" />
+                                <circle cx="167" cy="147" r="2" fill="white" />
+                                
+                                <!-- 眉毛 -->
+                                <path d="M120,135 Q130,130 140,135" stroke="#333" stroke-width="2" fill="none" />
+                                <path d="M160,135 Q170,130 180,135" stroke="#333" stroke-width="2" fill="none" />
+                                
+                                <!-- 嘴巴 -->
+                                <path d="M140,180 Q150,185 160,180" stroke="#333" stroke-width="1.5" fill="none" />
+                                
+                                <!-- 身体 -->
+                                <path d="M110,210 L80,350 L110,450 L190,450 L220,350 L190,210 Z" fill="#BDE0FE" />
+                                <path d="M110,210 L190,210 C200,210 210,220 210,230 L210,280 C210,270 200,260 190,260 L110,260 C100,260 90,270 90,280 L90,230 C90,220 100,210 110,210 Z" fill="#87CEFA" />
+                                
+                                <!-- 领带 -->
+                                <path d="M150,260 L140,300 L150,290 L160,300 Z" fill="#FF8DA1" />
+                                
+                                <!-- 装饰 -->
+                                <circle cx="130" cy="230" r="5" fill="#FFD700" />
+                                <circle cx="170" cy="230" r="5" fill="#FFD700" />
+                            </svg>
+                            <!-- 魔法效果 -->
+                            <div class="absolute -z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] rounded-full border-4 border-dashed border-sakura/50 animate-spin" style="animation-duration: 15s;"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- 关于我内容 -->
+                    <div class="w-full lg:w-3/5">
+                        <h3 class="text-[clamp(1.3rem,2vw,1.8rem)] font-bold mb-6 text-sakura-dark dark:text-sakura">
+                            <span class="en:hidden">我的故事與技能</span>
+                            <span class="hidden en:inline">My Story & Skills</span>
+                        </h3>
+                        <p class="mb-6 text-gray-700 dark:text-gray-300 leading-relaxed">
+                            <span class="en:hidden">
+                                我是一名熱愛動漫的藝術家，從小就對日本動漫充滿熱情。多年來，我專注於角色設計、場景繪製和短篇動畫製作，努力創造出充滿生命力的動漫世界。
+                            </span>
+                            <span class="hidden en:inline">
+                                I'm an anime enthusiast and artist who has been passionate about Japanese animation since childhood. Over the years, I've focused on character design, scene illustration, and short animation production, striving to create vibrant anime worlds.
+                            </span>
+                        </p>
+                        <p class="mb-8 text-gray-700 dark:text-gray-300 leading-relaxed">
+                            <span class="en:hidden">
+                                我相信每個角色都有自己的故事，每個場景都有獨特的氛圍。透過我的作品，我希望能帶給觀眾情感上的共鳴和視覺上的享受。
+                            </span>
+                            <span class="hidden en:inline">
+                                I believe every character has their own story and every scene has a unique atmosphere. Through my work, I hope to bring emotional resonance and visual enjoyment to the audience.
+                            </span>
+                        </p>
+                        
+                        <!-- 技能条 (魔法能量条风格) -->
+                        <div class="space-y-6">
+                            <h4 class="text-lg font-semibold mb-4">
+                                <span class="en:hidden">我的魔法技能</span>
+                                <span class="hidden en:inline">My Magical Skills</span>
+                            </h4>
+                            
+                            <!-- 角色设计 -->
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="font-medium">
+                                        <span class="en:hidden">角色設計</span>
+                                        <span class="hidden en:inline">Character Design</span>
+                                    </span>
+                                    <span class="text-sakura-dark dark:text-sakura">90%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-fill" style="--start-color: #FFB7C5; --end-color: #FF8DA1; width: 0%" data-width="90%"></div>
+                                    <div class="skill-glow"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- 场景绘画 -->
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="font-medium">
+                                        <span class="en:hidden">場景繪畫</span>
+                                        <span class="hidden en:inline">Scene Painting</span>
+                                    </span>
+                                    <span class="text-sakura-dark dark:text-sakura">85%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-fill" style="--start-color: #BDE0FE; --end-color: #87CEFA; width: 0%" data-width="85%"></div>
+                                    <div class="skill-glow"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- 动画制作 -->
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="font-medium">
+                                        <span class="en:hidden">動畫製作</span>
+                                        <span class="hidden en:inline">Animation Production</span>
+                                    </span>
+                                    <span class="text-sakura-dark dark:text-sakura">75%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-fill" style="--start-color: #B5EAD7; --end-color: #80E8C1; width: 0%" data-width="75%"></div>
+                                    <div class="skill-glow"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- 故事创作 -->
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="font-medium">
+                                        <span class="en:hidden">故事創作</span>
+                                        <span class="hidden en:inline">Story Creation</span>
+                                    </span>
+                                    <span class="text-sakura-dark dark:text-sakura">80%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-fill" style="--start-color: #E2D1F8; --end-color: #C0A8F0; width: 0%" data-width="80%"></div>
+                                    <div class="skill-glow"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 作品集区块 -->
+        <section id="works" class="py-20 bg-gray-50 dark:bg-night-light/50 relative">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-4 text-shadow">
+                        <span class="en:hidden">我的作品集</span>
+                        <span class="hidden en:inline">My Works</span>
+                    </h2>
+                    <div class="w-24 h-1 bg-sakura mx-auto rounded-full mb-8"></div>
+                    
+                    <!-- 作品过滤 -->
+                    <div class="flex flex-wrap justify-center gap-3 mb-4">
+                        <button class="filter-btn active px-5 py-2 rounded-full bg-sakura text-white font-medium transition-colors" data-filter="all">
+                            <span class="en:hidden">全部</span>
+                            <span class="hidden en:inline">All</span>
+                        </button>
+                        <button class="filter-btn px-5 py-2 rounded-full bg-white dark:bg-gray-800 hover:bg-sakura/20 dark:hover:bg-sakura/20 font-medium transition-colors" data-filter="school">
+                            <span class="en:hidden">校園</span>
+                            <span class="hidden en:inline">School</span>
+                        </button>
+                        <button class="filter-btn px-5 py-2 rounded-full bg-white dark:bg-gray-800 hover:bg-sakura/20 dark:hover:bg-sakura/20 font-medium transition-colors" data-filter="fantasy">
+                            <span class="en:hidden">奇幻</span>
+                            <span class="hidden en:inline">Fantasy</span>
+                        </button>
+                        <button class="filter-btn px-5 py-2 rounded-full bg-white dark:bg-gray-800 hover:bg-sakura/20 dark:hover:bg-sakura/20 font-medium transition-colors" data-filter="future">
+                            <span class="en:hidden">未來</span>
+                            <span class="hidden en:inline">Future</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 作品网格 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- 作品1 - 校园 -->
+                    <div class="work-item card-anime bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg" data-category="school">
+                        <div class="relative overflow-hidden">
+                            <svg width="100%" height="200" viewBox="0 0 400 200" class="w-full h-56 object-cover">
+                                <!-- 校园场景 -->
+                                <rect width="400" height="200" fill="#BDE0FE" />
+                                <rect x="0" y="120" width="400" height="80" fill="#B5EAD7" />
+                                
+                                <!-- 太阳 -->
+                                <circle cx="350" cy="50" r="30" fill="#FFD700" />
+                                
+                                <!-- 樱花树 -->
+                                <rect x="70" y="80" width="10" height="70" fill="#8B4513" />
+                                <circle cx="70" cy="70" r="40" fill="#FFB7C5" />
+                                <circle cx="90" cy="60" r="30" fill="#FFB7C5" />
+                                <circle cx="50" cy="60" r="30" fill="#FFB7C5" />
+                                
+                                <!-- 教学楼 -->
+                                <rect x="200" y="70" width="120" height="80" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="2" />
+                                <rect x="220" y="90" width="20" height="20" fill="#BDE0FE" />
+                                <rect x="260" y="90" width="20" height="20" fill="#BDE0FE" />
+                                <rect x="300" y="90" width="20" height="20" fill="#BDE0FE" />
+                                <rect x="220" y="130" width="20" height="20" fill="#BDE0FE" />
+                                <rect x="260" y="130" width="20" height="20" fill="#BDE0FE" />
+                                <rect x="300" y="130" width="20" height="20" fill="#BDE0FE" />
+                                <rect x="240" y="50" width="60" height="20" fill="#FFB7C5" />
+                                <rect x="260" y="30" width="20" height="20" fill="#BDE0FE" />
+                                
+                                <!-- 学生 -->
+                                <g transform="translate(120, 130)">
+                                    <circle cx="0" cy="-30" r="15" fill="#FFDAB9" />
+                                    <path d="M-15,0 L-10,-30 L10,-30 L15,0 Z" fill="#FF69B4" />
+                                    <line x1="0" y1="0" x2="0" y2="30" stroke="#000" stroke-width="2" />
+                                    <line x1="0" y1="10" x2="-20" y2="30" stroke="#000" stroke-width="2" />
+                                    <line x1="0" y1="10" x2="20" y2="30" stroke="#000" stroke-width="2" />
+                                </g>
+                                <g transform="translate(150, 130)">
+                                    <circle cx="0" cy="-30" r="15" fill="#FFDAB9" />
+                                    <path d="M-15,0 L-10,-30 L10,-30 L15,0 Z" fill="#87CEFA" />
+                                    <line x1="0" y1="0" x2="0" y2="30" stroke="#000" stroke-width="2" />
+                                    <line x1="0" y1="10" x2="-20" y2="30" stroke="#000" stroke-width="2" />
+                                    <line x1="0" y1="10" x2="20" y2="30" stroke="#000" stroke-width="2" />
+                                </g>
+                            </svg>
+                            <div class="absolute top-4 left-4 bg-sakura text-white text-sm font-medium px-3 py-1 rounded-full">
+                                <span class="en:hidden">校園</span>
+                                <span class="hidden en:inline">School</span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">
+                                <span class="en:hidden">櫻花學園日記</span>
+                                <span class="hidden en:inline">Cherry Blossom School Diary</span>
+                            </h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">
+                                <span class="en:hidden">描繪高中生在充滿櫻花的校園裡度過的青春歲月，充滿友情與成長的故事。</span>
+                                <span class="hidden en:inline">Depicting high school students' youthful years in a cherry blossom-filled campus, a story full of friendship and growth.</span>
+                            </p>
+                            <a href="#" class="inline-flex items-center text-sakura-dark dark:text-sakura font-medium hover:underline">
+                                <span class="en:hidden">查看詳情</span>
+                                <span class="hidden en:inline">View Details</span>
+                                <i class="fa fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- 作品2 - 奇幻 -->
+                    <div class="work-item card-anime bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg" data-category="fantasy">
+                        <div class="relative overflow-hidden">
+                            <svg width="100%" height="200" viewBox="0 0 400 200" class="w-full h-56 object-cover">
+                                <!-- 奇幻场景 -->
+                                <rect width="400" height="200" fill="#7B68EE" />
+                                <rect x="0" y="120" width="400" height="80" fill="#228B22" />
+                                
+                                <!-- 月亮 -->
+                                <circle cx="350" cy="50" r="25" fill="#E0E0E0" />
+                                
+                                <!-- 城堡 -->
+                                <path d="M250,100 L220,150 L280,150 Z" fill="#DAA520" />
+                                <rect x="230" y="100" width="40" height="50" fill="#8B4513" />
+                                <rect x="245" y="120" width="10" height="30" fill="#FFF8DC" />
+                                
+                                <!-- 魔法森林 -->
+                                <rect x="50" y="100" width="10" height="50" fill="#8B4513" />
+                                <circle cx="50" cy="90" r="30" fill="#9ACD32" />
+                                
+                                <rect x="100" y="80" width="15" height="70" fill="#8B4513" />
+                                <circle cx="100" cy="70" r="40" fill="#32CD32" />
+                                
+                                <rect x="150" y="110" width="10" height="40" fill="#8B4513" />
+                                <circle cx="150" cy="100" r="25" fill="#228B22" />
+                                
+                                <!-- 魔法角色 -->
+                                <g transform="translate(200, 130)">
+                                    <circle cx="0" cy="-30" r="15" fill="#FFDAB9" />
+                                    <path d="M-15,0 L-10,-30 L10,-30 L15,0 Z" fill="#9370DB" />
+                                    <path d="M-20,-10 C-30,-20 -30,10 -15,0" fill="#BA55D3" />
+                                    <path d="M20,-10 C30,-20 30,10 15,0" fill="#BA55D3" />
+                                    <line x1="0" y1="0" x2="0" y2="30" stroke="#000" stroke-width="2" />
+                                    <line x1="0" y1="10" x2="-20" y2="30" stroke="#000" stroke-width="2" />
+                                    <line x1="0" y1="10" x2="20" y2="30" stroke="#000" stroke-width="2" />
+                                </g>
+                                
+                                <!-- 魔法效果 -->
+                                <circle cx="200" cy="80" r="10" fill="#FFFF00" opacity="0.7">
+                                    <animate attributeName="r" values="10;15;10" dur="3s" repeatCount="indefinite" />
+                                </circle>
+                            </svg>
+                            <div class="absolute top-4 left-4 bg-lavender-dark text-white text-sm font-medium px-3 py-1 rounded-full">
+                                <span class="en:hidden">奇幻</span>
+                                <span class="hidden en:inline">Fantasy</span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">
+                                <span class="en:hidden">魔法使的冒險</span>
+                                <span class="hidden en:inline">Wizard's Adventure</span>
+                            </h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">
+                                <span class="en:hidden">年輕的魔法使在神秘森林中展開冒險，學習控制魔法並對抗黑暗勢力的故事。</span>
+                                <span class="hidden en:inline">A story of a young wizard's adventure in a mysterious forest, learning to control magic and fight against dark forces.</span>
+                            </p>
+                            <a href="#" class="inline-flex items-center text-sakura-dark dark:text-sakura font-medium hover:underline">
+                                <span class="en:hidden">查看詳情</span>
+                                <span class="hidden en:inline">View Details</span>
+                                <i class="fa fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- 作品3 - 未来 -->
+                    <div class="work-item card-anime bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg" data-category="future">
+                        <div class="relative overflow-hidden">
+                            <svg width="100%" height="200" viewBox="0 0 400 200" class="w-full h-56 object-cover">
+                                <!-- 未来都市场景 -->
+                                <rect width="400" height="200" fill="#1E3A8A" />
+                                <rect x="0" y="150" width="400" height="50" fill="#0F172A" />
+                                
+                                <!-- 建筑 -->
+                                <rect x="50" y="50" width="30" height="100" fill="#3B82F6" />
+                                <rect x="100" y="30" width="40" height="120" fill="#3B82F6" />
+                                <rect x="160" y="70" width="25" height="80" fill="#3B82F6" />
+                                <rect x="210" y="20" width="35" height="130" fill="#3B82F6" />
+                                <rect x="270" y="60" width="30" height="90" fill="#3B82F6" />
+                                <rect x="320" y="40" width="25" height="110" fill="#3B82F6" />
+                                
+                                <!-- 窗户 -->
+                                <g fill="#BDE0FE">
+                                    <rect x="55" y="55" width="10" height="10" />
+                                    <rect x="70" y="55" width="10" height="10" />
+                                    <rect x="55" y="75" width="10" height="10" />
+                                    <rect x="70" y="75" width="10" height="10" />
+                                    
+                                    <rect x="110" y="35" width="10" height="10" />
+                                    <rect x="125" y="35" width="10" height="10" />
+                                    <rect x="110" y="55" width="10" height="10" />
+                                    <rect x="125" y="55" width="10" height="10" />
+                                </g>
+                                
+                                <!-- 飞行器 -->
+                                <ellipse cx="300" cy="40" rx="20" ry="10" fill="#E2D1F8" />
+                                <rect x="295" y="35" width="10" height="10" fill="#FFB7C5" />
+                                
+                                <!-- 未来角色 -->
+                                <g transform="translate(200, 130)">
+                                    <circle cx="0" cy="-30" r="15" fill="#FFDAB9" />
+                                    <path d="M-15,0 L-10,-30 L10,-30 L15,0 Z" fill="#3B82F6" />
+                                    <rect x="-10" y="0" width="20" height="30" fill="#1E40AF" />
+                                    <line x1="-10" y1="10" x2="-25" y2="30" stroke="#000" stroke-width="2" />
+                                    <line x1="10" y1="10" x2="25" y2="30" stroke="#000" stroke-width="2" />
+                                    <line x1="-10" y1="25" x2="10" y2="25" stroke="#000" stroke-width="2" />
+                                </g>
+                                
+                                <!-- 全息投影 -->
+                                <circle cx="200" cy="90" r="20" fill="#BDE0FE" opacity="0.3">
+                                    <animate attributeName="r" values="20;25;20" dur="3s" repeatCount="indefinite" />
+                                </circle>
+                            </svg>
+                            <div class="absolute top-4 left-4 bg-sky-dark text-white text-sm font-medium px-3 py-1 rounded-full">
+                                <span class="en:hidden">未來</span>
+                                <span class="hidden en:inline">Future</span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">
+                                <span class="en:hidden">數位都市的記憶</span>
+                                <span class="hidden en:inline">Memories of Digital City</span>
+                            </h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">
+                                <span class="en:hidden">在充滿高科技的未來都市中，一個年輕人發現了能改變世界的數位秘密。</span>
+                                <span class="hidden en:inline">In a high-tech future city, a young person discovers a digital secret that can change the world.</span>
+                            </p>
+                            <a href="#" class="inline-flex items-center text-sakura-dark dark:text-sakura font-medium hover:underline">
+                                <span class="en:hidden">查看詳情</span>
+                                <span class="hidden en:inline">View Details</span>
+                                <i class="fa fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- 作品4 - 校园 -->
+                    <div class="work-item card-anime bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg" data-category="school">
+                        <div class="relative overflow-hidden">
+                            <svg width="100%" height="200" viewBox="0 0 400 200" class="w-full h-56 object-cover">
+                                <!-- 校园活动场景 -->
+                                <rect width="400" height="200" fill="#87CEEB" />
+                                <rect x="0" y="120" width="400" height="80" fill="#228B22" />
+                                
+                                <!-- 太阳 -->
+                                <circle cx="350" cy="50" r="30" fill="#FFD700" />
+                                
+                                <!-- 学校建筑 -->
+                                <rect x="50" y="80" width="100" height="70" fill="#F5F5DC" stroke="#CD853F" stroke-width="2" />
+                                <rect x="70" y="100" width="20" height="20" fill="#87CEEB" />
+                                <rect x="110" y="100" width="20" height="20" fill="#87CEEB" />
+                                <rect x="70" y="130" width="20" height="20" fill="#87CEEB" />
+                                <rect x="110" y="130" width="20" height="20" fill="#87CEEB" />
+                                
+                                <!-- 樱花树 -->
+                                <rect x="300" y="80" width="10" height="70" fill="#8B4513" />
+                                <circle cx="300" cy="70" r="40" fill="#FFB7C5" />
+                                
+                                <!-- 学生们 -->
+                                <g transform="translate(200, 140)">
+                                    <circle cx="0" cy="-25" r="12" fill="#FFDAB9" />
+                                    <path d="M-12,0 L-8,-25 L8,-25 L12,0 Z" fill="#FF6347" />
+                                    <line x1="0" y1="0" x2="0" y2="25" stroke="#000" stroke-width="2" />
+                                    <line x1="0" y1="10" x2="-15" y2="25" stroke="#000" stroke-width="2" />
+                                    <line x1="0" y1="10" x2="15" y2="25" stroke="#000" stroke-width="2" />
+                                </g>
+                                
+                                <g transform="translate(230, 140)">
+                                    <circle cx="0" cy="-25" r="12" fill="#FFDAB9" />
+                                    <path d="M-12,0 L-8,-25 L8,-25 L12,0 Z" fill="#4682B4" />
+                                    <line x1="0" y1="0" x2="0" y2="25" stroke="#000" stroke-width="2" />
+                                    <line x1="0" y1="10" x2="-15" y2="25" stroke="#000" stroke-width="2" />
+                                    <line x1="0" y1="10" x2="15" y2="25" stroke="#000" stroke-width="2" />
+                                </g>
+                                
+                                <g transform="translate(260, 140)">
+                                    <circle cx="0" cy="-25" r="12" fill="#FFDAB9" />
+                                    <path d="M-12,0 L-8,-25 L8,-25 L12,0 Z" fill="#32CD32" />
+                                    <line x1="0" y1="0" x2="0" y2="25" stroke="#000" stroke-width="2" />
+                                    <line x1="0" y1="10" x2="-15" y2="25" stroke="#000" stroke-width="2" />
+                                    <line x1="0" y1="10" x2="15" y2="25" stroke="#000" stroke-width="2" />
+                                </g>
+                                
+                                <!-- 运动器材 -->
+                                <circle cx="180" cy="140" r="15" fill="#FF6347" />
+                            </svg>
+                            <div class="absolute top-4 left-4 bg-sakura text-white text-sm font-medium px-3 py-1 rounded-full">
+                                <span class="en:hidden">校園</span>
+                                <span class="hidden en:inline">School</span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">
+                                <span class="en:hidden">學園祭的奇蹟</span>
+                                <span class="hidden en:inline">School Festival Miracle</span>
+                            </h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">
+                                <span class="en:hidden">學生們為了準備一年一度的學園祭而努力，過程中充滿歡笑與感動的青春喜劇。</span>
+                                <span class="hidden en:inline">A youth comedy full of laughter and touching moments as students work hard to prepare for the annual school festival.</span>
+                            </p>
+                            <a href="#" class="inline-flex items-center text-sakura-dark dark:text-sakura font-medium hover:underline">
+                                <span class="en:hidden">查看詳情</span>
+                                <span class="hidden en:inline">View Details</span>
+                                <i class="fa fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- 作品5 - 奇幻 -->
+                    <div class="work-item card-anime bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg" data-category="fantasy">
+                        <div class="relative overflow-hidden">
+                            <svg width="100%" height="200" viewBox="0 0 400 200" class="w-full h-56 object-cover">
+                                <!-- 奇幻冒险场景 -->
+                                <rect width="400" height="200" fill="#4B0082" />
+                                <rect x="0" y="120" width="400" height="80" fill="#228B22" />
+                                
+                                <!-- 月亮和星星 -->
+                                <circle cx="350" cy="50" r="20" fill="#E0E0E0" />
+                                <circle cx="100" cy="40" r="2" fill="white" />
+                                <circle cx="150" cy="60" r="2" fill="white" />
+                                <circle cx="200" cy="30" r="2" fill="white" />
+                                <circle cx="250" cy="70" r="2" fill="white" />
+                                <circle cx="300" cy="40" r="2" fill="white" />
+                                
+                                <!-- 山脉 -->
+                                <path d="M0,120 L100,60 L200,100 L300,50 L400,90 L400,200 L0,200 Z" fill="#2F4F4F" />
+                                
+                                <!-- 城堡 -->
+                                <path d="M150,90 L130,120 L170,120 Z" fill="#DAA520" />
+                                <rect x="135" y="90" width="30" height="30" fill="#8B4513" />
+                                
+                                <!-- 冒险角色 -->
+                                <g transform="translate(200, 130)">
+                                    <circle cx="0" cy="-25" r="12" fill="#FFDAB9" />
+                                    <path d="M-12,0 L-8,-25 L8,-25 L12,0 Z" fill="#8B4513" />
+                                    <line x1="0" y1="0" x2="0" y2="25" stroke="#000" stroke-width="2" />
+                                    <line x1="0" y1="10" x2="-15" y2="25" stroke="#000" stroke-width="2" />
+                                    <line x1="0" y1="10" x2="15" y2="25" stroke="#000" stroke-width="2" />
+                                    <line x1="10" y1="-15" x2="30" y2="-30" stroke="#000" stroke-width="2" /> <!-- 剑 -->
+                                </g>
+                                
+                                <!-- 魔法生物 -->
+                                <g transform="translate(250, 140)">
+                                    <circle cx="0" cy="-15" r="10" fill="#9ACD32" />
+                                    <ellipse cx="0" cy="-5" rx="15" ry="10" fill="#9ACD32" />
+                                    <line x1="-10" y1="5" x2="-20" y2="20" stroke="#228B22" stroke-width="2" />
+                                    <line x1="10" y1="5" x2="20" y2="20" stroke="#228B22" stroke-width="2" />
+                                    <line x1="-5" y1="-20" x2="-15" y2="-30" stroke="#228B22" stroke-width="2" />
+                                    <line x1="5" y1="-20" x2="15" y2="-30" stroke="#228B22" stroke-width="2" />
+                                </g>
+                                
+                                <!-- 魔法效果 -->
+                                <circle cx="250" cy="120" r="10" fill="#FFFF00" opacity="0.7">
+                                    <animate attributeName="r" values="10;15;10" dur="3s" repeatCount="indefinite" />
+                                </circle>
+                            </svg>
+                            <div class="absolute top-4 left-4 bg-lavender-dark text-white text-sm font-medium px-3 py-1 rounded-full">
+                                <span class="en:hidden">奇幻</span>
+                                <span class="hidden en:inline">Fantasy</span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">
+                                <span class="en:hidden">龍之守護者</span>
+                                <span class="hidden en:inline">Dragon Guardian</span>
+                            </h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">
+                                <span class="en:hidden">年輕的勇者與神秘的龍結下契約，共同守護王國寶藏，對抗邪惡巫師的故事。</span>
+                                <span class="hidden en:inline">A story of a young hero who forms a contract with a mysterious dragon to protect the kingdom's treasure and fight against an evil wizard.</span>
+                            </p>
+                            <a href="#" class="inline-flex items-center text-sakura-dark dark:text-sakura font-medium hover:underline">
+                                <span class="en:hidden">查看詳情</span>
+                                <span class="hidden en:inline">View Details</span>
+                                <i class="fa fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- 作品6 - 未来 -->
+                    <div class="work-item card-anime bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg" data-category="future">
+                        <div class="relative overflow-hidden">
+                            <svg width="100%" height="200" viewBox="0 0 400 200" class="w-full h-56 object-cover">
+                                <!-- 未来科技场景 -->
+                                <rect width="400" height="200" fill="#0F172A" />
+                                
+                                <!-- 全息城市 -->
+                                <rect x="50" y="80" width="20" height="80" fill="#3B82F6" opacity="0.5" />
+                                <rect x="90" y="60" width="25" height="100" fill="#3B82F6" opacity="0.5" />
+                                <rect x="135" y="90" width="15" height="70" fill="#3B82F6" opacity="0.5" />
+                                <rect x="170" y="50" width="30" height="110" fill="#3B82F6" opacity="0.5" />
+                                <rect x="220" y="70" width="20" height="90" fill="#3B82F6" opacity="0.5" />
+                                <rect x="260" y="40" width="25" height="120" fill="#3B82F6" opacity="0.5" />
+                                <rect x="305" y="80" width="15" height="80" fill="#3B82F6" opacity="0.5" />
+                                
+                                <!-- 全息投影 -->
+                                <circle cx="200" cy="100" r="40" fill="#BDE0FE" opacity="0.2">
+                                    <animate attributeName="r" values="40;45;40" dur="4s" repeatCount="indefinite" />
+                                </circle>
+                                
+                                <!-- 飞行器 -->
+                                <ellipse cx="320" cy="60" rx="25" ry="10" fill="#E2D1F8" opacity="0.7" />
+                                <rect x="315" cy="55" width="10" height="10" fill="#FFB7C5" opacity="0.7" />
+                                
+                                <!-- 未来角色 -->
+                                <g transform="translate(200, 130)">
+                                    <circle cx="0" cy="-25" r="12" fill="#FFDAB9" />
+                                    <path d="M-12,0 L-8,-25 L8,-25 L12,0 Z" fill="#1E40AF" />
+                                    <rect x="-10" y="0" width="20" height="25" fill="#0F172A" stroke="#3B82F6" stroke-width="1" />
+                                    <line x1="-10" y1="10" x2="-20" y2="25" stroke="#000" stroke-width="2" />
+                                    <line x1="10" y1="10" x2="20" y2="25" stroke="#000" stroke-width="2" />
+                                    
+                                    <!-- 机械臂 -->
+                                    <rect x="-25" y="-5" width="15" height="5" fill="#3B82F6" />
+                                </g>
+                                
+                                <!-- 科技元素 -->
+                                <circle cx="100" cy="50" r="5" fill="#FFB7C5">
+                                    <animate attributeName="r" values="5;8;5" dur="2s" repeatCount="indefinite" />
+                                </circle>
+                                <circle cx="120" cy="70" r="5" fill="#B5EAD7">
+                                    <animate attributeName="r" values="5;8;5" dur="2.5s" repeatCount="indefinite" />
+                                </circle>
+                                <circle cx="80" cy="90" r="5" fill="#E2D1F8">
+                                    <animate attributeName="r" values="5;8;5" dur="3s" repeatCount="indefinite" />
+                                </circle>
+                            </svg>
+                            <div class="absolute top-4 left-4 bg-sky-dark text-white text-sm font-medium px-3 py-1 rounded-full">
+                                <span class="en:hidden">未來</span>
+                                <span class="hidden en:inline">Future</span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">
+                                <span class="en:hidden">虛擬現實邊界</span>
+                                <span class="hidden en:inline">VR Boundaries</span>
+                            </h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">
+                                <span class="en:hidden">在2077年，一個年輕工程師發現虛擬現實與現實世界的界線開始模糊，引發一連串冒險。</span>
+                                <span class="hidden en:inline">In 2077, a young engineer discovers that the line between virtual reality and the real world is beginning to blur, triggering a series of adventures.</span>
+                            </p>
+                            <a href="#" class="inline-flex items-center text-sakura-dark dark:text-sakura font-medium hover:underline">
+                                <span class="en:hidden">查看詳情</span>
+                                <span class="hidden en:inline">View Details</span>
+                                <i class="fa fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 服务区块 -->
+        <section id="services" class="py-20 relative">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-4 text-shadow">
+                        <span class="en:hidden">我的服務</span>
+                        <span class="hidden en:inline">My Services</span>
+                    </h2>
+                    <div class="w-24 h-1 bg-sakura mx-auto rounded-full"></div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- 服务1 - 角色设计 -->
+                    <div class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow card-anime">
+                        <div class="w-16 h-16 bg-sakura/20 rounded-full flex items-center justify-center mb-6">
+                            <svg width="40" height="40" viewBox="0 0 40 40">
+                                <!-- 角色设计图标 -->
+                                <circle cx="20" cy="15" r="8" fill="#FF8DA1" />
+                                <path d="M12,35 L28,35 L25,23 L15,23 Z" fill="#FF8DA1" />
+                                <line x1="20" y1="23" x2="20" y2="15" stroke="#FF8DA1" stroke-width="2" />
+                                <ellipse cx="17" cy="14" rx="1.5" ry="2" fill="white" />
+                                <ellipse cx="23" cy="14" rx="1.5" ry="2" fill="white" />
+                                <path d="M18,18 Q20,20 22,18" stroke="white" stroke-width="1.5" fill="none" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4">
+                            <span class="en:hidden">角色設計</span>
+                            <span class="hidden en:inline">Character Design</span>
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6">
+                            <span class="en:hidden">根據你的故事和世界觀，設計獨具特色的動漫角色，包括外觀、服裝和表情。</span>
+                            <span class="hidden en:inline">Design unique anime characters based on your story and worldview, including appearance, clothing, and expressions.</span>
+                        </p>
+                        <ul class="space-y-2 mb-6">
+                            <li class="flex items-center text-gray-700 dark:text-gray-200">
+                                <i class="fa fa-check text-sakura-dark mr-2"></i>
+                                <span class="en:hidden">角色設定與背景故事</span>
+                                <span class="hidden en:inline">Character setting & backstory</span>
+                            </li>
+                            <li class="flex items-center text-gray-700 dark:text-gray-200">
+                                <i class="fa fa-check text-sakura-dark mr-2"></i>
+                                <span class="en:hidden">多角度插圖</span>
+                                <span class="hidden en:inline">Multi-angle illustrations</span>
+                            </li>
+                            <li class="flex items-center text-gray-700 dark:text-gray-200">
+                                <i class="fa fa-check text-sakura-dark mr-2"></i>
+                                <span class="en:hidden">表情與動作參考</span>
+                                <span class="hidden en:inline">Expression & action references</span>
+                            </li>
+                        </ul>
+                        <a href="#contact" class="inline-block btn-anime bg-sakura hover:bg-sakura-dark text-white font-medium py-2 px-6 rounded-full transition-colors text-center">
+                            <span class="en:hidden">了解更多</span>
+                            <span class="hidden en:inline">Learn More</span>
+                        </a>
+                    </div>
+                    
+                    <!-- 服务2 - 场景绘画 -->
+                    <div class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow card-anime">
+                        <div class="w-16 h-16 bg-sky/20 rounded-full flex items-center justify-center mb-6">
+                            <svg width="40" height="40" viewBox="0 0 40 40">
+                                <!-- 场景绘画图标 -->
+                                <rect x="10" y="25" width="20" height="10" fill="#87CEFA" />
+                                <path d="M10,25 L20,15 L30,25" fill="#87CEFA" />
+                                <circle cx="15" cy="12" r="3" fill="#FFD700" />
+                                <path d="M5,35 L35,35 L30,25 L10,25 Z" fill="#B5EAD7" />
+                                <rect x="18" y="20" width="4" height="5" fill="#8B4513" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4">
+                            <span class="en:hidden">場景繪畫</span>
+                            <span class="hidden en:inline">Scene Painting</span>
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6">
+                            <span class="en:hidden">創建生動的動漫場景，從校園、城市到奇幻世界，營造出獨特的氛圍和視覺體驗。</span>
+                            <span class="hidden en:inline">Create vivid anime scenes, from schools and cities to fantasy worlds, creating unique atmospheres and visual experiences.</span>
+                        </p>
+                        <ul class="space-y-2 mb-6">
+                            <li class="flex items-center text-gray-700 dark:text-gray-200">
+                                <i class="fa fa-check text-sky-dark mr-2"></i>
+                                <span class="en:hidden">室內與室外場景</span>
+                                <span class="hidden en:inline">Indoor & outdoor scenes</span>
+                            </li>
+                            <li class="flex items-center text-gray-700 dark:text-gray-200">
+                                <i class="fa fa-check text-sky-dark mr-2"></i>
+                                <span class="en:hidden">日夜與季節變化</span>
+                                <span class="hidden en:inline">Day/night & seasonal changes</span>
+                            </li>
+                            <li class="flex items-center text-gray-700 dark:text-gray-200">
+                                <i class="fa fa-check text-sky-dark mr-2"></i>
+                                <span class="en:hidden">氛圍與情緒表達</span>
+                                <span class="hidden en:inline">Atmosphere & emotion expression</span>
+                            </li>
+                        </ul>
+                        <a href="#contact" class="inline-block btn-anime bg-sky hover:bg-sky-dark text-white font-medium py-2 px-6 rounded-full transition-colors text-center">
+                            <span class="en:hidden">了解更多</span>
+                            <span class="hidden en:inline">Learn More</span>
+                        </a>
+                    </div>
+                    
+                    <!-- 服务3 - 动画制作 -->
+                    <div class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow card-anime">
+                        <div class="w-16 h-16 bg-lavender/20 rounded-full flex items-center justify-center mb-6">
+                            <svg width="40" height="40" viewBox="0 0 40 40">
+                                <!-- 动画制作图标 -->
+                                <rect x="10" y="15" width="20" height="15" fill="#C0A8F0" />
+                                <polygon points="15,15 20,10 25,15" fill="#C0A8F0" />
+                                <circle cx="18" cy="22" r="2" fill="white" />
+                                <rect x="22" y="20" width="4" height="4" fill="white" />
+                                <rect x="15" y="30" width="10" height="2" fill="white" />
+                                <line x1="5" y1="25" x2="10" y2="25" stroke="#C0A8F0" stroke-width="2" />
+                                <line x1="30" y1="25" x2="35" y2="25" stroke="#C0A8F0" stroke-width="2" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4">
+                            <span class="en:hidden">動畫製作</span>
+                            <span class="hidden en:inline">Animation Production</span>
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6">
+                            <span class="en:hidden">製作短篇動畫片段，包括角色動作、表情變化和場景轉換，讓你的故事更加生動。</span>
+                            <span class="hidden en:inline">Produce short animation clips, including character movements, expression changes, and scene transitions to bring your story to life.</span>
+                        </p>
+                        <ul class="space-y-2 mb-6">
+                            <li class="flex items-center text-gray-700 dark:text-gray-200">
+                                <i class="fa fa-check text-lavender-dark mr-2"></i>
+                                <span class="en:hidden">角色動作動畫</span>
+                                <span class="hidden en:inline">Character action animation</span>
+                            </li>
+                            <li class="flex items-center text-gray-700 dark:text-gray-200">
+                                <i class="fa fa-check text-lavender-dark mr-2"></i>
+                                <span class="en:hidden">表情與肢體語言</span>
+                                <span class="hidden en:inline">Facial expressions & body language</span>
+                            </li>
+                            <li class="flex items-center text-gray-700 dark:text-gray-200">
+                                <i class="fa fa-check text-lavender-dark mr-2"></i>
+                                <span class="en:hidden">場景與特效動畫</span>
+                                <span class="hidden en:inline">Scene & effect animation</span>
+                            </li>
+                        </ul>
+                        <a href="#contact" class="inline-block btn-anime bg-lavender hover:bg-lavender-dark text-white font-medium py-2 px-6 rounded-full transition-colors text-center">
+                            <span class="en:hidden">了解更多</span>
+                            <span class="hidden en:inline">Learn More</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 联系表单区块 -->
+        <section id="contact" class="py-20 bg-gray-50 dark:bg-night-light/50 relative">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-4 text-shadow">
+                        <span class="en:hidden">聯絡我</span>
+                        <span class="hidden en:inline">Contact Me</span>
+                    </h2>
+                    <div class="w-24 h-1 bg-sakura mx-auto rounded-full mb-6"></div>
+                    <p class="max-w-2xl mx-auto text-gray-600 dark:text-gray-300">
+                        <span class="en:hidden">有任何合作想法或問題？歡迎透過以下表單與我聯繫，我會盡快回覆你！</span>
+                        <span class="hidden en:inline">Have any collaboration ideas or questions? Feel free to contact me through the form below, and I'll get back to you as soon as possible!</span>
+                    </p>
+                </div>
+                
+                <div class="max-w-4xl mx-auto">
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden">
+                        <!-- 魔法书/日记风格装饰 -->
+                        <div class="h-6 bg-gradient-to-r from-sakura via-lavender to-sky"></div>
+                        
+                        <div class="p-8 md:p-10">
+                            <form id="contact-form" class="space-y-6">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <!-- 姓名 -->
+                                    <div>
+                                        <label for="name" class="block text-sm font-medium mb-2">
+                                            <span class="en:hidden">姓名</span>
+                                            <span class="hidden en:inline">Name</span> <span class="text-red-500">*</span>
+                                        </label>
+                                        <input type="text" id="name" name="name" class="form-input-anime w-full px-4 py-3 rounded-lg focus:outline-none" required>
+                                    </div>
+                                    
+                                    <!-- 邮箱 -->
+                                    <div>
+                                        <label for="email" class="block text-sm font-medium mb-2">
+                                            <span class="en:hidden">信箱</span>
+                                            <span class="hidden en:inline">Email</span> <span class="text-red-500">*</span>
+                                        </label>
+                                        <input type="email" id="email" name="email" class="form-input-anime w-full px-4 py-3 rounded-lg focus:outline-none" required>
+                                    </div>
+                                </div>
+                                
+                                <!-- 主题 -->
+                                <div>
+                                    <label for="subject" class="block text-sm font-medium mb-2">
+                                        <span class="en:hidden">主題</span>
+                                        <span class="hidden en:inline">Subject</span> <span class="text-red-500">*</span>
+                                    </label>
+                                    <input type="text" id="subject" name="subject" class="form-input-anime w-full px-4 py-3 rounded-lg focus:outline-none" required>
+                                </div>
+                                
+                                <!-- 消息 -->
+                                <div>
+                                    <label for="message" class="block text-sm font-medium mb-2">
+                                        <span class="en:hidden">訊息</span>
+                                        <span class="hidden en:inline">Message</span> <span class="text-red-500">*</span>
+                                    </label>
+                                    <textarea id="message" name="message" rows="5" class="form-input-anime w-full px-4 py-3 rounded-lg focus:outline-none resize-none" required></textarea>
+                                </div>
+                                
+                                <!-- 提交按钮 -->
+                                <div class="text-center">
+                                    <button type="submit" class="btn-anime bg-sakura hover:bg-sakura-dark text-white font-medium py-3 px-10 rounded-full transition-colors shadow-lg hover:shadow-xl text-lg">
+                                        <span class="en:hidden">發送訊息</span>
+                                        <span class="hidden en:inline">Send Message</span>
+                                        <i class="fa fa-paper-plane ml-2"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <!-- 联系信息 -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
+                        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg text-center">
+                            <div class="w-12 h-12 bg-sakura/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fa fa-envelope text-sakura-dark text-xl"></i>
+                            </div>
+                            <h3 class="font-medium mb-2">
+                                <span class="en:hidden">信箱</span>
+                                <span class="hidden en:inline">Email</span>
+                            </h3>
+                            <p class="text-gray-600 dark:text-gray-300">contact@animeartist.com</p>
+                        </div>
+                        
+                        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg text-center">
+                            <div class="w-12 h-12 bg-sky/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fa fa-map-marker text-sky-dark text-xl"></i>
+                            </div>
+                            <h3 class="font-medium mb-2">
+                                <span class="en:hidden">地點</span>
+                                <span class="hidden en:inline">Location</span>
+                            </h3>
+                            <p class="text-gray-600 dark:text-gray-300">
+                                <span class="en:hidden">日本東京</span>
+                                <span class="hidden en:inline">Tokyo, Japan</span>
+                            </p>
+                        </div>
+                        
+                        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg text-center">
+                            <div class="w-12 h-12 bg-lavender/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fa fa-clock-o text-lavender-dark text-xl"></i>
+                            </div>
+                            <h3 class="font-medium mb-2">
+                                <span class="en:hidden">工作時間</span>
+                                <span class="hidden en:inline">Working Hours</span>
+                            </h3>
+                            <p class="text-gray-600 dark:text-gray-300">
+                                <span class="en:hidden">週一至週五 9:00-18:00</span>
+                                <span class="hidden en:inline">Mon-Fri 9:00-18:00</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-gray-100 dark:bg-night py-12 relative">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-10">
+                <div class="mb-6 md:mb-0">
+                    <a href="#" class="text-2xl font-bold text-sakura-dark dark:text-sakura flex items-center">
+                        <span class="mr-2"><i class="fa fa-paint-brush"></i></span>
+                        <span class="en:hidden">動漫作品集</span>
+                        <span class="hidden en:inline">Anime Portfolio</span>
+                    </a>
+                    <p class="mt-2 text-gray-600 dark:text-gray-400 max-w-md">
+                        <span class="en:hidden">熱愛動漫藝術的創作者，擅長角色設計、場景繪製與動畫製作。</span>
+                        <span class="hidden en:inline">Anime artist specializing in character design, scene illustration, and animation production.</span>
+                    </p>
+                </div>
+                
+                <!-- 社交媒体 -->
+                <div class="flex space-x-4">
+                    <a href="#" class="w-10 h-10 rounded-full bg-sakura/20 hover:bg-sakura/40 flex items-center justify-center text-sakura-dark dark:text-sakura transition-colors" title="Twitter">
+                        <i class="fa fa-twitter"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-sky/20 hover:bg-sky/40 flex items-center justify-center text-sky-dark dark:text-sky transition-colors" title="YouTube">
+                        <i class="fa fa-youtube-play"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-lavender/20 hover:bg-lavender/40 flex items-center justify-center text-lavender-dark dark:text-lavender transition-colors" title="Pixiv">
+                        <i class="fa fa-picture-o"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-mint/20 hover:bg-mint/40 flex items-center justify-center text-mint-dark dark:text-mint transition-colors" title="Instagram">
+                        <i class="fa fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-200 dark:border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-600 dark:text-gray-400 text-sm">
+                    &copy; 2023 
+                    <span class="en:hidden">動漫作品集</span>
+                    <span class="hidden en:inline">Anime Portfolio</span>
+                    
